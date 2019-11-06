@@ -5,15 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.shoplist.Adapters.ShopListAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         EditText input = findViewById(R.id.input);
 
         // Создаём пустой массив для хранения списка покупок
+        // или добавляем список из памяти
         final ArrayList<String> list;
         String json =mSettings.getString("list","") ;
         if (json.length() == 0) {
