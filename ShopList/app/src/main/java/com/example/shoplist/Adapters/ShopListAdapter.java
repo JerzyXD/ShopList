@@ -18,7 +18,7 @@ public class ShopListAdapter extends BaseAdapter {
     ArrayList<String> arrayList;
     private LayoutInflater lInflater;
 
-    ShopListAdapter (Context context, ArrayList arrayList) {
+    public ShopListAdapter(Context context, ArrayList arrayList) {
 
         this.context = context;
         this.arrayList = arrayList;
