@@ -17,24 +17,34 @@
             android:id="@+id/shop_list"
             android:layout_width="match_parent"
             android:layout_height="377dp"
-            android:layout_margin="10dp" />
+            android:layout_margin="5dp" >
 
-        <EditText
-            android:id="@+id/input"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text=""
-            android:textAllCaps="false"
-            android:layout_margin="10dp"/>
+        </ListView>
 
-        <Button
-            android:id="@+id/add"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Добавить"
-            android:textAllCaps="false"
-            android:layout_margin="10dp"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/add"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:text="+"
+                android:textAllCaps="false" />
+
+            <EditText
+                android:id="@+id/input"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_margin="10dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text=""
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
