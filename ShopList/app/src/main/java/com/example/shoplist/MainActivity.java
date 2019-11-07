@@ -2,9 +2,13 @@ package com.example.shoplist;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,6 +25,14 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mSettings;
     private ArrayList<NoteClass> shoplist = new ArrayList<>();
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.shop_list_menu, menu);
+        setTitle(R.string.title);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
