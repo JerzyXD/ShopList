@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.R;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.zip.Inflater;
 public class ShopListAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<String> arrayList;
+    ArrayList<NoteClass> arrayList;
     private LayoutInflater lInflater;
 
     public ShopListAdapter(Context context, ArrayList arrayList) {
@@ -47,8 +49,12 @@ public class ShopListAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.item_list_element, viewGroup, false);
         }
-        TextView output = view.findViewById(R.id.textView);
-        output.setText(arrayList.get(i));
+
+        ((TextView) view.findViewById(R.id.type)).setText(arrayList.get(i).getType());
+        ((TextView) view.findViewById(R.id.date)).setText(arrayList.get(i).getDate());
+        ((TextView) view.findViewById(R.id.text)).setText(arrayList.get(i).getText());
+        ((CheckBox) view.findViewById(R.id.checkbox)).setChecked(arrayList.get(i).getChecked());
+
         return view;
     }
 }
