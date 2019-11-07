@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#BD183A</color>
     <color name="colorPrimaryDark">#9D0C2B</color>
-    <color name="colorAccent">#FEB741</color>
+    <color name="colorAccent">#D9573D</color>
+    <color name="yellow">#FEB741</color>
     <color name="back">#191919</color>
     <color name="listItemBack">#2D2D2D</color>
 </resources>
