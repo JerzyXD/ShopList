@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Список покупок</string>
+    <string name="app_name">Shop list</string>
+
+    <string name="title">Список покупок</string>
 </resources>

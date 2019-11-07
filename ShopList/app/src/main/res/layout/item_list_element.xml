@@ -18,16 +18,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <Button
                 android:id="@+id/type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:background="@color/colorPrimary"
                 android:padding="10dp"
+                android:textAllCaps="false"
                 android:textSize="20dp"
                 android:text="Продукты"
+                android:gravity="left"
                 android:drawableTint="@android:color/white"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:drawableRight="@drawable/ic_create_24px" />
 
             <LinearLayout
