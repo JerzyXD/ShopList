@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         mSettings = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
         shoplist.clear();
 
-        shoplist.add(new NoteClass("Хлеб", "07.11.2019", "Продукты"));
+        shoplist.add(new NoteClass("Хлеб", "Продукты"));
 
         ListView listView = findViewById(R.id.shop_list);
         ShopListAdapter adapter = new ShopListAdapter(this, shoplist);

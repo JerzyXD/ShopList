@@ -7,9 +7,9 @@ public class NoteClass {
     private String date;
     private String type;
 
-    public NoteClass (String text, String date, String type) {
+    public NoteClass (String text, String type) {
 
-        this.date = date;
+        this.date = "--.--.--";
         this.text = text;
         this.type = type;
         this.checked = false;
