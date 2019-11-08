@@ -5,6 +5,10 @@ import java.util.Calendar;
 
 public class NoteClass {
 
+    //Список типов покупок.
+    public static final String[] TYPE_LIST_ITEM = {"Продукты", "Одежда", "Электроника", "Канцелярия"
+                                            , "Прочее"};
+
     private boolean checked;
     private String text;
     private String date;

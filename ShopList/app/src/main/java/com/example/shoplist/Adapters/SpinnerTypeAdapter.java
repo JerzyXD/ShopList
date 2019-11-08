@@ -14,13 +14,12 @@ import com.example.shoplist.R;
 
 import java.util.ArrayList;
 
-public class ShopListAdapter extends BaseAdapter {
-
+public class SpinnerTypeAdapter extends BaseAdapter {
     Context context;
-    ArrayList<NoteClass> arrayList;
+    String[] arrayList;
     private LayoutInflater lInflater;
 
-    public ShopListAdapter(Context context, ArrayList arrayList) {
+    public SpinnerTypeAdapter(Context context, String[] arrayList) {
 
         this.context = context;
         this.arrayList = arrayList;
@@ -30,12 +29,12 @@ public class ShopListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return arrayList.size();
+        return arrayList.length;
     }
 
     @Override
     public Object getItem(int i) {
-        return arrayList.get(i);
+        return arrayList[i];
     }
 
     @Override
@@ -47,21 +46,10 @@ public class ShopListAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         View view = convertView;
         if (view == null) {
-            view = lInflater.inflate(R.layout.item_list_element, viewGroup, false);
+            view = lInflater.inflate(R.layout.item_spinner_type, viewGroup, false);
         }
 
-        ((TextView) view.findViewById(R.id.type)).setText(arrayList.get(i).getType());
-        ((TextView) view.findViewById(R.id.date)).setText(arrayList.get(i).getDate());
-        ((TextView) view.findViewById(R.id.text)).setText(arrayList.get(i).getText());
-
-        CheckBox checkBox = view.findViewById(R.id.checkbox);
-        checkBox.setChecked(arrayList.get(i).getChecked());
-        checkBox.setOnCheckedChangeListener((v, b) -> {
-            arrayList.get(i).setChecked(b);
-            ((MainActivity) context).saveList();
-        });
-
-        //TODO определить нажатие на заголовок заметки.
+        ((TextView) view.findViewById(R.id.textView)).setText(arrayList[i]);
 
         return view;
     }
