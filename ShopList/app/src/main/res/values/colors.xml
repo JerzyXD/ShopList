@@ -6,4 +6,7 @@
     <color name="yellow">#FEB741</color>
     <color name="back">#191919</color>
     <color name="listItemBack">#2D2D2D</color>
+    <color name="grey">#797979</color>
+
+    <color name="none">#002D2D2D</color>
 </resources>

@@ -19,6 +19,7 @@ import android.widget.ListView;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -44,9 +45,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
             case R.id.addButton:
-                shopList.add(new NoteClass("Хлеб", "Продукты"));
-                if (adapter != null)
-                    adapter.notifyDataSetChanged();
+                CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(this, shopList);
+                dialog.show(getSupportFragmentManager(), "tag");
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -57,16 +57,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mSettings = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
-        shopList.clear();
 
-        shopList.add(new NoteClass("Хлеб", "Продукты"));
+        //shopList.clear();
+        //shopList.add(new NoteClass("Хлеб", "Продукты"));
 
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);
 
         Gson gson = new Gson();
-        String json = mSettings.getString("list","") ;
+        String json = mSettings.getString("listNote","") ;
         if (json.length() != 0) {
             try {
                 for (NoteClass noteClass : gson.fromJson(json, NoteClass[].class)) {
@@ -76,8 +76,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Переопределение кнопки назад чтоб
+     * не попасть обратно на сплэш.
+     */
     @Override
     public void onBackPressed() {
 
+    }
+
+    /**
+     * Сохранение списка покупок.
+     */
+    public void saveList() {
+        mSettings.edit()
+                .putString("listNote", new Gson().toJson(shopList))
+                .apply();
+    }
+
+    /**
+     * Обновление данных адатера.
+     */
+    public void udateAdapterData() {
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 }
