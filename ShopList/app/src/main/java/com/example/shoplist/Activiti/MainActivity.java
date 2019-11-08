@@ -1,4 +1,4 @@
-package com.example.shoplist;
+package com.example.shoplist.Activiti;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,14 +17,16 @@ import android.widget.ListView;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.R;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mSettings;
-    private ArrayList<NoteClass> shoplist = new ArrayList<>();
+    private ArrayList<NoteClass> shopList = new ArrayList<>();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -39,26 +41,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mSettings = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
-        shoplist.clear();
+        shopList.clear();
 
-        shoplist.add(new NoteClass("Хлеб", "Продукты"));
+        shopList.add(new NoteClass("Хлеб", "Продукты"));
 
         ListView listView = findViewById(R.id.shop_list);
-        ShopListAdapter adapter = new ShopListAdapter(this, shoplist);
+        ShopListAdapter adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);
 
         Gson gson = new Gson();
         String json = mSettings.getString("list","") ;
         if (json.length() != 0) {
-
-            for (NoteClass noteClass : gson.fromJson(json, NoteClass[].class)) {
-
-                shoplist.add(noteClass);
-
-            }
-
+            try {
+                for (NoteClass noteClass : gson.fromJson(json, NoteClass[].class)) {
+                    shopList.add(noteClass);
+                }
+            } catch (JsonSyntaxException ex) {}
         }
+    }
 
+    @Override
+    public void onBackPressed() {
 
     }
 }
