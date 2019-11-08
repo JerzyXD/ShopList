@@ -1,5 +1,6 @@
 package com.example.shoplist.Activiti;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -8,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -63,5 +65,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item ) {
+        switch (item.getItemId()) {
+            case R.id.addButton:
+                shopList.add(new NoteClass("Хлеб", "Продукты"));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,5 +1,8 @@
 package com.example.shoplist.Classes;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class NoteClass {
 
     private boolean checked;
@@ -9,7 +12,7 @@ public class NoteClass {
 
     public NoteClass (String text, String type) {
 
-        this.date = "--.--.--";
+        this.date = new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
         this.text = text;
         this.type = type;
         this.checked = false;
