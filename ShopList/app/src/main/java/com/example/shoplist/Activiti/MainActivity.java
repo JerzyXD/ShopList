@@ -29,13 +29,27 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mSettings;
     private ArrayList<NoteClass> shopList = new ArrayList<>();
+    private ShopListAdapter adapter;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.shop_list_menu, menu);
+        super.onCreateOptionsMenu(menu);
         setTitle(R.string.title);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item ) {
+        switch (item.getItemId()) {
+            case R.id.addButton:
+                shopList.add(new NoteClass("Хлеб", "Продукты"));
+                if (adapter != null)
+                    adapter.notifyDataSetChanged();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -48,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         shopList.add(new NoteClass("Хлеб", "Продукты"));
 
         ListView listView = findViewById(R.id.shop_list);
-        ShopListAdapter adapter = new ShopListAdapter(this, shopList);
+        adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);
 
         Gson gson = new Gson();
@@ -65,15 +79,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected( MenuItem item ) {
-        switch (item.getItemId()) {
-            case R.id.addButton:
-                shopList.add(new NoteClass("Хлеб", "Продукты"));
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
