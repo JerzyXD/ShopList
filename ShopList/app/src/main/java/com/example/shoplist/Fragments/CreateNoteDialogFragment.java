@@ -8,8 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.example.shoplist.Activiti.MainActivity;
 import com.example.shoplist.Adapters.SpinnerTypeAdapter;
 import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.R;
@@ -37,6 +41,19 @@ public class CreateNoteDialogFragment extends DialogFragment {
         Spinner spinner = v.findViewById(R.id.spinner);
         spinner.setAdapter(new SpinnerTypeAdapter(context, NoteClass.TYPE_LIST_ITEM));
 
+        Button saveButton = v.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(view -> {
+            EditText text = v.findViewById(R.id.text);
+            String type = NoteClass.TYPE_LIST_ITEM[(int) spinner.getSelectedItemId()];
+            String input = text.getText().toString();
+            NoteClass note = new NoteClass(input,type);
+            list.add(note);
+            ((MainActivity) context).updateAdapterData();
+            ((MainActivity) context).saveList();
+        });
+
         return v;
     }
+
+
 }
