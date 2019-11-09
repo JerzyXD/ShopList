@@ -19,4 +19,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="30dp"
+        android:translationZ="4dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_margin="10dp">
+
+        <ImageButton
+            android:id="@+id/filterButton"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tint="@android:color/white"
+            android:src="@drawable/ic_filter_list_24px"
+            android:background="@color/none"/>
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

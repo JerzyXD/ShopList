@@ -64,16 +64,38 @@
             android:gravity="bottom"
             android:background="@color/listItemBack">
 
-            <Button
-                android:id="@+id/save_button"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Сохранить"
-                android:layout_gravity="right"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:background="@color/none"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:layout_gravity="right">
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Удалить "
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="right"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/holo_red_light"
+                    android:background="@color/none"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:drawableRight="@drawable/ic_block_24px"
+                    android:drawableTint="@android:color/holo_red_light"/>
+                <Button
+                    android:id="@+id/save_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Сохранить "
+                    android:layout_gravity="right"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:background="@color/none"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:drawableRight="@drawable/ic_archive_24px"
+                    android:drawableTint="@android:color/white"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

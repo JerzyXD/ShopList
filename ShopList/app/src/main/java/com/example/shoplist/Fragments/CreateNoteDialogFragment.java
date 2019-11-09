@@ -65,10 +65,10 @@ public class CreateNoteDialogFragment extends DialogFragment {
         });
 
         Button saveButton = v.findViewById(R.id.save_button);
-
-
+        Button deleteButton = v.findViewById(R.id.delete_button);
 
         if (note !=  null) {
+            deleteButton.setVisibility(View.VISIBLE);
             EditText text = v.findViewById(R.id.text);
             text.setText(note.getText());
             spinner.setSelection(Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(note.getType()));
@@ -81,7 +81,12 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 ((MainActivity) context).saveList();
                 dismiss();
             });
-
+            deleteButton.setOnClickListener(view -> {
+                list.remove(note);
+                ((MainActivity) context).updateAdapterData();
+                ((MainActivity) context).saveList();
+                dismiss();
+            });
         }else {
             saveButton.setOnClickListener(view -> {
                 EditText text = v.findViewById(R.id.text);
