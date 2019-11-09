@@ -15,6 +15,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
@@ -70,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (JsonSyntaxException ex) {}
         }
+
+        ImageButton button = findViewById(R.id.filterButton);
+        button.setOnClickListener(view -> {
+
+        });
     }
 
     /**
