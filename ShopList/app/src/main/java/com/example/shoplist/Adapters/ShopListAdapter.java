@@ -65,19 +65,10 @@ public class ShopListAdapter extends BaseAdapter {
         });
 
         Button typeButton = view.findViewById(R.id.type);
-        /*
-            typeButton.setOnClickListener( v -> {
-            ((MainActivity) context).createDialog();
-            EditText text = v.findViewById(R.id.text);
-            String type = NoteClass.TYPE_LIST_ITEM[1];
-            String input = text.getText().toString();
-            NoteClass note = new NoteClass(type,input);
-            ((MainActivity) context).updateAdapterData();
-            ((MainActivity) context).saveList();
-        });
-        Дописать функционал кнопке
-         */
+        typeButton.setOnClickListener( l -> {
+            ((MainActivity) context).createDialog(arrayList.get(i));
 
+        });
 
         //TODO определить нажатие на заголовок заметки.
 

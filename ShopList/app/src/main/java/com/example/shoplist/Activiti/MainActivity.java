@@ -106,4 +106,9 @@ public class MainActivity extends AppCompatActivity {
         CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(this, shopList);
         dialog.show(getSupportFragmentManager(), "tag");
     }
+
+    public void createDialog(NoteClass note) {
+        CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(note,this, shopList);
+        dialog.show(getSupportFragmentManager(), "tag");
+    }
 }

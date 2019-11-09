@@ -20,6 +20,7 @@ import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -28,8 +29,16 @@ public class CreateNoteDialogFragment extends DialogFragment {
     private Context context;
     private ArrayList<NoteClass> list;
     private int id;
+    private NoteClass note;
 
     public CreateNoteDialogFragment(Context context, ArrayList list) {
+        this.context = context;
+        this.list = list;
+        this.id = 0;
+    }
+
+    public CreateNoteDialogFragment(NoteClass note, Context context, ArrayList list) {
+        this.note = note;
         this.context = context;
         this.list = list;
         this.id = 0;
@@ -56,16 +65,36 @@ public class CreateNoteDialogFragment extends DialogFragment {
         });
 
         Button saveButton = v.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(view -> {
+
+
+
+        if (note !=  null) {
             EditText text = v.findViewById(R.id.text);
-            String type = NoteClass.TYPE_LIST_ITEM[id];
-            String input = text.getText().toString();
-            NoteClass note = new NoteClass(input,type);
-            list.add(0, note);
-            ((MainActivity) context).updateAdapterData();
-            ((MainActivity) context).saveList();
-            dismiss();
-        });
+            text.setText(note.getText());
+            spinner.setSelection(Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(note.getType()));
+            saveButton.setOnClickListener(view -> {
+                String type = NoteClass.TYPE_LIST_ITEM[id];
+                String input = text.getText().toString();
+                note.setType(type);
+                note.setText(input);
+                ((MainActivity) context).updateAdapterData();
+                ((MainActivity) context).saveList();
+                dismiss();
+            });
+
+        }else {
+            saveButton.setOnClickListener(view -> {
+                EditText text = v.findViewById(R.id.text);
+                String type = NoteClass.TYPE_LIST_ITEM[id];
+                String input = text.getText().toString();
+                NoteClass note = new NoteClass(input,type);
+                list.add(0, note);
+                ((MainActivity) context).updateAdapterData();
+                ((MainActivity) context).saveList();
+                dismiss();
+            });
+        }
+
 
         return v;
     }
