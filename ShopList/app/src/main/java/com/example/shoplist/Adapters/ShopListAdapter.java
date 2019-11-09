@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.shoplist.Activiti.MainActivity;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.R;
 
 import java.util.ArrayList;
@@ -59,6 +62,12 @@ public class ShopListAdapter extends BaseAdapter {
         checkBox.setOnCheckedChangeListener((v, b) -> {
             arrayList.get(i).setChecked(b);
             ((MainActivity) context).saveList();
+        });
+
+        Button typeButton = view.findViewById(R.id.type);
+        typeButton.setOnClickListener( l -> {
+            ((MainActivity) context).createDialog(arrayList.get(i));
+
         });
 
         //TODO определить нажатие на заголовок заметки.
