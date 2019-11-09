@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Обновление данных адатера.
      */
-    public void udateAdapterData() {
+    public void updateAdapterData() {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
