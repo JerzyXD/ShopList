@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,10 +27,12 @@ public class CreateNoteDialogFragment extends DialogFragment {
 
     private Context context;
     private ArrayList<NoteClass> list;
+    private int id;
 
     public CreateNoteDialogFragment(Context context, ArrayList list) {
         this.context = context;
         this.list = list;
+        this.id = 0;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,16 +43,28 @@ public class CreateNoteDialogFragment extends DialogFragment {
 
         Spinner spinner = v.findViewById(R.id.spinner);
         spinner.setAdapter(new SpinnerTypeAdapter(context, NoteClass.TYPE_LIST_ITEM));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                id = i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         Button saveButton = v.findViewById(R.id.save_button);
         saveButton.setOnClickListener(view -> {
             EditText text = v.findViewById(R.id.text);
-            String type = NoteClass.TYPE_LIST_ITEM[(int) spinner.getSelectedItemId()];
+            String type = NoteClass.TYPE_LIST_ITEM[id];
             String input = text.getText().toString();
             NoteClass note = new NoteClass(input,type);
-            list.add(note);
+            list.add(0, note);
             ((MainActivity) context).updateAdapterData();
             ((MainActivity) context).saveList();
+            dismiss();
         });
 
         return v;

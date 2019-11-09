@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
             case R.id.addButton:
-                CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(this, shopList);
-                dialog.show(getSupportFragmentManager(), "tag");
+                createDialog();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -57,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mSettings = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
-
-        //shopList.clear();
-        //shopList.add(new NoteClass("Хлеб", "Продукты"));
 
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
@@ -101,5 +97,13 @@ public class MainActivity extends AppCompatActivity {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
+    }
+
+    /**
+     * Открытие диалога для создания заметки.
+     */
+    public void createDialog() {
+        CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(this, shopList);
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 }
