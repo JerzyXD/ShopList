@@ -71,6 +71,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
             deleteButton.setVisibility(View.VISIBLE);
             EditText text = v.findViewById(R.id.text);
             text.setText(note.getText());
+            ((TextView) v.findViewById(R.id.titleText)).setText("Редактирование замеки");
             spinner.setSelection(Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(note.getType()));
             saveButton.setOnClickListener(view -> {
                 String type = NoteClass.TYPE_LIST_ITEM[id];
