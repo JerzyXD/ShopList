@@ -1,6 +1,7 @@
 package com.example.shoplist.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,9 @@ import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ShopListAdapter extends BaseAdapter {
 
@@ -53,7 +56,12 @@ public class ShopListAdapter extends BaseAdapter {
             view = lInflater.inflate(R.layout.item_list_element, viewGroup, false);
         }
 
-        ((TextView) view.findViewById(R.id.type)).setText(arrayList.get(i).getType());
+        Button button = view.findViewById(R.id.type);
+        button.setText(arrayList.get(i).getType());
+        button.setBackgroundColor(getTitleColor(
+                Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(arrayList.get(i).getType()),
+                NoteClass.TYPE_LIST_ITEM.length));
+
         ((TextView) view.findViewById(R.id.date)).setText(arrayList.get(i).getDate());
         ((TextView) view.findViewById(R.id.text)).setText(arrayList.get(i).getText());
 
@@ -67,11 +75,22 @@ public class ShopListAdapter extends BaseAdapter {
         Button typeButton = view.findViewById(R.id.type);
         typeButton.setOnClickListener( l -> {
             ((MainActivity) context).createDialog(arrayList.get(i));
-
         });
 
-        //TODO определить нажатие на заголовок заметки.
-
         return view;
+    }
+
+    /**
+     * Определение фона заголовка заметки.
+     * (Просто красиво)
+     */
+    private int getTitleColor(int id, int summ) {
+        int color1 = context.getResources().getColor(R.color.colorPrimary);
+        int color2 = context.getResources().getColor(R.color.yellow);
+
+        /*
+        return color1 > color2 ? color2 : color1 +
+                Math.abs(color2 - color1)*id/summ; */
+        return color1;
     }
 }
