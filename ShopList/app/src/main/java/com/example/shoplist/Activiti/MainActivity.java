@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton button = findViewById(R.id.filterButton);
         button.setOnClickListener(view -> {
-
+            //TODO создать диалог
         });
     }
 
