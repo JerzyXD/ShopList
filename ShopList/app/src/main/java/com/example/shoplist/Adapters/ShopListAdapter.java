@@ -22,6 +22,7 @@ import java.util.Arrays;
 
 public class ShopListAdapter extends BaseAdapter {
 
+    View view;
     Context context;
     ArrayList<NoteClass> arrayList;
     private LayoutInflater lInflater;
@@ -51,7 +52,7 @@ public class ShopListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
-        View view = convertView;
+        view = convertView;
         if (view == null) {
             view = lInflater.inflate(R.layout.item_list_element, viewGroup, false);
         }
@@ -66,11 +67,13 @@ public class ShopListAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.text)).setText(arrayList.get(i).getText());
 
         CheckBox checkBox = view.findViewById(R.id.checkbox);
-        checkBox.setChecked(arrayList.get(i).getChecked());
         checkBox.setOnCheckedChangeListener((v, b) -> {
             arrayList.get(i).setChecked(b);
+            ((MainActivity) context).updateAdapterData();
             ((MainActivity) context).saveList();
         });
+
+        checkBox.setChecked(arrayList.get(i).getChecked());
 
         Button typeButton = view.findViewById(R.id.type);
         typeButton.setOnClickListener( l -> {
