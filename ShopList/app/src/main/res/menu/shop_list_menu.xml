@@ -8,4 +8,11 @@
         app:showAsAction="always">
 
     </item>
+
+    <item android:id="@+id/menuButton"
+        android:icon="@drawable/baseline_more_vert_black_24dp"
+        app:iconTint="@android:color/white"
+        android:title=""
+        app:showAsAction="always">
+    </item>
 </menu>

@@ -74,7 +74,7 @@ public class ShopListAdapter extends BaseAdapter {
         });
 
         checkBox.setChecked(arrayList.get(i).getChecked());
-        
+
         Button typeButton = view.findViewById(R.id.type);
         typeButton.setOnClickListener( l -> {
             ((MainActivity) context).createDialog(arrayList.get(i));
