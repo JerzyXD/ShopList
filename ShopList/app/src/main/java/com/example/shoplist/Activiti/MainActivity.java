@@ -71,11 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (JsonSyntaxException ex) {}
         }
-
-        ImageButton button = findViewById(R.id.filterButton);
-        button.setOnClickListener(view -> {
-            //TODO создать диалог
-        });
     }
 
     /**
