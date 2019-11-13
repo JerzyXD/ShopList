@@ -65,6 +65,8 @@ public class ShopListAdapter extends BaseAdapter {
 
         ((TextView) view.findViewById(R.id.date)).setText(arrayList.get(i).getDate());
         ((TextView) view.findViewById(R.id.text)).setText(arrayList.get(i).getText());
+        ((TextView) view.findViewById(R.id.textInfo)).setText((arrayList.get(i).getAmount())
+                + " " + arrayList.get(i).getUnits());
 
         CheckBox checkBox = view.findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener((v, b) -> {
