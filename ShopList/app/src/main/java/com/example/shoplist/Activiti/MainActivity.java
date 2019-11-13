@@ -21,6 +21,7 @@ import android.widget.ListView;
 import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
+import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -47,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.addButton:
                 createDialog();
+                break;
+            case R.id.menuFilter:
+                FilterDialogFragment dialog = new FilterDialogFragment(this, shopList);
+                dialog.show(getSupportFragmentManager(), "tag");
+                break;
+            case R.id.menuSetting:
+                //TODO создать переход к настройкам тут (если они вообще будут).
                 break;
         }
         return super.onOptionsItemSelected(item);
