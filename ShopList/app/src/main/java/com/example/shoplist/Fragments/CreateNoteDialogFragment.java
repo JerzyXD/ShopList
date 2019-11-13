@@ -1,6 +1,7 @@
 package com.example.shoplist.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -62,6 +63,15 @@ public class CreateNoteDialogFragment extends DialogFragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+        });
+
+        v.findViewById(R.id.add).setOnClickListener(view -> {
+            TextView text = v.findViewById(R.id.textCol);
+            text.setText(Integer.toString(Integer.parseInt(text.getText().toString()) + 1));
+        });
+        v.findViewById(R.id.remove).setOnClickListener(view -> {
+            TextView text = v.findViewById(R.id.textCol);
+            text.setText(Integer.toString(Integer.parseInt(text.getText().toString()) - 1));
         });
 
         Button saveButton = v.findViewById(R.id.save_button);
