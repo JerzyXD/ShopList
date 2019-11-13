@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mSettings;
     private ArrayList<NoteClass> shopList = new ArrayList<>();
+    private ArrayList<NoteClass> startList = new ArrayList<>();
     private ShopListAdapter adapter;
 
     @Override
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (JsonSyntaxException ex) {}
         }
+        startList.addAll(shopList);
     }
 
     /**
