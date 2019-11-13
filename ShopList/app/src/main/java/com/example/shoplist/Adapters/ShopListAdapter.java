@@ -87,13 +87,13 @@ public class ShopListAdapter extends BaseAdapter {
      * Определение фона заголовка заметки.
      * (Просто красиво)
      */
-    private int getTitleColor(int id, int summ) {
+    private int getTitleColor(int id, int sum) {
         int color1 = context.getResources().getColor(R.color.colorPrimary);
         int color2 = context.getResources().getColor(R.color.yellow);
 
         /*
         return color1 > color2 ? color2 : color1 +
-                Math.abs(color2 - color1)*id/summ; */
+                Math.abs(color2 - color1)*id/sum; */
         return color1;
     }
 }
