@@ -13,6 +13,8 @@ public class NoteClass {
     private String text;
     private String date;
     private String type;
+    private float amount;
+    private String units;
 
     public NoteClass (String text, String type) {
 
@@ -20,6 +22,8 @@ public class NoteClass {
         this.text = text;
         this.type = type;
         this.checked = false;
+        this.amount = amount;
+        this.units = units;
 
     }
 
@@ -40,6 +44,15 @@ public class NoteClass {
         return checked;
     }
 
+    public float getAmount() {
+        return amount;
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+
     public void setDate(String date) {
         this.date = date;
     }
@@ -54,5 +67,13 @@ public class NoteClass {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
     }
 }

@@ -66,17 +66,16 @@ public class CreateNoteDialogFragment extends DialogFragment {
 
         Button saveButton = v.findViewById(R.id.save_button);
         Button deleteButton = v.findViewById(R.id.delete_button);
-        String type = NoteClass.TYPE_LIST_ITEM[id];
-        EditText text = v.findViewById(R.id.text);
-        String input = text.getText().toString();
-
 
         if (note !=  null) {
             deleteButton.setVisibility(View.VISIBLE);
+            EditText text = v.findViewById(R.id.text);
             text.setText(note.getText());
             ((TextView) v.findViewById(R.id.titleText)).setText("Редактирование замеки");
             spinner.setSelection(Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(note.getType()));
             saveButton.setOnClickListener(view -> {
+                String type = NoteClass.TYPE_LIST_ITEM[id];
+                String input = text.getText().toString();
                 note.setType(type);
                 note.setText(input);
                 ((MainActivity) context).updateAdapterData();
@@ -91,6 +90,9 @@ public class CreateNoteDialogFragment extends DialogFragment {
             });
         }else {
             saveButton.setOnClickListener(view -> {
+                EditText text = v.findViewById(R.id.text);
+                String type = NoteClass.TYPE_LIST_ITEM[id];
+                String input = text.getText().toString();
                 NoteClass note = new NoteClass(input,type);
                 list.add(0, note);
                 ((MainActivity) context).updateAdapterData();
