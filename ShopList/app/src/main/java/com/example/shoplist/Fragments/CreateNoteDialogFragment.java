@@ -79,15 +79,23 @@ public class CreateNoteDialogFragment extends DialogFragment {
 
         if (note !=  null) {
             deleteButton.setVisibility(View.VISIBLE);
+            TextView textAmount = v.findViewById(R.id.textCol);
+            EditText textUnits = v.findViewById(R.id.textUnits);
             EditText text = v.findViewById(R.id.text);
             text.setText(note.getText());
+            textAmount.setText(Integer.toString( note.getAmount()));
+            textUnits.setText(note.getUnits());
             ((TextView) v.findViewById(R.id.titleText)).setText("Редактирование замеки");
             spinner.setSelection(Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(note.getType()));
             saveButton.setOnClickListener(view -> {
                 String type = NoteClass.TYPE_LIST_ITEM[id];
                 String input = text.getText().toString();
+                String units = textUnits.getText().toString();
+                int amount = Integer.parseInt(textAmount.getText().toString());
                 note.setType(type);
                 note.setText(input);
+                note.setAmount(amount);
+                note.setUnits(units);
                 ((MainActivity) context).updateAdapterData();
                 ((MainActivity) context).saveList();
                 dismiss();
@@ -100,10 +108,14 @@ public class CreateNoteDialogFragment extends DialogFragment {
             });
         }else {
             saveButton.setOnClickListener(view -> {
+                TextView textAmount = v.findViewById(R.id.textCol);
+                EditText textUnits = v.findViewById(R.id.textUnits);
                 EditText text = v.findViewById(R.id.text);
                 String type = NoteClass.TYPE_LIST_ITEM[id];
+                String units = textUnits.getText().toString();
+                int amount = Integer.parseInt(textAmount.getText().toString());
                 String input = text.getText().toString();
-                NoteClass note = new NoteClass(input,type);
+                NoteClass note = new NoteClass(input,type,units,amount);
                 list.add(0, note);
                 ((MainActivity) context).updateAdapterData();
                 ((MainActivity) context).saveList();

@@ -76,7 +76,7 @@
                     android:tint="@color/colorAccent"
                     android:src="@drawable/ic_remove_24px"/>
                 <EditText
-                    android:id="@+id/edit"
+                    android:id="@+id/textUnits"
                     android:textColor="@android:color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>

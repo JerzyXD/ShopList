@@ -13,10 +13,10 @@ public class NoteClass {
     private String text;
     private String date;
     private String type;
-    private float amount;
+    private int amount;
     private String units;
 
-    public NoteClass (String text, String type) {
+    public NoteClass (String text, String type, String units, int amount) {
 
         this.date = new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
         this.text = text;
@@ -44,7 +44,7 @@ public class NoteClass {
         return checked;
     }
 
-    public float getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -69,7 +69,7 @@ public class NoteClass {
         this.checked = checked;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
