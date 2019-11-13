@@ -10,7 +10,7 @@
     </item>
 
     <item android:id="@+id/menuButton"
-        android:icon="@drawable/baseline_more_vert_black_24dp"
+        android:icon="@drawable/ic_more_vert_24px"
         app:iconTint="@android:color/white"
         android:title=""
         app:showAsAction="always">
