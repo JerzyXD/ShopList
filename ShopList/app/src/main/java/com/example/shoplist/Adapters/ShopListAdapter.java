@@ -69,8 +69,9 @@ public class ShopListAdapter extends BaseAdapter {
         if (arrayList.get(i).getAmount() != 0) {
             ((TextView) view.findViewById(R.id.textInfo)).setText((arrayList.get(i).getAmount())
                     + " " + arrayList.get(i).getUnits());
+            view.findViewById(R.id.textInfo).setVisibility(View.VISIBLE);
         } else {
-            ((TextView) view.findViewById(R.id.textInfo)).setVisibility(View.GONE);
+            view.findViewById(R.id.textInfo).setVisibility(View.GONE);
         }
 
 
