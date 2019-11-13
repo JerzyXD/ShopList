@@ -103,6 +103,7 @@ public class ShopListAdapter extends BaseAdapter {
         /*
         return color1 > color2 ? color2 : color1 +
                 Math.abs(color2 - color1)*id/sum; */
+        //TODO написать ссаные градиенты в недалеком пасмурном будущем.
         return color1;
     }
 }
