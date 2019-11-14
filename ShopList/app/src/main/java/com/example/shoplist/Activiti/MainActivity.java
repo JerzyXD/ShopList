@@ -21,6 +21,7 @@ import android.widget.ListView;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.Classes.Sorter;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
@@ -81,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (JsonSyntaxException ex) {}
         }
+
+        //TODO сортировку запилить (сложную, чтоб Юра ничего не понял)
+        Sorter sorter = new Sorter();
+        sorter.sortLisr(shopList, () -> {
+            return true;
+        });
+
         startList.addAll(shopList);
     }
 
@@ -119,8 +127,20 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
+    /**
+     * Открытие диалога для редактирования заметки.
+     * @param note
+     */
     public void createDialog(NoteClass note) {
         CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(note,this, shopList);
         dialog.show(getSupportFragmentManager(), "tag");
+    }
+
+    /**
+     * Перезапись списка заметок при отмене фильра.
+     */
+    public void reloadNoteList() {
+        shopList.clear();
+        shopList.addAll(startList);
     }
 }
