@@ -7,7 +7,12 @@ import java.util.ArrayList;
  */
 public class Sorter {
 
+    private ArrayList startList;
     private Filter f;
+
+    public Sorter(ArrayList arrayList) {
+        this.startList = arrayList;
+    }
 
     /**
      * Сортировка списка по заданному правилу.
@@ -15,11 +20,11 @@ public class Sorter {
      * @return отфильтрованный список.
      */
     public ArrayList sort(ArrayList arrayList) {
-        ArrayList list = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (f.filter(arrayList.get(i))) list.add(arrayList.get(i));
+        arrayList.clear();
+        for (int i = 0; i < startList.size(); i++) {
+            if (f.filter(startList.get(i))) arrayList.add(startList.get(i));
         }
-        return list;
+        return arrayList;
     }
 
     /**

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NoteClass> startList = new ArrayList<>();
     private ShopListAdapter adapter;
 
-    private Sorter sorter = new Sorter();
+    private Sorter sorter;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,16 +71,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (JsonSyntaxException ex) {}
         }
+        startList.addAll(shopList);
 
-        //TODO сложная сортировка которую тебе не понять (да и еще не рабочая).
-        //sorter.setFilter(obj -> true);
-        //shopList = sorter.sort(shopList);
+        //TODO сложная фильтрация которую сложно понять.
+        sorter = new Sorter(startList);
+        sorter.setFilter(obj -> true);
+        sorter.sort(shopList);
 
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);
-
-        startList.addAll(shopList);
     }
 
     /**
