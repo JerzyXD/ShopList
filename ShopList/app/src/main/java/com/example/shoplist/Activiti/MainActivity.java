@@ -1,22 +1,13 @@
 package com.example.shoplist.Activiti;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
@@ -36,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NoteClass> shopList = new ArrayList<>();
     private ArrayList<NoteClass> startList = new ArrayList<>();
     private ShopListAdapter adapter;
+
+    private Sorter sorter = new Sorter();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,10 +62,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mSettings = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
 
-        ListView listView = findViewById(R.id.shop_list);
-        adapter = new ShopListAdapter(this, shopList);
-        listView.setAdapter(adapter);
-
         Gson gson = new Gson();
         String json = mSettings.getString("listNote","") ;
         if (json.length() != 0) {
@@ -83,11 +72,13 @@ public class MainActivity extends AppCompatActivity {
             } catch (JsonSyntaxException ex) {}
         }
 
-        //TODO сортировку запилить (сложную, чтоб Юра ничего не понял)
-        Sorter sorter = new Sorter();
-        sorter.sortLisr(shopList, () -> {
-            return true;
-        });
+        //TODO сложная сортировка которую тебе не понять (да и еще не рабочая).
+        //sorter.setFilter(obj -> true);
+        //shopList = sorter.sort(shopList);
+
+        ListView listView = findViewById(R.id.shop_list);
+        adapter = new ShopListAdapter(this, shopList);
+        listView.setAdapter(adapter);
 
         startList.addAll(shopList);
     }

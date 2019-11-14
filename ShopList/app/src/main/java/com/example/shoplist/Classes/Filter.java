@@ -1,7 +1,8 @@
 package com.example.shoplist.Classes;
 
-import java.util.List;
-
+/**
+ * Фильтр для отбора элементов.
+ */
 public interface Filter {
-    public boolean filter();
+    boolean filter(Object object);
 }
