@@ -73,11 +73,6 @@ public class MainActivity extends AppCompatActivity {
         }
         startList.addAll(shopList);
 
-        //TODO сложная фильтрация которую сложно понять.
-        sorter = new Sorter(startList);
-        sorter.setFilter(obj -> true);
-        sorter.sort(shopList);
-
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);

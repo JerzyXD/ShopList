@@ -30,7 +30,7 @@ public class FilterDialogFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.dialog_fragment_filter, null);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        //TODO диалог тут делается типо.
+        
 
         return v;
     }
