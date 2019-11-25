@@ -52,6 +52,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuSetting:
                 //TODO создать переход к настройкам тут (если они вообще будут).
                 break;
+            case R.id.checkedButton:
+                boolean check = true;
+                for (int i = 0; i < shopList.size(); i++) {
+                    if (shopList.get(i).getChecked() == false) {
+                        check = false;
+                    }
+                }
+                for (int i = 0; i < shopList.size(); i++) {
+                    if (check) {
+                        shopList.get(i).setChecked(false);
+                    } else {
+                        shopList.get(i).setChecked(true);
+                    }
+                }
+                updateAdapterData();
+                saveList();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -72,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (JsonSyntaxException ex) {}
         }
         startList.addAll(shopList);
+        setSubTitle();
 
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
@@ -85,6 +103,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    private void setSubTitle() {
+        int checkedCount = 0;
+        for (NoteClass note : shopList ) {
+            if (note.getChecked()) {
+               checkedCount++;
+            }
+        }
+        getSupportActionBar().setSubtitle(checkedCount+"/"+shopList.size());
     }
 
     /**
@@ -102,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateAdapterData() {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
+            setSubTitle();
         }
     }
 

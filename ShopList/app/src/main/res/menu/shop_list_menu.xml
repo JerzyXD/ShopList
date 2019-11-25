@@ -27,6 +27,12 @@
                 android:title="Настройки"
                 app:showAsAction="always">
             </item>
+            <item android:id="@+id/checkedButton"
+                android:icon="@drawable/ic_check_box_24px"
+                app:iconTint="@color/colorPrimaryDark"
+                android:title="Отметить"
+                app:showAsAction="always">
+            </item>
         </menu>
     </item>
 </menu>
