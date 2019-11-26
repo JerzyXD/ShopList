@@ -42,6 +42,7 @@ android {
 
 
 dependencies {
+    implementation 'com.android.support:recyclerview-v7:22.2.0'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
