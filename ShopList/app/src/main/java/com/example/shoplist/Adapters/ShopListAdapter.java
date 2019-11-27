@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.shoplist.Activiti.MainActivity;
@@ -85,9 +86,11 @@ public class ShopListAdapter extends BaseAdapter {
         checkBox.setChecked(arrayList.get(i).getChecked());
 
         Button typeButton = view.findViewById(R.id.type);
-        typeButton.setOnClickListener( l -> {
+        typeButton.setOnClickListener( v -> {
             ((MainActivity) context).createDialog(arrayList.get(i));
         });
+
+
 
         return view;
     }
