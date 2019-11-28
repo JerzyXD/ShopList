@@ -1,10 +1,8 @@
 package com.example.shoplist.Activiti;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +11,6 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
-import com.example.shoplist.Adapters.TestAdapter;
 import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.Classes.Sorter;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
@@ -57,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menuSetting:
                 //TODO создать переход к настройкам тут (если они вообще будут).
-                Intent intent = new Intent(this, TestActivity.class);
-                startActivity(intent);
                 break;
             case R.id.checkedButton:
                 boolean check = true;

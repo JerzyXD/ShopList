@@ -1,7 +1,6 @@
 package com.example.shoplist.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.shoplist.Activiti.MainActivity;
-import com.example.shoplist.Activiti.TestActivity;
 import com.example.shoplist.Adapters.SpinnerTypeAdapter;
 import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.R;
@@ -66,21 +63,14 @@ public class CreateNoteDialogFragment extends DialogFragment {
             }
         });
 
-        v.findViewById(R.id.add).setOnClickListener(view -> {
-            TextView text = v.findViewById(R.id.textCol);
-            text.setText(Integer.toString(Integer.parseInt(text.getText().toString()) + 1));
-        });
-        v.findViewById(R.id.remove).setOnClickListener(view -> {
-            TextView text = v.findViewById(R.id.textCol);
-            text.setText(Integer.toString(Integer.parseInt(text.getText().toString()) - 1));
-        });
+
 
         Button saveButton = v.findViewById(R.id.save_button);
         Button deleteButton = v.findViewById(R.id.delete_button);
 
         if (note !=  null) {
             deleteButton.setVisibility(View.VISIBLE);
-            TextView textAmount = v.findViewById(R.id.textCol);
+            TextView textAmount = v.findViewById(R.id.textAmount);
             EditText textUnits = v.findViewById(R.id.textUnits);
             EditText text = v.findViewById(R.id.text);
             text.setText(note.getText());
@@ -97,35 +87,29 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 note.setText(input);
                 note.setAmount(amount);
                 note.setUnits(units);
-                //((TestActivity) context).updateAdapterData();
-                //((TestActivity) context).saveList();
                 ((MainActivity) context).updateAdapterData();
                 ((MainActivity) context).saveList();
                 dismiss();
             });
             deleteButton.setOnClickListener(view -> {
                 list.remove(note);
-                //((TestActivity) context).updateAdapterData();
-                //((TestActivity) context).saveList();
                 ((MainActivity) context).updateAdapterData();
                 ((MainActivity) context).saveList();
                 dismiss();
             });
         }else {
             saveButton.setOnClickListener(view -> {
-                TextView textAmount = v.findViewById(R.id.textCol);
+                TextView textAmount = v.findViewById(R.id.textAmount);
                 EditText textUnits = v.findViewById(R.id.textUnits);
                 EditText text = v.findViewById(R.id.text);
                 String type = NoteClass.TYPE_LIST_ITEM[id];
                 String units = textUnits.getText().toString();
-                int amount = Integer.parseInt(textAmount.getText().toString());
+                int amount = Integer.parseInt(textAmount.toString());
                 String input = text.getText().toString();
                 NoteClass note = new NoteClass(input,type,units,amount);
                 list.add(0, note);
-                //((MainActivity) context).updateAdapterData();
-                //((MainActivity) context).saveList();
-                ((TestActivity) context).updateAdapterData();
-                ((TestActivity) context).saveList();
+                ((MainActivity) context).updateAdapterData();
+                ((MainActivity) context).saveList();
                 dismiss();
             });
         }

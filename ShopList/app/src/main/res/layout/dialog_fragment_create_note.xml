@@ -52,34 +52,23 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageButton
-                    android:id="@+id/add"
-                    android:background="@color/none"
+
+                <EditText
+                    android:id="@+id/textAmount"
+                    android:inputType="numberDecimal"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:tint="@color/colorAccent"
-                    android:src="@drawable/ic_add_24px"/>
-                <TextView
-                    android:id="@+id/textCol"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="0"
-                    android:textColor="@android:color/white"
-                    android:padding="10dp"
-                    android:textSize="17dp"
-                    android:gravity="center"/>
-                <ImageButton
-                    android:id="@+id/remove"
-                    android:background="@color/none"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:tint="@color/colorAccent"
-                    android:src="@drawable/ic_remove_24px"/>
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white" />
+
                 <EditText
                     android:id="@+id/textUnits"
                     android:textColor="@android:color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
             </LinearLayout>
 
             <TextView
