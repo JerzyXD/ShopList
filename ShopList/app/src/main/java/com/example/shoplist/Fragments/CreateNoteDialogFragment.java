@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.shoplist.Activiti.MainActivity;
+import com.example.shoplist.Activiti.TestActivity;
 import com.example.shoplist.Adapters.SpinnerTypeAdapter;
 import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.R;
@@ -96,12 +97,16 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 note.setText(input);
                 note.setAmount(amount);
                 note.setUnits(units);
+                //((TestActivity) context).updateAdapterData();
+                //((TestActivity) context).saveList();
                 ((MainActivity) context).updateAdapterData();
                 ((MainActivity) context).saveList();
                 dismiss();
             });
             deleteButton.setOnClickListener(view -> {
                 list.remove(note);
+                //((TestActivity) context).updateAdapterData();
+                //((TestActivity) context).saveList();
                 ((MainActivity) context).updateAdapterData();
                 ((MainActivity) context).saveList();
                 dismiss();
@@ -117,8 +122,10 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 String input = text.getText().toString();
                 NoteClass note = new NoteClass(input,type,units,amount);
                 list.add(0, note);
-                ((MainActivity) context).updateAdapterData();
-                ((MainActivity) context).saveList();
+                //((MainActivity) context).updateAdapterData();
+                //((MainActivity) context).saveList();
+                ((TestActivity) context).updateAdapterData();
+                ((TestActivity) context).saveList();
                 dismiss();
             });
         }

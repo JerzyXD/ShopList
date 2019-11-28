@@ -36,7 +36,6 @@
                 android:drawableRight="@drawable/ic_create_24px" />
 
             <LinearLayout
-                android:id="@+id/product"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
