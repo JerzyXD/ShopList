@@ -82,7 +82,12 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 String type = NoteClass.TYPE_LIST_ITEM[id];
                 String input = text.getText().toString();
                 String units = textUnits.getText().toString();
-                int amount = Integer.parseInt(textAmount.getText().toString());
+                int amount;
+                try {
+                    amount = Integer.parseInt(textAmount.getText().toString());
+                } catch (NumberFormatException e) {
+                    amount = 0;
+                }
                 note.setType(type);
                 note.setText(input);
                 note.setAmount(amount);
@@ -104,7 +109,13 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 EditText text = v.findViewById(R.id.text);
                 String type = NoteClass.TYPE_LIST_ITEM[id];
                 String units = textUnits.getText().toString();
-                int amount = Integer.parseInt(textAmount.getText().toString());
+                int amount;
+                try {
+                     amount = Integer.parseInt(textAmount.getText().toString());
+                } catch (NumberFormatException e) {
+                    amount = 0;
+                }
+
                 String input = text.getText().toString();
                 NoteClass note = new NoteClass(input,type,units,amount);
                 list.add(0, note);
