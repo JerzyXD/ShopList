@@ -16,24 +16,24 @@
         app:cardCornerRadius="10dp">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
                 android:background="@color/colorPrimary"
-                android:padding="10dp"
-                android:textAllCaps="false"
-                android:textSize="20dp"
-                android:text="Продукты"
-                android:gravity="left"
+                android:drawableRight="@drawable/ic_create_24px"
                 android:drawableTint="@android:color/white"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:drawableRight="@drawable/ic_create_24px" />
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Продукты"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -69,6 +69,7 @@
                         android:text="8 кг"
                         android:textColor="@color/grey"
                         android:textSize="20dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -96,6 +97,7 @@
                         android:text="09.11.2019"
                         android:textColor="@color/colorAccent"
                         android:textSize="15dp" />
+
                 </LinearLayout>
             </LinearLayout>
 
