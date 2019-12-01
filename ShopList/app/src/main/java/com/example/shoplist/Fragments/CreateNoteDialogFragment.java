@@ -92,12 +92,16 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 note.setText(input);
                 note.setAmount(amount);
                 note.setUnits(units);
+                //((MainActivity) context).updateAdapterData();
+                //((MainActivity) context).saveList();
                 ((MainActivity) context).updateAdapterData();
                 ((MainActivity) context).saveList();
                 dismiss();
             });
             deleteButton.setOnClickListener(view -> {
                 list.remove(note);
+                //((MainActivity) context).updateAdapterData();
+                //((MainActivity) context).saveList();
                 ((MainActivity) context).updateAdapterData();
                 ((MainActivity) context).saveList();
                 dismiss();
@@ -119,6 +123,8 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 String input = text.getText().toString();
                 NoteClass note = new NoteClass(input,type,units,amount);
                 list.add(0, note);
+                //((MainActivity) context).updateAdapterData();
+                //((MainActivity) context).saveList();
                 ((MainActivity) context).updateAdapterData();
                 ((MainActivity) context).saveList();
                 dismiss();
