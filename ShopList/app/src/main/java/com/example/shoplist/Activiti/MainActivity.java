@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateAdapterData() {
         if (adapter != null) {
-            adapter.notifyDataSetChanged();
+            //adapter.notifyDataSetChanged();
+            adapter.notifyItemInserted(shopList.size());
             setSubTitle();
         }
     }
