@@ -1,18 +1,18 @@
 package com.example.shoplist.Activiti;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.ListView;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.Classes.Sorter;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
@@ -20,13 +20,21 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mSettings;
     private ArrayList<NoteClass> shopList = new ArrayList<>();
     private ArrayList<NoteClass> startList = new ArrayList<>();
+    private ArrayList<NoteClass> sortedList = new ArrayList<>();
     private ShopListAdapter adapter;
+
+
+    private Sorter sorter;
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -36,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.title);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
@@ -64,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 updateAdapterData();
+                saveList();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -72,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_main);
         mSettings = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
 
         Gson gson = new Gson();
@@ -86,9 +96,19 @@ public class MainActivity extends AppCompatActivity {
         }
         startList.addAll(shopList);
         setSubTitle();
-        RecyclerView recyclerView = findViewById(R.id.recycleView);
-        adapter = new ShopListAdapter(this,shopList);
-        recyclerView.setAdapter(adapter);
+
+        ListView listView = findViewById(R.id.shop_list);
+        adapter = new ShopListAdapter(this, shopList);
+        listView.setAdapter(adapter);
+    }
+
+    /**
+     * Переопределение кнопки назад чтоб
+     * не попасть обратно на сплэш.
+     */
+    @Override
+    public void onBackPressed() {
+
     }
 
     private void setSubTitle() {
@@ -101,28 +121,47 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setSubtitle(checkedCount+"/"+shopList.size());
     }
 
+    /**
+     * Сохранение списка покупок.
+     */
     public void saveList() {
         mSettings.edit()
                 .putString("listNote", new Gson().toJson(shopList))
                 .apply();
     }
 
+    /**
+     * Обновление данных адатера.
+     */
     public void updateAdapterData() {
         if (adapter != null) {
-            //adapter.notifyDataSetChanged();
-            adapter.notifyItemInserted(shopList.size());
+            adapter.notifyDataSetChanged();
             setSubTitle();
         }
     }
 
+    /**
+     * Открытие диалога для создания заметки.
+     */
     public void createDialog() {
         CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(this, shopList);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
+    /**
+     * Открытие диалога для редактирования заметки.
+     * @param note
+     */
     public void createDialog(NoteClass note) {
         CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(note,this, shopList);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
+    /**
+     * Перезапись списка заметок при отмене фильра.
+     */
+    public void reloadNoteList() {
+        shopList.clear();
+        shopList.addAll(startList);
+    }
 }
