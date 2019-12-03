@@ -80,7 +80,7 @@ public class ShopListAdapter extends BaseAdapter {
         checkBox.setOnCheckedChangeListener((v, b) -> {
             arrayList.get(i).setChecked(b);
             ((MainActivity) context).updateAdapterData();
-            ((MainActivity) context).saveList();
+            ((MainActivity) context).saveList(arrayList);
         });
 
         checkBox.setChecked(arrayList.get(i).getChecked());

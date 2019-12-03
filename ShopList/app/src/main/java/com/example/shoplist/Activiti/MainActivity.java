@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences mSettings;
     private ArrayList<NoteClass> shopList = new ArrayList<>();
     private ArrayList<NoteClass> startList = new ArrayList<>();
-    private ArrayList<NoteClass> sortedList = new ArrayList<>();
     private ShopListAdapter adapter;
 
 
@@ -57,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menuSetting:
                 //TODO создать переход к настройкам тут (если они вообще будут).
+                Collections.sort(shopList);
+                saveList(shopList);
+                updateAdapterData();
                 break;
             case R.id.checkedButton:
                 boolean check = true;
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 updateAdapterData();
-                saveList();
+                saveList(shopList);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -124,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Сохранение списка покупок.
      */
-    public void saveList() {
+    public void saveList(ArrayList<NoteClass> saveList) {
         mSettings.edit()
-                .putString("listNote", new Gson().toJson(shopList))
+                .putString("listNote", new Gson().toJson(saveList))
                 .apply();
     }
 

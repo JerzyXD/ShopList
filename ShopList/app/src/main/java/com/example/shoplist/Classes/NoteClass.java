@@ -1,9 +1,10 @@
 package com.example.shoplist.Classes;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class NoteClass {
+public class NoteClass implements Comparable<NoteClass>, Serializable {
 
     //Список типов покупок.
     public static final String[] TYPE_LIST_ITEM = {"Продукты", "Одежда", "Электроника", "Канцелярия","Медицина"
@@ -75,5 +76,20 @@ public class NoteClass {
 
     public void setUnits(String units) {
         this.units = units;
+    }
+
+    /**
+     *
+     * @param noteClass
+     * @return отсортированный arrayList
+     */
+
+    @Override
+    public int compareTo(NoteClass noteClass) {
+        int result = this.type.compareTo(noteClass.type);
+        if (result == 0) {
+            result = this.text.compareTo(noteClass.text);
+        }
+        return result ;
     }
 }
