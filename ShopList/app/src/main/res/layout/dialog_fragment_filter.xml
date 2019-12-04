@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
@@ -13,15 +15,63 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:padding="10dp"
                 android:text="Фильтр"
                 android:textColor="@android:color/white"
-                android:background="@color/colorPrimary"
-                android:textSize="20dp"
-                android:padding="10dp"/>
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/sortTypeBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="left|center_vertical"
+                    android:text="По категорям"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp" />
+
+                <Button
+                    android:id="@+id/sortAlfBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="left|center_vertical"
+                    android:text="По алфавиту"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"/>
+
+                <Button
+                    android:id="@+id/sortDateBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="left|center_vertical"
+                    android:text="По дате"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

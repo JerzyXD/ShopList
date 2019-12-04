@@ -3,8 +3,9 @@ package com.example.shoplist.Classes;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 
-public class NoteClass implements Comparable<NoteClass>, Serializable {
+public class NoteClass {
 
     //Список типов покупок.
     public static final String[] TYPE_LIST_ITEM = {"Продукты", "Одежда", "Электроника", "Канцелярия","Медицина"
@@ -78,18 +79,40 @@ public class NoteClass implements Comparable<NoteClass>, Serializable {
         this.units = units;
     }
 
+
     /**
-     *
-     * @param noteClass
-     * @return отсортированный arrayList
+     * Компараторы для каждого типа сортировки: по типпу, наименованию товара и дате
      */
 
-    @Override
-    public int compareTo(NoteClass noteClass) {
-        int result = this.type.compareTo(noteClass.type);
-        if (result == 0) {
-            result = this.text.compareTo(noteClass.text);
+    public static class TypeComparator implements Comparator<NoteClass> {
+
+        @Override
+        public int compare(NoteClass o1, NoteClass o2) {
+            int result;
+            result = o1.getType().compareTo(o2.getType());
+            if (result == 0) {
+                result = o1.getText().compareTo(o2.getText());
+            }
+            return result;
         }
-        return result ;
+    }
+
+    public static class NameComparator implements Comparator<NoteClass> {
+
+        @Override
+        public int compare(NoteClass o1, NoteClass o2) {
+            int result = o1.getText().compareTo(o2.getText());
+            return result;
+        }
+    }
+
+    public static class DateComparator implements Comparator<NoteClass> {
+
+        @Override
+        public int compare(NoteClass o1, NoteClass o2) {
+            int result;
+            result = o1.getDate().compareTo(o2.getDate());
+            return result;
+        }
     }
 }

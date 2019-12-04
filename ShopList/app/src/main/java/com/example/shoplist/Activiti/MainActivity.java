@@ -1,9 +1,11 @@
 package com.example.shoplist.Activiti;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
@@ -56,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menuSetting:
                 //TODO создать переход к настройкам тут (если они вообще будут).
-                Collections.sort(shopList);
+                Comparator<NoteClass> textComp = new NoteClass.NameComparator().thenComparing(new NoteClass.NameComparator());
+                Collections.sort(shopList, textComp);
                 saveList(shopList);
                 updateAdapterData();
                 break;
