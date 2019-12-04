@@ -59,10 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menuSetting:
                 //TODO создать переход к настройкам тут (если они вообще будут).
-                Comparator<NoteClass> textComp = new NoteClass.NameComparator().thenComparing(new NoteClass.NameComparator());
-                Collections.sort(shopList, textComp);
-                saveList(shopList);
-                updateAdapterData();
                 break;
             case R.id.checkedButton:
                 boolean check = true;
