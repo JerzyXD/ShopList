@@ -41,10 +41,12 @@ public class FilterDialogFragment extends DialogFragment {
         Comparator<NoteClass> textComp = new NoteClass.NameComparator().thenComparing(new NoteClass.NameComparator());
         Comparator<NoteClass> typeComp = new NoteClass.TypeComparator().thenComparing(new NoteClass.TypeComparator());
         Comparator<NoteClass> dateComp = new NoteClass.DateComparator().thenComparing(new NoteClass.DateComparator());
+        Comparator<NoteClass> checkComp = new NoteClass.CheckComparator().thenComparing(new NoteClass.CheckComparator());
 
         Button sortTypeBtn = v.findViewById(R.id.sortTypeBtn);
         Button sortAlfBtn = v.findViewById(R.id.sortAlfBtn);
         Button sortDateBtn = v.findViewById(R.id.sortDateBtn);
+        Button sortCheck = v.findViewById(R.id.sortCheckBtn);
 
         sortTypeBtn.setOnClickListener(view -> {
             Collections.sort(list, typeComp);
@@ -67,7 +69,15 @@ public class FilterDialogFragment extends DialogFragment {
             dismiss();
         });
 
-        
+        sortCheck.setOnClickListener(view -> {
+                Collections.sort(list,checkComp);
+                sortCheck.setText("Сначала отмеченные");
+                ((MainActivity) context).updateAdapterData();
+                ((MainActivity) context).saveList(list);
+                dismiss();
+
+        });
+
 
         return v;
     }

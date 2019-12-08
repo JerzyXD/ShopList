@@ -81,15 +81,14 @@ public class NoteClass {
 
 
     /**
-     * Компараторы для каждого типа сортировки: по типпу, наименованию товара и дате
+     * Компараторы для каждого типа сортировки: по типу, наименованию товара, дате, отмечен/неотмечен товар
      */
 
     public static class TypeComparator implements Comparator<NoteClass> {
 
         @Override
         public int compare(NoteClass o1, NoteClass o2) {
-            int result;
-            result = o1.getType().compareTo(o2.getType());
+            int result  = o1.getType().compareTo(o2.getType());
             if (result == 0) {
                 result = o1.getText().compareTo(o2.getText());
             }
@@ -110,8 +109,19 @@ public class NoteClass {
 
         @Override
         public int compare(NoteClass o1, NoteClass o2) {
-            int result;
-            result = o1.getDate().compareTo(o2.getDate());
+            int result = o1.getDate().compareTo(o2.getDate());
+            return result;
+        }
+    }
+
+    public static class CheckComparator implements Comparator<NoteClass> {
+
+        @Override
+        public int compare(NoteClass o1, NoteClass o2) {
+            int result = o1.getChecked().compareTo(o2.getChecked());
+            if (result == 0) {
+                result = o1.getText().compareTo(o2.getText());
+            }
             return result;
         }
     }
