@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "tag");
                 break;
             case R.id.menuSetting:
-                //TODO создать переход к настройкам тут (если они вообще будут).
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.checkedButton:
                 boolean check = true;
