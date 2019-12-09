@@ -33,56 +33,60 @@
                 android:orientation="vertical">
 
                 <Button
+                    style="@style/SortButton"
                     android:id="@+id/sortTypeBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/sort_button"
                     android:gravity="left|center_vertical"
                     android:text="По категорям"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
                     android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:paddingLeft="10dp"/>
 
                 <Button
+                    style="@style/SortButton"
                     android:id="@+id/sortAlfBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/sort_button"
                     android:gravity="left|center_vertical"
                     android:text="По алфавиту"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
                     android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:paddingLeft="10dp"/>
 
                 <Button
+                    style="@style/SortButton"
                     android:id="@+id/sortDateBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/sort_button"
                     android:gravity="left|center_vertical"
                     android:text="По дате"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
                     android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:paddingLeft="10dp"/>
 
                 <Button
+                    style="@style/SortButton"
                     android:id="@+id/sortCheckBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/sort_button"
                     android:gravity="left|center_vertical"
                     android:text="Сначала неотмеченные"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
                     android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:paddingLeft="10dp"/>
             </LinearLayout>
 
         </LinearLayout>
