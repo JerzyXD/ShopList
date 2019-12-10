@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/addButton"
         android:icon="@drawable/ic_add_box_24px"
@@ -33,6 +34,12 @@
                 android:title="Отметить"
                 app:showAsAction="always">
             </item>
+            <item
+                android:id="@+id/deleteButton"
+                android:title="Удалить отмеченные"
+                app:iconTint="@color/colorPrimaryDark"
+                android:icon="@drawable/ic_delete_sweep_24px"
+                app:showAsAction="always"/>
         </menu>
     </item>
 </menu>

@@ -51,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
+            case R.id.deleteButton:
+                for (int i = 0; i < shopList.size(); i++) {
+                    if (shopList.get(i).getChecked()) {
+                      shopList.remove(i);
+                    }
+                }
+                updateAdapterData();
+                saveList(shopList);
+                break;
             case R.id.addButton:
                 createDialog();
                 break;
