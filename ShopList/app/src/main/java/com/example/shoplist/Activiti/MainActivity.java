@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
             case R.id.deleteButton:
+                //TODO: сделать удаление через цикл
                 shopList.removeIf(shopList -> shopList.getChecked());
                 updateAdapterData();
                 saveList(shopList);
