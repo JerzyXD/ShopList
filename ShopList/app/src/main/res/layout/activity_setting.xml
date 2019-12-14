@@ -3,4 +3,45 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="В скором времени здесь должны появится новые функции"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:paddingLeft="10dp"
+        android:text="Связь с разработчиками" />
+
+    <TextView
+        android:id="@+id/textVk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:autoLink="web"
+        android:gravity="bottom"
+        android:paddingLeft="10dp"
+        android:text="https://vk.com/jerzyxd"
+        android:textSize="20dp"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:paddingLeft="10dp"
+        android:text="https://vk.com/seks_simvo1"
+        android:textColor="@android:color/white"
+        android:textSize="20dp" />
 </LinearLayout>

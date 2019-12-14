@@ -89,13 +89,17 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 } catch (NumberFormatException e) {
                     amount = 0;
                 }
-                note.setType(type);
-                note.setText(input);
-                note.setAmount(amount);
-                note.setUnits(units);
-                ((MainActivity) context).updateAdapterData();
-                ((MainActivity) context).saveList(list);
-                dismiss();
+                if (input.equals("")) {
+                    dismiss();
+                } else {
+                    note.setType(type);
+                    note.setText(input);
+                    note.setAmount(amount);
+                    note.setUnits(units);
+                    ((MainActivity) context).updateAdapterData();
+                    ((MainActivity) context).saveList(list);
+                    dismiss();
+                }
             });
             deleteButton.setOnClickListener(view -> {
                 list.remove(note);
@@ -116,13 +120,16 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 } catch (NumberFormatException e) {
                     amount = 0;
                 }
-
                 String input = text.getText().toString();
-                NoteClass note = new NoteClass(input,type,units,amount);
-                list.add(0, note);
-                ((MainActivity) context).updateAdapterData();
-                ((MainActivity) context).saveList(list);
-                dismiss();
+                if (input.equals("")) {
+                    dismiss();
+                } else {
+                    NoteClass note = new NoteClass(input, type, units, amount);
+                    list.add(0, note);
+                    ((MainActivity) context).updateAdapterData();
+                    ((MainActivity) context).saveList(list);
+                    dismiss();
+                }
             });
         }
 

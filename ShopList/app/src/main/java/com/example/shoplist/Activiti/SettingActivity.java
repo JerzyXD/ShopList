@@ -1,6 +1,7 @@
 package com.example.shoplist.Activiti;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.shoplist.R;
 
