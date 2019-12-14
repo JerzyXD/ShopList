@@ -52,11 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
             case R.id.deleteButton:
-                for (int i = 0; i < shopList.size(); i++) {
-                    if (shopList.get(i).getChecked()) {
-                      shopList.remove(i);
-                    }
-                }
+                shopList.removeIf(shopList -> shopList.getChecked());
                 updateAdapterData();
                 saveList(shopList);
                 break;
@@ -74,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.checkedButton:
                 boolean check = true;
                 for (int i = 0; i < shopList.size(); i++) {
-                    if (shopList.get(i).getChecked() == false) {
+                    if (!shopList.get(i).getChecked()) {
                         check = false;
                     }
                 }
