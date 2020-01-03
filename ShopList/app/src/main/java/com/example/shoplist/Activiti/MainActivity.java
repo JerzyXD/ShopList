@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    //test
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
