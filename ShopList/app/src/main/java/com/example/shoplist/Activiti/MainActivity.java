@@ -2,12 +2,19 @@ package com.example.shoplist.Activiti;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,13 +25,15 @@ import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.Classes.Sorter;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
+import com.example.shoplist.Fragments.TimeNotification;
 import com.example.shoplist.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NoteClass> shopList = new ArrayList<>();
     private ArrayList<NoteClass> startList = new ArrayList<>();
     private ShopListAdapter adapter;
+    private static final int NOTIFY_ID = 101;
+    private static String CHANNEL_ID = "ShopList channel";
+
 
 
     private Sorter sorter;
@@ -110,6 +122,63 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "My channel",
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("My channel description");
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+            channel.enableVibration(false);
+            notificationManager.createNotificationChannel(channel);
+        }
+        /*
+
+        Calendar currentTime = Calendar.getInstance();
+        Calendar notifyTime = Calendar.getInstance();
+        notifyTime.set(Calendar.HOUR_OF_DAY,18);
+        notifyTime.set(Calendar.MINUTE,0);
+        notifyTime.set(Calendar.SECOND,0);
+        System.out.println(notifyTime.getTime());
+        System.out.println(currentTime.getTime());
+
+        if (currentTime.after(notifyTime)) {
+            Intent intent = new Intent (this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "My channel",
+                        NotificationManager.IMPORTANCE_HIGH);
+                channel.setDescription("My channel description");
+                channel.enableLights(true);
+                channel.setLightColor(Color.RED);
+                channel.enableVibration(false);
+                notificationManager.createNotificationChannel(channel);
+            }
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(MainActivity.this , CHANNEL_ID)
+                            .setSmallIcon(R.drawable.ic_check_box_24px)
+                            .setAutoCancel(true)
+                            .setContentIntent(pendingIntent)
+                            .setContentTitle("Напоминание")
+                            .setContentText("Пора сходить в магазин")
+                            .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+
+            notificationManager.notify(NOTIFY_ID, builder.build());
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, notifyTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+         */
+
+
+
     }
 
     /**
@@ -119,6 +188,51 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        Intent intent = new Intent (this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "My channel",
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("My channel description");
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+            channel.enableVibration(false);
+            notificationManager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(MainActivity.this , CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_check_box_24px)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .setContentTitle("Напоминание")
+                        .setContentText("Пора сходить в магазин")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+
+        notificationManager.notify(NOTIFY_ID, builder.build());
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        Intent intent = new Intent (this, TimeNotification.class);
+        PendingIntent pendIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 0);
+        long alarmTime = calendar.getTimeInMillis();
+        if (alarmTime < System.currentTimeMillis() + 1000) {
+            alarmTime += 24 * 60 * 60 * 1000;
+        }
+        am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, AlarmManager.INTERVAL_DAY, pendIntent);
+        super.onResume();
     }
 
     private void setSubTitle() {
@@ -174,4 +288,6 @@ public class MainActivity extends AppCompatActivity {
         shopList.clear();
         shopList.addAll(startList);
     }
+
+
 }

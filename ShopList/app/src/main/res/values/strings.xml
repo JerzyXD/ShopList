@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shop list</string>
+    <string name="app_name">ShopList</string>
 
     <string name="title">Список покупок</string>
     <string name="link1"><a href="https://vk.com/jerzyxd">Воронцов Юрий</a></string>
