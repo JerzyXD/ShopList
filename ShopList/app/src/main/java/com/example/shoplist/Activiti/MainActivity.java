@@ -32,6 +32,7 @@ import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -122,24 +123,7 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "My channel",
-                    NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("My channel description");
-            channel.enableLights(true);
-            channel.setLightColor(Color.RED);
-            channel.enableVibration(false);
-            notificationManager.createNotificationChannel(channel);
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 14);
-
-
-
+        restartNotify();
 
     }
 
@@ -178,6 +162,23 @@ public class MainActivity extends AppCompatActivity {
         notificationManager.notify(NOTIFY_ID, builder.build());
 
 
+    }
+
+    private void restartNotify() {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, TimeNotification.class);
+        PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0,
+                intent, PendingIntent.FLAG_CANCEL_CURRENT );
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 0);
+        long timeToStart = calendar.getTimeInMillis();
+        if(System.currentTimeMillis() < timeToStart){
+            timeToStart += 24L * 60L * 60L * 1000; // one day
+        }
+        am.setRepeating(AlarmManager.RTC_WAKEUP, timeToStart, AlarmManager.INTERVAL_DAY, contentIntent);
     }
 
 
