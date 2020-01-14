@@ -25,7 +25,9 @@ public class TimeNotification extends BroadcastReceiver {
     }
     @Override
     public void onReceive(Context context, Intent intent) {
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent intentTL = new Intent(context, MainActivity.class);
+        PendingIntent.getActivity(context, 0, intentTL,
+                PendingIntent.FLAG_CANCEL_CURRENT);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationManager notificationManager =
