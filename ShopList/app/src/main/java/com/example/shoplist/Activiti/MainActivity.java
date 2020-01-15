@@ -134,34 +134,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent (this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "My channel",
-                    NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("My channel description");
-            channel.enableLights(true);
-            channel.setLightColor(Color.RED);
-            channel.enableVibration(false);
-            notificationManager.createNotificationChannel(channel);
-        }
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(MainActivity.this , CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_check_box_24px)
-                        .setAutoCancel(true)
-                        .setContentIntent(pendingIntent)
-                        .setContentTitle("Напоминание")
-                        .setContentText("Пора сходить в магазин")
-                        .setPriority(NotificationCompat.PRIORITY_HIGH);
-
-
-        notificationManager.notify(NOTIFY_ID, builder.build());
-
-
     }
 
     private void restartNotify() {
@@ -171,14 +143,13 @@ public class MainActivity extends AppCompatActivity {
                 intent, PendingIntent.FLAG_CANCEL_CURRENT );
 
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 18);
-        calendar.set(Calendar.MINUTE, 0);
-        long timeToStart = calendar.getTimeInMillis();
-        if(System.currentTimeMillis() < timeToStart){
-            timeToStart += 24L * 60L * 60L * 1000; // one day
-        }
-        am.setRepeating(AlarmManager.RTC_WAKEUP, timeToStart, AlarmManager.INTERVAL_DAY, contentIntent);
+        Calendar timeToStart = Calendar.getInstance();
+        timeToStart.set(Calendar.HOUR_OF_DAY, 18);
+        timeToStart.set(Calendar.MINUTE, 0);
+        Calendar now = Calendar.getInstance();
+        if(timeToStart.getTimeInMillis() < now.getTimeInMillis())
+            timeToStart.add(Calendar.DAY_OF_MONTH, 1);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, timeToStart.getTimeInMillis(), AlarmManager.INTERVAL_DAY, contentIntent);
     }
 
 

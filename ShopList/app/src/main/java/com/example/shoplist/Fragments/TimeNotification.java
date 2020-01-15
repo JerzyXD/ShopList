@@ -1,9 +1,6 @@
 package com.example.shoplist.Fragments;
 
 
-
-import android.annotation.TargetApi;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,19 +8,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
-
-
-import androidx.core.app.NotificationCompat;
 
 import com.example.shoplist.Activiti.MainActivity;
 import com.example.shoplist.R;
+
+import androidx.core.app.NotificationCompat;
 
 
 public class TimeNotification extends BroadcastReceiver {
     private static final int NOTIFY_ID = 101;
     private static String CHANNEL_ID = "ShopList channel";
-    private static final String NOTIFICATION_TAG = "Message";
 
     public TimeNotification(){
 
@@ -64,29 +58,5 @@ public class TimeNotification extends BroadcastReceiver {
         notificationManager.notify(NOTIFY_ID, builder.build());
 
     }
-
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
-    private static void notify(final Context context, final Notification notification) {
-        final NotificationManager nm = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-            nm.notify(NOTIFICATION_TAG, 0, notification);
-        } else {
-            nm.notify(NOTIFICATION_TAG.hashCode(), notification);
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
-    public static void cancel(final Context context) {
-        final NotificationManager nm = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-            nm.cancel(NOTIFICATION_TAG, 0);
-        } else {
-            nm.cancel(NOTIFICATION_TAG.hashCode());
-        }
-    }
-
-
 
 }
