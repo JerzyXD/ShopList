@@ -2,19 +2,14 @@ package com.example.shoplist.Activiti;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,16 +20,13 @@ import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.Classes.Sorter;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
-import com.example.shoplist.Fragments.TimeNotification;
+import com.example.shoplist.Notification.BroadcastNotification;
 import com.example.shoplist.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -123,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);
-        restartNotify();
+        //restartNotify();
 
     }
 
@@ -138,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void restartNotify() {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, TimeNotification.class);
+        Intent intent = new Intent(this, BroadcastNotification.class);
         PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0,
                 intent, PendingIntent.FLAG_CANCEL_CURRENT );
 

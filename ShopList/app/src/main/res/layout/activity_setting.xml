@@ -37,7 +37,7 @@
                     android:layout_gravity="center_horizontal"/>
 
                 <Switch
-                    android:id="@+id/switch1"
+                    android:id="@+id/startNotification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -47,79 +47,71 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/listItemBack"
-                        android:gravity="left"
-                        android:maxLength="50"
-                        android:textSize="20dp"
-                        android:text="Получать уведомление в 18:00. Чтобы изменить время, нажмите здесь."
-                        android:textAllCaps="false"
-                        android:paddingLeft="10dp"
-                        android:textColor="@android:color/white" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                </LinearLayout>
+                    android:background="@color/listItemBack"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:text="Получать уведомление в 18:00. Чтобы изменить время, нажмите здесь."
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp" />
 
             </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/textSetting"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:text="В скором времени здесь должны появится новые функции"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="10dp"
-        android:textSize="20dp"/>
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="10dp"
-        android:textSize="20dp"
-        android:paddingLeft="10dp"
-        android:text="Связь с разработчиками" />
+        <TextView
+            android:id="@+id/textSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:text="В скором времени здесь должны появится новые функции"
+            android:textColor="@android:color/white"
+            android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/textVk1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="bottom"
-        android:paddingLeft="10dp"
-        android:text="@string/link1"
-        android:textColor="@android:color/white"
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:text="Связь с разработчиками"
+            android:textColor="@android:color/white"
+            android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/textVk2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:text="@string/link2"
-        android:textColor="@android:color/white"
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/textVk1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="bottom"
+            android:paddingLeft="10dp"
+            android:text="@string/link1"
+            android:textColor="@android:color/white"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/textVk2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="@string/link2"
+            android:textColor="@android:color/white"
+            android:textSize="20dp" />
+    </LinearLayout>
 
 
 </LinearLayout>

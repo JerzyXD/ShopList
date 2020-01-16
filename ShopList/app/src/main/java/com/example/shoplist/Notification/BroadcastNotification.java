@@ -1,4 +1,4 @@
-package com.example.shoplist.Fragments;
+package com.example.shoplist.Notification;
 
 
 import android.app.NotificationChannel;
@@ -15,11 +15,11 @@ import com.example.shoplist.R;
 import androidx.core.app.NotificationCompat;
 
 
-public class TimeNotification extends BroadcastReceiver {
+public class BroadcastNotification extends BroadcastReceiver {
     private static final int NOTIFY_ID = 101;
     private static String CHANNEL_ID = "ShopList channel";
 
-    public TimeNotification(){
+    public BroadcastNotification(){
 
     }
     @Override
