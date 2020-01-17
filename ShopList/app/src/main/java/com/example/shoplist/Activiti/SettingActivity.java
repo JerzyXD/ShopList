@@ -1,13 +1,17 @@
 package com.example.shoplist.Activiti;
 
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
@@ -17,13 +21,15 @@ import androidx.appcompat.widget.SwitchCompat;
 
 public class SettingActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
-    private SharedPreferences mSettings;
     private Switch switchNotification;
+    Button setTimeBtn;
+    int myHour = 18;
+    int myMinute = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSettings = getSharedPreferences("SettingActivity", Context.MODE_PRIVATE);
         setContentView(R.layout.activity_setting);
         setTitle("Настройки");
         TextView vkText1 = findViewById(R.id.textVk1);
@@ -37,17 +43,21 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         switchNotification.setOnCheckedChangeListener(this);
         SharedPreferences prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
         boolean switchState = prefs.getBoolean("switchState", true);
-
         switchNotification.setChecked(switchState);
 
-    }
+        setTimeBtn = findViewById(R.id.setTimeBtn);
+        setTimeBtn.setOnClickListener(v -> {
+            //createDialog();
+        });
+
+        }
 
     @Override
     protected void onPause() {
         super.onPause();
         SharedPreferences.Editor ed = getSharedPreferences("test", Context.MODE_PRIVATE).edit();
         ed.putBoolean("switchState", switchNotification.isChecked());
-        ed.commit();
+        ed.apply();
     }
 
     @Override
@@ -58,5 +68,17 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             stopService(new Intent(this, ServiceNotification.class));
         }
     }
+
+    public void createDialog() {
+        TimePickerDialog.OnTimeSetListener myCallBack = (view, hourOfDay, minute) -> {
+            myHour = hourOfDay;
+            myMinute = minute;
+        };
+        TimePickerDialog tpd = new TimePickerDialog(this, myCallBack, myHour, myMinute, true);
+        setTimeBtn.setText("Получать уведомление в " + myHour + ":" + myMinute + "  Чтобы изменить время, нажмите здесь.");
+        tpd.show();
+    }
+
+
 
 }
