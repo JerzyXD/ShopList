@@ -37,7 +37,7 @@
                     android:layout_gravity="center_horizontal"/>
 
                 <Switch
-                    android:id="@+id/startNotification"
+                    android:id="@+id/switchNotification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
-            android:text="В скором времени здесь должны появится новые функции"
+            android:text="В скором времени здесь появятся новые функции"
             android:textColor="@android:color/white"
             android:textSize="20dp" />
 

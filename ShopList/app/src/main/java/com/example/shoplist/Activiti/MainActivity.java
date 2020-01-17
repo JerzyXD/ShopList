@@ -34,13 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NoteClass> shopList = new ArrayList<>();
     private ArrayList<NoteClass> startList = new ArrayList<>();
     private ShopListAdapter adapter;
-    private static final int NOTIFY_ID = 101;
-    private static String CHANNEL_ID = "ShopList channel";
-
-
-
     private Sorter sorter;
-
 
 
     @Override
@@ -98,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mSettings = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
+        mSettings = getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
 
         Gson gson = new Gson();
         String json = mSettings.getString("listNote","") ;
@@ -115,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);
-        //restartNotify();
 
     }
 
@@ -125,25 +118,11 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-
     }
 
-    private void restartNotify() {
-        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, BroadcastNotification.class);
-        PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0,
-                intent, PendingIntent.FLAG_CANCEL_CURRENT );
-
-
-        Calendar timeToStart = Calendar.getInstance();
-        timeToStart.set(Calendar.HOUR_OF_DAY, 18);
-        timeToStart.set(Calendar.MINUTE, 0);
-        Calendar now = Calendar.getInstance();
-        if(timeToStart.getTimeInMillis() < now.getTimeInMillis())
-            timeToStart.add(Calendar.DAY_OF_MONTH, 1);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, timeToStart.getTimeInMillis(), AlarmManager.INTERVAL_DAY, contentIntent);
-    }
-
+    /**
+     * Запись количества отмеченных товаров в subtitle
+     */
 
     private void setSubTitle() {
         int checkedCount = 0;
@@ -192,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Перезапись списка заметок при отмене фильра.
+     * Перезапись списка заметок при отмене фильтра.
      */
     public void reloadNoteList() {
         shopList.clear();

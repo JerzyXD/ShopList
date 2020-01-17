@@ -22,14 +22,17 @@ public class BroadcastNotification extends BroadcastReceiver {
     public BroadcastNotification(){
 
     }
+
+    /**
+     * Метод для создания уведомления
+     * @param context
+     * @param intent
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
 
-
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "My channel",

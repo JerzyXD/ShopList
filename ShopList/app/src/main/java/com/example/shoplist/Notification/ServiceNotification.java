@@ -21,10 +21,22 @@ public class ServiceNotification extends Service {
         return null;
     }
 
+    /**
+     * Создание сервиса
+     */
+
     public void onCreate() {
         super.onCreate();
         Log.d(LOG_TAG, "onCreate");
     }
+
+    /**
+     * Запуск сервиса, содержащего метод someTask
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     */
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "onStartCommand");
@@ -36,6 +48,10 @@ public class ServiceNotification extends Service {
         super.onDestroy();
         Log.d(LOG_TAG, "onDestroy");
     }
+
+    /**
+     * Метод для того, чтобы задать время показа уведомления
+     */
 
     void someTask() {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
