@@ -1,6 +1,5 @@
 package com.example.shoplist.Activiti;
 
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,20 +10,20 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 
 public class SettingActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     private Switch switchNotification;
+    SharedPreferences prefs;
     Button setTimeBtn;
     int myHour = 18;
     int myMinute = 0;
+
 
 
     @Override
@@ -41,13 +40,13 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
 
         switchNotification = findViewById(R.id.switchNotification);
         switchNotification.setOnCheckedChangeListener(this);
-        SharedPreferences prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
+        prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
         boolean switchState = prefs.getBoolean("switchState", true);
         switchNotification.setChecked(switchState);
 
         setTimeBtn = findViewById(R.id.setTimeBtn);
         setTimeBtn.setOnClickListener(v -> {
-            //createDialog();
+            createDialog();
         });
 
         }
@@ -73,12 +72,14 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         TimePickerDialog.OnTimeSetListener myCallBack = (view, hourOfDay, minute) -> {
             myHour = hourOfDay;
             myMinute = minute;
+            if (myMinute<9) {
+                setTimeBtn.setText("Получать уведомление в " + myHour + ":" + "0" + myMinute  + ". Чтобы изменить время, нажмите здесь.");
+            } else {
+                setTimeBtn.setText("Получать уведомление в " + myHour + ":" + myMinute + ". Чтобы изменить время, нажмите здесь.");
+            }
         };
         TimePickerDialog tpd = new TimePickerDialog(this, myCallBack, myHour, myMinute, true);
-        setTimeBtn.setText("Получать уведомление в " + myHour + ":" + myMinute + "  Чтобы изменить время, нажмите здесь.");
         tpd.show();
     }
-
-
 
 }

@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NoteClass> shopList = new ArrayList<>();
     private ArrayList<NoteClass> startList = new ArrayList<>();
     private ShopListAdapter adapter;
-    private Sorter sorter;
 
 
     @Override
