@@ -40,7 +40,7 @@ public class ServiceNotification extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "onStartCommand");
-        someTask();
+        someTask(intent);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -53,16 +53,19 @@ public class ServiceNotification extends Service {
      * Метод для того, чтобы задать время показа уведомления
      */
 
-    void someTask() {
+    void someTask(Intent intent2) {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, BroadcastNotification.class);
+        int hour = intent2.getIntExtra("hour", 18);
+        int minute = intent2.getIntExtra("minute", 0);
         PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0,
                 intent, PendingIntent.FLAG_CANCEL_CURRENT );
 
 
         Calendar timeToStart = Calendar.getInstance();
-        timeToStart.set(Calendar.HOUR_OF_DAY, 18);
-        timeToStart.set(Calendar.MINUTE, 0);
+        timeToStart.set(Calendar.HOUR_OF_DAY, hour);
+        timeToStart.set(Calendar.MINUTE, minute);
+        System.out.println(hour + " " + minute);
         Calendar now = Calendar.getInstance();
         if(timeToStart.getTimeInMillis() < now.getTimeInMillis())
             timeToStart.add(Calendar.DAY_OF_MONTH, 1);

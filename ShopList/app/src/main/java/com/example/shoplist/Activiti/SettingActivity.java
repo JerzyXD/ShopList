@@ -62,7 +62,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            startService(new Intent(this, ServiceNotification.class));
+            startService(setTime());
         } else {
             stopService(new Intent(this, ServiceNotification.class));
         }
@@ -77,9 +77,20 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             } else {
                 setTimeBtn.setText("Получать уведомление в " + myHour + ":" + myMinute + ". Чтобы изменить время, нажмите здесь.");
             }
+
+            if (switchNotification.isChecked()) {
+                stopService(new Intent(this, ServiceNotification.class));
+                startService(setTime());
+            }
         };
         TimePickerDialog tpd = new TimePickerDialog(this, myCallBack, myHour, myMinute, true);
         tpd.show();
     }
 
+    public Intent setTime() {
+        Intent intent = new Intent(this, ServiceNotification.class);
+        intent.putExtra("hour", myHour);
+        intent.putExtra("minute", myMinute);
+        return intent;
+    }
 }
