@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
+
     }
 
     /**
@@ -176,6 +177,5 @@ public class MainActivity extends AppCompatActivity {
         shopList.clear();
         shopList.addAll(startList);
     }
-
 
 }
