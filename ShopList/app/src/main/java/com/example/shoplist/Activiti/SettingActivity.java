@@ -21,9 +21,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     private Switch switchNotification;
     SharedPreferences prefs;
     Button setTimeBtn;
-    int myHour = 18;
-    int myMinute = 0;
-
+    int myHour;
+    int myMinute;
 
 
     @Override
@@ -31,6 +30,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         setTitle("Настройки");
+        prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
+
         TextView vkText1 = findViewById(R.id.textVk1);
         TextView vkText2 = findViewById(R.id.textVk2);
         if ((vkText1 != null) && (vkText2 != null) ){
@@ -38,13 +39,20 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             vkText2.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
+        myHour = prefs.getInt("hour", 18);
+        myMinute = prefs.getInt("minute", 0);
+
         switchNotification = findViewById(R.id.switchNotification);
         switchNotification.setOnCheckedChangeListener(this);
-        prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
         boolean switchState = prefs.getBoolean("switchState", true);
         switchNotification.setChecked(switchState);
 
         setTimeBtn = findViewById(R.id.setTimeBtn);
+        if (myMinute<9) {
+            setTimeBtn.setText("Получать уведомление в " + myHour + ":" + "0" + myMinute  + ". Чтобы изменить время, нажмите здесь.");
+        } else {
+            setTimeBtn.setText("Получать уведомление в " + myHour + ":" + myMinute + ". Чтобы изменить время, нажмите здесь.");
+        }
         setTimeBtn.setOnClickListener(v -> {
             createDialog();
         });
@@ -54,7 +62,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences.Editor ed = getSharedPreferences("test", Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor ed = prefs.edit();
         ed.putBoolean("switchState", switchNotification.isChecked());
         ed.apply();
     }
@@ -72,6 +80,11 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         TimePickerDialog.OnTimeSetListener myCallBack = (view, hourOfDay, minute) -> {
             myHour = hourOfDay;
             myMinute = minute;
+            SharedPreferences.Editor ed = prefs.edit();
+            ed.putInt("hour", myHour);
+            ed.putInt("minute", myMinute);
+            ed.apply();
+
             if (myMinute<9) {
                 setTimeBtn.setText("Получать уведомление в " + myHour + ":" + "0" + myMinute  + ". Чтобы изменить время, нажмите здесь.");
             } else {
