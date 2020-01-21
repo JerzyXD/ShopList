@@ -3,6 +3,9 @@ package com.example.shoplist.Adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -58,9 +61,9 @@ public class ShopListAdapter extends BaseAdapter {
             view = lInflater.inflate(R.layout.item_list_element, viewGroup, false);
         }
 
-        Button button = view.findViewById(R.id.type);
-        button.setText(arrayList.get(i).getType());
-        button.setBackgroundColor(getTitleColor(
+        Button typeButton = view.findViewById(R.id.type);
+        typeButton.setText(arrayList.get(i).getType());
+        typeButton.setBackgroundColor(getTitleColor(
                 Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(arrayList.get(i).getType()),
                 NoteClass.TYPE_LIST_ITEM.length));
 
@@ -77,15 +80,15 @@ public class ShopListAdapter extends BaseAdapter {
 
 
         CheckBox checkBox = view.findViewById(R.id.checkbox);
+
+
         checkBox.setOnCheckedChangeListener((v, b) -> {
             arrayList.get(i).setChecked(b);
             ((MainActivity) context).updateAdapterData();
             ((MainActivity) context).saveList(arrayList);
         });
-
         checkBox.setChecked(arrayList.get(i).getChecked());
 
-        Button typeButton = view.findViewById(R.id.type);
         typeButton.setOnClickListener( v -> {
             ((MainActivity) context).createDialog(arrayList.get(i));
         });

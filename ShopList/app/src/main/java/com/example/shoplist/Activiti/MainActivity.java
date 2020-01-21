@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +28,7 @@ import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NoteClass> shopList = new ArrayList<>();
     private ArrayList<NoteClass> startList = new ArrayList<>();
     private ShopListAdapter adapter;
+    private Menu menu;
 
 
     @Override
@@ -41,7 +44,20 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.shop_list_menu, menu);
         super.onCreateOptionsMenu(menu);
+        this.menu = menu;
         setTitle(R.string.title);
+
+        MenuItem checkedButton = menu.findItem(R.id.checkedButton);
+        for (int i = 0; i < shopList.size(); i++) {
+            if (!shopList.get(i).getChecked()) {
+                checkedButton.setTitle("Выделить всё");
+                checkedButton.setIcon(R.drawable.ic_check_box_24px);
+            } else {
+                checkedButton.setTitle("Убрать выделенные");
+                checkedButton.setIcon(R.drawable.ic_check_box_outline_blank_24px);
+            }
+        }
+
         return true;
     }
 
@@ -50,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
             case R.id.deleteButton:
-                //TODO: сделать удаление через цикл
-                shopList.removeIf(shopList -> shopList.getChecked());
+                shopList.removeIf(NoteClass::getChecked);
                 updateAdapterData();
                 saveList(shopList);
                 break;
@@ -73,11 +88,16 @@ public class MainActivity extends AppCompatActivity {
                         check = false;
                     }
                 }
+
                 for (int i = 0; i < shopList.size(); i++) {
                     if (check) {
                         shopList.get(i).setChecked(false);
+                        item.setTitle("Выделить всё");
+                        item.setIcon(R.drawable.ic_check_box_24px);
                     } else {
                         shopList.get(i).setChecked(true);
+                        item.setTitle("Убрать выделенные");
+                        item.setIcon(R.drawable.ic_check_box_outline_blank_24px);
                     }
                 }
                 updateAdapterData();
@@ -97,9 +117,7 @@ public class MainActivity extends AppCompatActivity {
         String json = mSettings.getString("listNote","") ;
         if (json.length() != 0) {
             try {
-                for (NoteClass noteClass : gson.fromJson(json, NoteClass[].class)) {
-                    shopList.add(noteClass);
-                }
+                Collections.addAll(shopList, gson.fromJson(json, NoteClass[].class));
             } catch (JsonSyntaxException ex) {}
         }
         startList.addAll(shopList);
@@ -108,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.shop_list);
         adapter = new ShopListAdapter(this, shopList);
         listView.setAdapter(adapter);
+
+
 
     }
 
@@ -141,6 +161,26 @@ public class MainActivity extends AppCompatActivity {
         mSettings.edit()
                 .putString("listNote", new Gson().toJson(saveList))
                 .apply();
+
+        try {
+            MenuItem checkedButton = menu.findItem(R.id.checkedButton);
+            boolean allCheck = true;
+            for (int i = 0; i < shopList.size(); i++) {
+                if (!shopList.get(i).getChecked()) {
+                    allCheck = false;
+                }
+            }
+
+            if (allCheck) {
+                checkedButton.setTitle("Убрать выделенные");
+                checkedButton.setIcon(R.drawable.ic_check_box_outline_blank_24px);
+            } else {
+                checkedButton.setTitle("Выделить всё");
+                checkedButton.setIcon(R.drawable.ic_check_box_24px);
+            }
+
+        } catch (NullPointerException ex) {}
+
     }
 
     /**
