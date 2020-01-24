@@ -2,10 +2,8 @@ package com.example.shoplist.Activiti;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,16 +16,14 @@ import android.widget.ListView;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Classes.NoteClass;
-import com.example.shoplist.Classes.Sorter;
+import com.example.shoplist.DataBase.AppDataBase;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
-import com.example.shoplist.Notification.BroadcastNotification;
 import com.example.shoplist.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NoteClass> startList = new ArrayList<>();
     private ShopListAdapter adapter;
     private Menu menu;
+    private AppDataBase database;
 
 
     @Override
@@ -111,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        database = Room.databaseBuilder(this, AppDataBase.class, "database")
+                .build();
         mSettings = getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
 
         Gson gson = new Gson();

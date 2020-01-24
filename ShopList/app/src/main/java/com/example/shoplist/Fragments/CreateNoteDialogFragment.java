@@ -17,6 +17,7 @@ import com.example.shoplist.Activiti.MainActivity;
 import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Adapters.SpinnerTypeAdapter;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.DataBase.NoteClassDao;
 import com.example.shoplist.R;
 
 import java.util.ArrayList;
@@ -125,6 +126,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     dismiss();
                 } else {
                     NoteClass note = new NoteClass(input, type, units, amount);
+                    //NoteClassDao.insert(note);
                     list.add(0, note);
                     ((MainActivity) context).updateAdapterData();
                     ((MainActivity) context).saveList(list);

@@ -1,16 +1,21 @@
 package com.example.shoplist.Classes;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class NoteClass {
 
     //Список типов покупок.
     public static final String[] TYPE_LIST_ITEM = {"Продукты", "Одежда", "Электроника", "Канцелярия","Медицина"
                                             , "Прочее"};
 
+    @PrimaryKey
+    private long id;
     private boolean checked;
     private String text;
     private String date;
@@ -54,6 +59,9 @@ public class NoteClass {
         return units;
     }
 
+    public long getId() {
+        return id;
+    }
 
     public void setDate(String date) {
         this.date = date;
@@ -77,6 +85,10 @@ public class NoteClass {
 
     public void setUnits(String units) {
         this.units = units;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
 
