@@ -18,15 +18,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 
 public class FilterDialogFragment extends DialogFragment {
     private Context context;
-    private ArrayList<NoteClass> list;
+    private List<NoteClass> list;
 
-    public FilterDialogFragment(Context context, ArrayList list) {
+    public FilterDialogFragment(Context context, List list) {
         this.context = context;
         this.list = list;
     }

@@ -2,7 +2,8 @@ package com.example.shoplist.Activiti;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +17,7 @@ import android.widget.ListView;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Classes.NoteClass;
-import com.example.shoplist.DataBase.AppDataBase;
+import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
@@ -25,15 +26,16 @@ import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mSettings;
-    private ArrayList<NoteClass> shopList = new ArrayList<>();
-    private ArrayList<NoteClass> startList = new ArrayList<>();
+    private List<NoteClass> shopList = new ArrayList<>();
+    private List<NoteClass> startList = new ArrayList<>();
     private ShopListAdapter adapter;
     private Menu menu;
-    private AppDataBase database;
+    private MyViewModel viewModel;
 
 
     @Override
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 saveList(shopList);
                 break;
             case R.id.addButton:
-                createDialog();
+                createDialog(viewModel);
                 break;
             case R.id.menuFilter:
                 FilterDialogFragment dialog = new FilterDialogFragment(this, shopList);
@@ -108,8 +110,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        database = Room.databaseBuilder(this, AppDataBase.class, "database")
-                .build();
         mSettings = getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
 
         Gson gson = new Gson();
@@ -119,14 +119,22 @@ public class MainActivity extends AppCompatActivity {
                 Collections.addAll(shopList, gson.fromJson(json, NoteClass[].class));
             } catch (JsonSyntaxException ex) {}
         }
+
         startList.addAll(shopList);
         setSubTitle();
 
         ListView listView = findViewById(R.id.shop_list);
-        adapter = new ShopListAdapter(this, shopList);
+        Context context = this;
+
+        viewModel = ViewModelProviders.of(this).get(MyViewModel.class);
+        viewModel.getAllNotes().observe(this, new Observer<List<NoteClass>>() {
+            @Override
+            public void onChanged(List<NoteClass> notes) {
+                adapter = new ShopListAdapter(context, notes, viewModel);
+            }
+        });
+
         listView.setAdapter(adapter);
-
-
 
     }
 
@@ -156,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Сохранение списка покупок.
      */
-    public void saveList(ArrayList<NoteClass> saveList) {
+    public void saveList(List<NoteClass> saveList) {
         mSettings.edit()
                 .putString("listNote", new Gson().toJson(saveList))
                 .apply();
@@ -195,8 +203,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Открытие диалога для создания заметки.
      */
-    public void createDialog() {
-        CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(this, shopList);
+    public void createDialog(MyViewModel viewModel) {
+        CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(this, shopList, viewModel);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -205,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
      * @param note
      */
     public void createDialog(NoteClass note) {
-        CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(note,this, shopList);
+        CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(note,this, shopList, viewModel);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -216,5 +224,6 @@ public class MainActivity extends AppCompatActivity {
         shopList.clear();
         shopList.addAll(startList);
     }
+
 
 }

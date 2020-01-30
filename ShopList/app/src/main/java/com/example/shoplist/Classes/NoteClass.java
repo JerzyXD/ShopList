@@ -4,19 +4,20 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "note_table")
 public class NoteClass {
 
     //Список типов покупок.
     public static final String[] TYPE_LIST_ITEM = {"Продукты", "Одежда", "Электроника", "Канцелярия","Медицина"
                                             , "Прочее"};
 
-    @PrimaryKey
-    private long id;
     private boolean checked;
+    @PrimaryKey
+    @NonNull
     private String text;
     private String date;
     private String type;
@@ -59,10 +60,6 @@ public class NoteClass {
         return units;
     }
 
-    public long getId() {
-        return id;
-    }
-
     public void setDate(String date) {
         this.date = date;
     }
@@ -85,10 +82,6 @@ public class NoteClass {
 
     public void setUnits(String units) {
         this.units = units;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
 

@@ -17,36 +17,40 @@ import android.widget.TextView;
 
 import com.example.shoplist.Activiti.MainActivity;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.R;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ShopListAdapter extends BaseAdapter {
 
     View view;
     Context context;
-    ArrayList<NoteClass> arrayList;
+    List<NoteClass> list;
     private LayoutInflater lInflater;
+    MyViewModel viewModel;
 
-    public ShopListAdapter(Context context, ArrayList arrayList) {
+    public ShopListAdapter(Context context, List list, MyViewModel viewModel) {
 
         this.context = context;
-        this.arrayList = arrayList;
+        this.list = list;
         this.lInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.viewModel = viewModel;
     }
 
     @Override
     public int getCount() {
-        return arrayList.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return arrayList.get(i);
+        return list.get(i);
     }
 
     @Override
@@ -62,17 +66,17 @@ public class ShopListAdapter extends BaseAdapter {
         }
 
         Button typeButton = view.findViewById(R.id.type);
-        typeButton.setText(arrayList.get(i).getType());
+        typeButton.setText(list.get(i).getType());
         typeButton.setBackgroundColor(getTitleColor(
-                Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(arrayList.get(i).getType()),
+                Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(list.get(i).getType()),
                 NoteClass.TYPE_LIST_ITEM.length));
 
-        ((TextView) view.findViewById(R.id.date)).setText(arrayList.get(i).getDate());
-        ((TextView) view.findViewById(R.id.text)).setText(arrayList.get(i).getText());
+        ((TextView) view.findViewById(R.id.date)).setText(list.get(i).getDate());
+        ((TextView) view.findViewById(R.id.text)).setText(list.get(i).getText());
 
-        if (arrayList.get(i).getAmount() != 0) {
-            ((TextView) view.findViewById(R.id.textInfo)).setText((arrayList.get(i).getAmount())
-                    + " " + arrayList.get(i).getUnits());
+        if (list.get(i).getAmount() != 0) {
+            ((TextView) view.findViewById(R.id.textInfo)).setText((list.get(i).getAmount())
+                    + " " + list.get(i).getUnits());
             view.findViewById(R.id.textInfo).setVisibility(View.VISIBLE);
         } else {
             view.findViewById(R.id.textInfo).setVisibility(View.GONE);
@@ -83,14 +87,15 @@ public class ShopListAdapter extends BaseAdapter {
 
 
         checkBox.setOnCheckedChangeListener((v, b) -> {
-            arrayList.get(i).setChecked(b);
+            list.get(i).setChecked(b);
             ((MainActivity) context).updateAdapterData();
-            ((MainActivity) context).saveList(arrayList);
+            ((MainActivity) context).saveList(list);
+            viewModel.update(list.get(i));
         });
-        checkBox.setChecked(arrayList.get(i).getChecked());
+        checkBox.setChecked(list.get(i).getChecked());
 
         typeButton.setOnClickListener( v -> {
-            ((MainActivity) context).createDialog(arrayList.get(i));
+            ((MainActivity) context).createDialog(list.get(i));
         });
 
 

@@ -14,35 +14,38 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.shoplist.Activiti.MainActivity;
-import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Adapters.SpinnerTypeAdapter;
 import com.example.shoplist.Classes.NoteClass;
-import com.example.shoplist.DataBase.NoteClassDao;
+import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import androidx.fragment.app.DialogFragment;
 
 public class CreateNoteDialogFragment extends DialogFragment {
 
     private Context context;
-    private ArrayList<NoteClass> list;
+    private List<NoteClass> list;
     private int id;
     private NoteClass note;
+    private MyViewModel viewModel;
 
-    public CreateNoteDialogFragment(Context context, ArrayList list) {
+    public CreateNoteDialogFragment(Context context, List list, MyViewModel viewModel ) {
         this.context = context;
         this.list = list;
         this.id = 0;
+        this.viewModel = viewModel;
     }
 
-    public CreateNoteDialogFragment(NoteClass note, Context context, ArrayList list) {
+    public CreateNoteDialogFragment(NoteClass note, Context context, List list, MyViewModel viewModel) {
         this.note = note;
         this.context = context;
         this.list = list;
         this.id = 0;
+        this.viewModel = viewModel;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,8 +68,6 @@ public class CreateNoteDialogFragment extends DialogFragment {
             }
         });
 
-
-
         Button saveButton = v.findViewById(R.id.save_button);
         Button deleteButton = v.findViewById(R.id.delete_button);
 
@@ -80,6 +81,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
             textUnits.setText(note.getUnits());
             ((TextView) v.findViewById(R.id.titleText)).setText("Редактирование замеки");
             spinner.setSelection(Arrays.asList(NoteClass.TYPE_LIST_ITEM).indexOf(note.getType()));
+
             saveButton.setOnClickListener(view -> {
                 String type = NoteClass.TYPE_LIST_ITEM[id];
                 String input = text.getText().toString();
@@ -99,6 +101,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     note.setUnits(units);
                     ((MainActivity) context).updateAdapterData();
                     ((MainActivity) context).saveList(list);
+                    viewModel.update(note);
                     dismiss();
                 }
             });
@@ -126,10 +129,10 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     dismiss();
                 } else {
                     NoteClass note = new NoteClass(input, type, units, amount);
-                    //NoteClassDao.insert(note);
                     list.add(0, note);
                     ((MainActivity) context).updateAdapterData();
                     ((MainActivity) context).saveList(list);
+                    viewModel.insert(note);
                     dismiss();
                 }
             });
