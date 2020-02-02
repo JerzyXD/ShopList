@@ -4,6 +4,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,10 +24,8 @@ import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences mSettings;
     private List<NoteClass> shopList = new ArrayList<>();
     private List<NoteClass> startList = new ArrayList<>();
-    private ShopListAdapter adapter;
     private Menu menu;
     private MyViewModel viewModel;
 
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 saveList(shopList);
                 break;
             case R.id.addButton:
-                createDialog(viewModel);
+                createDialog();
                 break;
             case R.id.menuFilter:
                 FilterDialogFragment dialog = new FilterDialogFragment(this, shopList);
@@ -112,29 +111,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mSettings = getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
 
+        RecyclerView recyclerView = findViewById(R.id.shop_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        final ShopListAdapter adapter = new ShopListAdapter();
+        recyclerView.setAdapter(adapter);
+
         Gson gson = new Gson();
+        /*
         String json = mSettings.getString("listNote","") ;
         if (json.length() != 0) {
             try {
                 Collections.addAll(shopList, gson.fromJson(json, NoteClass[].class));
             } catch (JsonSyntaxException ex) {}
         }
+         */
+
 
         startList.addAll(shopList);
-        setSubTitle();
 
-        ListView listView = findViewById(R.id.shop_list);
-        Context context = this;
+        //ListView listView = findViewById(R.id.shop_list);
+        //Context context = this;
 
         viewModel = ViewModelProviders.of(this).get(MyViewModel.class);
         viewModel.getAllNotes().observe(this, new Observer<List<NoteClass>>() {
             @Override
             public void onChanged(List<NoteClass> notes) {
-                adapter = new ShopListAdapter(context, notes, viewModel);
+                adapter.setNotes(notes);
+                setSubTitle();
             }
         });
+        //listView.setAdapter(adapter);
 
-        listView.setAdapter(adapter);
 
     }
 
@@ -194,16 +201,16 @@ public class MainActivity extends AppCompatActivity {
      * Обновление данных адатера.
      */
     public void updateAdapterData() {
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
+        //if (adapter != null) {
+           // adapter.notifyDataSetChanged();
             setSubTitle();
-        }
+
     }
 
     /**
      * Открытие диалога для создания заметки.
      */
-    public void createDialog(MyViewModel viewModel) {
+    public void createDialog() {
         CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(this, shopList, viewModel);
         dialog.show(getSupportFragmentManager(), "tag");
     }

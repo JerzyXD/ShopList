@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 
 import com.example.shoplist.Classes.NoteClass;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NoteRepository {
