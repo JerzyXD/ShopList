@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:translationZ="3dp"
         app:cardBackgroundColor="@color/listItemBack"
@@ -61,13 +61,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
+                        android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:gravity="left"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
+                        android:padding="8dp"
                         android:text="8 кг"
                         android:textColor="@color/grey"
                         android:textSize="20dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -75,28 +76,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
-                    android:gravity="right"
                     android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <CheckBox
-                        android:id="@+id/checkbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:buttonTint="@color/yellow"
-                        android:checked="true" />
+                    android:paddingTop="50dp">
 
                     <TextView
                         android:id="@+id/date"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:text="09.11.2019"
                         android:textColor="@color/colorAccent"
                         android:textSize="15dp" />
-
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

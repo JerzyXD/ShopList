@@ -11,7 +11,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {NoteClass.class}, version = 1, exportSchema = false)
+@Database(entities = {NoteClass.class}, version = 4, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
     private static AppDataBase instance;
     public abstract NoteDao noteDao();

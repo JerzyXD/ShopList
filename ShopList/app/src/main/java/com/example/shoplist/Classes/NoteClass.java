@@ -16,15 +16,16 @@ public class NoteClass {
                                             , "Прочее"};
 
     private boolean checked;
-    @PrimaryKey
-    @NonNull
     private String text;
     private String date;
     private String type;
     private int amount;
     private String units;
+    @NonNull
+    @PrimaryKey
+    private String id;
 
-    public NoteClass (String text, String type, String units, int amount) {
+    public NoteClass (String text, String type, String units, int amount, String id) {
 
         this.date = new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
         this.text = text;
@@ -32,6 +33,7 @@ public class NoteClass {
         this.checked = false;
         this.amount = amount;
         this.units = units;
+        this.id = id;
 
     }
 
@@ -60,6 +62,10 @@ public class NoteClass {
         return units;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public void setDate(String date) {
         this.date = date;
     }
@@ -84,6 +90,9 @@ public class NoteClass {
         this.units = units;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     /**
      * Компараторы для каждого типа сортировки: по типу, наименованию товара, дате, отмечен/неотмечен товар

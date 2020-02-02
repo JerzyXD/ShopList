@@ -1,9 +1,11 @@
 package com.example.shoplist.Activiti;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,15 +28,16 @@ import com.example.shoplist.R;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mSettings;
-    private List<NoteClass> shopList = new ArrayList<>();
-    private List<NoteClass> startList = new ArrayList<>();
+    private List<NoteClass> shopList;
     private Menu menu;
     private MyViewModel viewModel;
+    ShopListAdapter adapter;
 
 
     @Override
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.title);
 
         MenuItem checkedButton = menu.findItem(R.id.checkedButton);
+
+        /*
         for (int i = 0; i < shopList.size(); i++) {
             if (!shopList.get(i).getChecked()) {
                 checkedButton.setTitle("Выделить всё");
@@ -55,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 checkedButton.setIcon(R.drawable.ic_check_box_outline_blank_24px);
             }
         }
+         */
+
 
         return true;
     }
@@ -65,8 +72,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.deleteButton:
                 shopList.removeIf(NoteClass::getChecked);
-                updateAdapterData();
-                saveList(shopList);
+                //saveList(shopList);
                 break;
             case R.id.addButton:
                 createDialog();
@@ -98,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
                         item.setIcon(R.drawable.ic_check_box_outline_blank_24px);
                     }
                 }
-                updateAdapterData();
-                saveList(shopList);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -113,35 +117,28 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.shop_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        final ShopListAdapter adapter = new ShopListAdapter();
+        final ShopListAdapter adapter = new ShopListAdapter(this);
         recyclerView.setAdapter(adapter);
 
-        Gson gson = new Gson();
-        /*
-        String json = mSettings.getString("listNote","") ;
-        if (json.length() != 0) {
-            try {
-                Collections.addAll(shopList, gson.fromJson(json, NoteClass[].class));
-            } catch (JsonSyntaxException ex) {}
-        }
-         */
-
-
-        startList.addAll(shopList);
-
-        //ListView listView = findViewById(R.id.shop_list);
-        //Context context = this;
-
         viewModel = ViewModelProviders.of(this).get(MyViewModel.class);
-        viewModel.getAllNotes().observe(this, new Observer<List<NoteClass>>() {
-            @Override
-            public void onChanged(List<NoteClass> notes) {
-                adapter.setNotes(notes);
-                setSubTitle();
-            }
+        viewModel.getAllNotes().observe(this, notes -> {
+            adapter.setNotes(notes);
+            shopList = new ArrayList<>(notes);
+            setSubTitle(shopList);
         });
-        //listView.setAdapter(adapter);
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                viewModel.delete(adapter.getNotePos(viewHolder.getAdapterPosition()));
+                setSubTitle(shopList);
+            }
+        }).attachToRecyclerView(recyclerView);
 
     }
 
@@ -158,14 +155,14 @@ public class MainActivity extends AppCompatActivity {
      * Запись количества отмеченных товаров в subtitle
      */
 
-    private void setSubTitle() {
+    private void setSubTitle(List<NoteClass> notes) {
         int checkedCount = 0;
-        for (NoteClass note : shopList ) {
+        for (NoteClass note : notes ) {
             if (note.getChecked()) {
                 checkedCount++;
             }
         }
-        getSupportActionBar().setSubtitle(checkedCount+"/"+shopList.size());
+        getSupportActionBar().setSubtitle(checkedCount+"/"+notes.size());
     }
 
     /**
@@ -201,9 +198,10 @@ public class MainActivity extends AppCompatActivity {
      * Обновление данных адатера.
      */
     public void updateAdapterData() {
-        //if (adapter != null) {
-           // adapter.notifyDataSetChanged();
-            setSubTitle();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+            setSubTitle(shopList);
+        }
 
     }
 
@@ -222,14 +220,6 @@ public class MainActivity extends AppCompatActivity {
     public void createDialog(NoteClass note) {
         CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(note,this, shopList, viewModel);
         dialog.show(getSupportFragmentManager(), "tag");
-    }
-
-    /**
-     * Перезапись списка заметок при отмене фильтра.
-     */
-    public void reloadNoteList() {
-        shopList.clear();
-        shopList.addAll(startList);
     }
 
 

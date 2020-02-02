@@ -22,6 +22,7 @@ import com.example.shoplist.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -99,7 +100,6 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     note.setText(input);
                     note.setAmount(amount);
                     note.setUnits(units);
-                    ((MainActivity) context).updateAdapterData();
                     ((MainActivity) context).saveList(list);
                     viewModel.update(note);
                     dismiss();
@@ -107,8 +107,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
             });
             deleteButton.setOnClickListener(view -> {
                 list.remove(note);
-                ((MainActivity) context).updateAdapterData();
-                ((MainActivity) context).saveList(list);
+                viewModel.delete(note);
                 dismiss();
             });
         }else {
@@ -128,10 +127,10 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 if (input.equals("")) {
                     dismiss();
                 } else {
-                    NoteClass note = new NoteClass(input, type, units, amount);
+                    UUID uuid = UUID.randomUUID();
+                    String id = uuid.toString();
+                    NoteClass note = new NoteClass(input, type, units, amount, id);
                     list.add(0, note);
-                    ((MainActivity) context).updateAdapterData();
-                    ((MainActivity) context).saveList(list);
                     viewModel.insert(note);
                     dismiss();
                 }
