@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Classes.NoteClass;
@@ -26,6 +29,8 @@ import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
 import com.google.gson.Gson;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.deleteButton:
                 shopList.removeIf(NoteClass::getChecked);
-                //saveList(shopList);
                 break;
             case R.id.addButton:
                 createDialog();
@@ -124,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getAllNotes().observe(this, notes -> {
             adapter.setNotes(notes);
             shopList = new ArrayList<>(notes);
-            setSubTitle(shopList);
+            setSubTitle();
         });
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -136,9 +140,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 viewModel.delete(adapter.getNotePos(viewHolder.getAdapterPosition()));
-                setSubTitle(shopList);
+                setSubTitle();
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(note -> {
+            if (note.getChecked()) {
+                note.setChecked(false);
+                Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_LONG ).show();
+            } else {
+                note.setChecked(true);
+                Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_LONG ).show();
+            }
+            viewModel.update(note);
+            setSubTitle();
+        });
 
     }
 
@@ -155,14 +171,14 @@ public class MainActivity extends AppCompatActivity {
      * Запись количества отмеченных товаров в subtitle
      */
 
-    private void setSubTitle(List<NoteClass> notes) {
+    private void setSubTitle() {
         int checkedCount = 0;
-        for (NoteClass note : notes ) {
+        for (NoteClass note : shopList ) {
             if (note.getChecked()) {
                 checkedCount++;
             }
         }
-        getSupportActionBar().setSubtitle(checkedCount+"/"+notes.size());
+        getSupportActionBar().setSubtitle(checkedCount+"/"+shopList.size());
     }
 
     /**
@@ -200,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateAdapterData() {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
-            setSubTitle(shopList);
+            setSubTitle();
         }
 
     }

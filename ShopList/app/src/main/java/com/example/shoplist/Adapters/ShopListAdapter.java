@@ -1,6 +1,7 @@
 package com.example.shoplist.Adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopLi
 
     private List<NoteClass> notes = new ArrayList<>();
     private Context context;
+    private OnItemClickListener listener;
 
     public ShopListAdapter(Context context) {
         this.context = context;
@@ -51,6 +53,14 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopLi
         holder.type.setOnClickListener(view -> {
             ((MainActivity) context).createDialog(note);
         });
+
+        if (note.getChecked()) {
+            holder.text.setPaintFlags(holder.text.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.type.setPaintFlags(holder.type.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            holder.text.setPaintFlags(0);
+            holder.type.setPaintFlags(0);
+        }
 
     }
 
@@ -83,6 +93,25 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopLi
             type = itemView.findViewById(R.id.type);
             text = itemView.findViewById(R.id.text);
             info = itemView.findViewById(R.id.textInfo);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(notes.get(position));
+
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(NoteClass note);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }
