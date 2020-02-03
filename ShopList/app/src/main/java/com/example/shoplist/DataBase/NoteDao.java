@@ -29,4 +29,7 @@ public interface NoteDao {
 
     @Query("DELETE FROM note_table")
     void deleteAllNotes();
+
+    @Query("SELECT * FROM note_table ORDER BY type")
+    LiveData<List<NoteClass>> getAllNotes();
 }

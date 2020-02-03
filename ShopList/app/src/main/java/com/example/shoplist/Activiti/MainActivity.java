@@ -55,34 +55,37 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem checkedButton = menu.findItem(R.id.checkedButton);
 
-        /*
-        for (int i = 0; i < shopList.size(); i++) {
-            if (!shopList.get(i).getChecked()) {
-                checkedButton.setTitle("Выделить всё");
-                checkedButton.setIcon(R.drawable.ic_check_box_24px);
-            } else {
-                checkedButton.setTitle("Убрать выделенные");
-                checkedButton.setIcon(R.drawable.ic_check_box_outline_blank_24px);
+        if(shopList != null) {
+            for (int i = 0; i < adapter.getNotes().size(); i++) {
+                if (!adapter.getNotes().get(i).getChecked()) {
+                    checkedButton.setTitle("Выделить всё");
+                    checkedButton.setIcon(R.drawable.ic_check_box_24px);
+                } else {
+                    checkedButton.setTitle("Убрать выделенные");
+                    checkedButton.setIcon(R.drawable.ic_check_box_outline_blank_24px);
+                }
             }
         }
-         */
 
 
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
             case R.id.deleteButton:
-                shopList.removeIf(NoteClass::getChecked);
+                for (int i = 0; i < shopList.size(); i++) {
+                    if (shopList.get(i).getChecked()) {
+                        viewModel.delete(shopList.get(i));
+                    }
+                }
                 break;
             case R.id.addButton:
                 createDialog();
                 break;
             case R.id.menuFilter:
-                FilterDialogFragment dialog = new FilterDialogFragment(this, shopList);
+                FilterDialogFragment dialog = new FilterDialogFragment(this, shopList, viewModel);
                 dialog.show(getSupportFragmentManager(), "tag");
                 break;
             case R.id.menuSetting:
@@ -100,10 +103,12 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < shopList.size(); i++) {
                     if (check) {
                         shopList.get(i).setChecked(false);
+                        viewModel.update(shopList.get(i));
                         item.setTitle("Выделить всё");
                         item.setIcon(R.drawable.ic_check_box_24px);
                     } else {
                         shopList.get(i).setChecked(true);
+                        viewModel.update(shopList.get(i));
                         item.setTitle("Убрать выделенные");
                         item.setIcon(R.drawable.ic_check_box_outline_blank_24px);
                     }
@@ -152,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
                 note.setChecked(true);
                 Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_LONG ).show();
             }
+
+
             viewModel.update(note);
             setSubTitle();
         });

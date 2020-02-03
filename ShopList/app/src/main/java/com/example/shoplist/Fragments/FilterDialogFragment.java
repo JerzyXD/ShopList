@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.example.shoplist.Activiti.MainActivity;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.R;
 
 import java.util.ArrayList;
@@ -26,10 +27,12 @@ import androidx.fragment.app.DialogFragment;
 public class FilterDialogFragment extends DialogFragment {
     private Context context;
     private List<NoteClass> list;
+    private MyViewModel viewModel;
 
-    public FilterDialogFragment(Context context, List list) {
+    public FilterDialogFragment(Context context, List list, MyViewModel viewModel) {
         this.context = context;
         this.list = list;
+        this.viewModel = viewModel;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
