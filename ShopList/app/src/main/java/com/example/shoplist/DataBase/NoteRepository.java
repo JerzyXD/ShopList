@@ -12,11 +12,13 @@ import java.util.List;
 public class NoteRepository {
     private NoteDao noteDao;
     private LiveData<List<NoteClass>> allNotes;
+    private LiveData<List<NoteClass>> sortedByTextNotes;
 
     public NoteRepository(Application application) {
         AppDataBase dataBase = AppDataBase.getInstance(application);
         noteDao = dataBase.noteDao();
         allNotes = noteDao.getAll();
+        sortedByTextNotes = noteDao.sortedByText();
     }
 
     public void insert(NoteClass note) {
@@ -34,6 +36,8 @@ public class NoteRepository {
     public LiveData<List<NoteClass>> getAllNotes() {
         return allNotes;
     }
+
+    public LiveData<List<NoteClass>> getSortedByTextNotes() {return sortedByTextNotes;}
 
     private static class InsertNoteAsyncTask extends AsyncTask<NoteClass, Void, Void> {
         private NoteDao noteDao;

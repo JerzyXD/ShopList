@@ -14,10 +14,12 @@ public class MyViewModel extends AndroidViewModel {
 
     private NoteRepository noteRepository;
     private LiveData<List<NoteClass>> allNotes;
+    private LiveData<List<NoteClass>> sortedByText;
     public MyViewModel(@NonNull Application application) {
         super(application);
         noteRepository = new NoteRepository(application);
         allNotes = noteRepository.getAllNotes();
+        sortedByText = noteRepository.getSortedByTextNotes();
     }
 
     public void insert (NoteClass note) {
@@ -34,5 +36,9 @@ public class MyViewModel extends AndroidViewModel {
 
     public LiveData<List<NoteClass>> getAllNotes() {
         return allNotes;
+    }
+
+    public LiveData<List<NoteClass>> getSortedByText() {
+        return sortedByText;
     }
 }

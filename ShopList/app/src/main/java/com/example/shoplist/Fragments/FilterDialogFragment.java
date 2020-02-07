@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 
 import com.example.shoplist.Activiti.MainActivity;
+import com.example.shoplist.Adapters.ShopListAdapter;
 import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.R;
@@ -21,18 +23,24 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 public class FilterDialogFragment extends DialogFragment {
     private Context context;
-    private List<NoteClass> list;
+    private List<NoteClass> shopList;
     private MyViewModel viewModel;
+    private ShopListAdapter adapter;
 
-    public FilterDialogFragment(Context context, List list, MyViewModel viewModel) {
+    public FilterDialogFragment(Context context, List shopList, MyViewModel viewModel, ShopListAdapter adapter) {
         this.context = context;
-        this.list = list;
+        this.shopList = shopList;
         this.viewModel = viewModel;
+        this.adapter = adapter;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -53,32 +61,31 @@ public class FilterDialogFragment extends DialogFragment {
         Button sortCheck = v.findViewById(R.id.sortCheckBtn);
 
         sortTypeBtn.setOnClickListener(view -> {
-            Collections.sort(list, typeComp);
-            ((MainActivity) context).updateAdapterData();
-            ((MainActivity) context).saveList(list);
+            //((MainActivity) context).updateAdapterData(shopList);
+            //((MainActivity) context).saveList(shopList);
             dismiss();
         });
 
         sortAlfBtn.setOnClickListener(view -> {
-            Collections.sort(list, textComp);
-            ((MainActivity) context).updateAdapterData();
-            ((MainActivity) context).saveList(list);
+            Collections.sort(shopList, textComp);
+            ((MainActivity) context).updateAdapterData(shopList);
+            ((MainActivity) context).saveList(shopList);
             dismiss();
         });
 
         sortDateBtn.setOnClickListener(view -> {
-            Collections.sort(list, dateComp);
-            ((MainActivity) context).updateAdapterData();
-            ((MainActivity) context).saveList(list);
+            Collections.sort(shopList, dateComp);
+            ((MainActivity) context).updateAdapterData(shopList);
+            ((MainActivity) context).saveList(shopList);
             dismiss();
         });
 
         sortCheck.setOnClickListener(view -> {
-                Collections.sort(list,checkComp);
-                sortCheck.setText("Сначала отмеченные");
-                ((MainActivity) context).updateAdapterData();
-                ((MainActivity) context).saveList(list);
-                dismiss();
+            Collections.sort(shopList,checkComp);
+            sortCheck.setText("Сначала отмеченные");
+            ((MainActivity) context).updateAdapterData(shopList);
+            ((MainActivity) context).saveList(shopList);
+            dismiss();
 
         });
 

@@ -34,6 +34,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Menu menu;
     private MyViewModel viewModel;
     ShopListAdapter adapter;
+    int type;
 
 
     @Override
@@ -55,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem checkedButton = menu.findItem(R.id.checkedButton);
 
+        
         if(shopList != null) {
-            for (int i = 0; i < adapter.getNotes().size(); i++) {
-                if (!adapter.getNotes().get(i).getChecked()) {
+            for (int i = 0; i < shopList.size(); i++) {
+                if (!shopList.get(i).getChecked()) {
                     checkedButton.setTitle("Выделить всё");
                     checkedButton.setIcon(R.drawable.ic_check_box_24px);
                 } else {
@@ -66,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
 
         return true;
     }
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 createDialog();
                 break;
             case R.id.menuFilter:
-                FilterDialogFragment dialog = new FilterDialogFragment(this, shopList, viewModel);
+                FilterDialogFragment dialog = new FilterDialogFragment(this, shopList, viewModel, adapter);
                 dialog.show(getSupportFragmentManager(), "tag");
                 break;
             case R.id.menuSetting:
@@ -118,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         viewModel = ViewModelProviders.of(this).get(MyViewModel.class);
-        viewModel.getAllNotes().observe(this, notes -> {
+
+        viewModel.getSortedByText().observe( this, notes -> {
             adapter.setNotes(notes);
             shopList = new ArrayList<>(notes);
             setSubTitle();
@@ -158,10 +163,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_LONG ).show();
             }
 
-
             viewModel.update(note);
             setSubTitle();
         });
+
 
     }
 
@@ -220,12 +225,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Обновление данных адатера.
      */
-    public void updateAdapterData() {
+    public void updateAdapterData(List<NoteClass> noteList) {
         if (adapter != null) {
-            adapter.notifyDataSetChanged();
+            adapter.setNotes(noteList);
             setSubTitle();
         }
-
     }
 
     /**
@@ -244,6 +248,5 @@ public class MainActivity extends AppCompatActivity {
         CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(note,this, shopList, viewModel);
         dialog.show(getSupportFragmentManager(), "tag");
     }
-
 
 }
