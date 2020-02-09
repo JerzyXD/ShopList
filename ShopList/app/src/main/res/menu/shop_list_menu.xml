@@ -20,7 +20,8 @@
                 android:icon="@drawable/ic_filter_list_24px"
                 app:iconTint="@color/colorPrimaryDark"
                 android:title="Фильтр заметок"
-                app:showAsAction="always">
+                app:showAsAction="always"
+                android:visible="false">
             </item>
             <item android:id="@+id/menuSetting"
                 android:icon="@drawable/ic_settings_applications_24px"
@@ -36,7 +37,7 @@
             </item>
             <item
                 android:id="@+id/deleteButton"
-                android:title="Удалить отмеченные"
+                android:title="Удалить всё"
                 app:iconTint="@color/colorPrimaryDark"
                 android:icon="@drawable/ic_delete_sweep_24px"
                 app:showAsAction="always"/>

@@ -40,13 +40,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences mSettings;
     private List<NoteClass> shopList;
     private Menu menu;
     private MyViewModel viewModel;
     ShopListAdapter adapter;
-    int type;
-
+    SettingActivity settingActivity = new SettingActivity();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         this.menu = menu;
         setTitle(R.string.title);
-
         MenuItem checkedButton = menu.findItem(R.id.checkedButton);
 
         
@@ -78,11 +75,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
             case R.id.deleteButton:
-                for (int i = 0; i < shopList.size(); i++) {
-                    if (shopList.get(i).getChecked()) {
-                        viewModel.delete(shopList.get(i));
-                    }
-                }
+                viewModel.deleteAllNotes();
                 break;
             case R.id.addButton:
                 createDialog();
@@ -126,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mSettings = getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
 
         RecyclerView recyclerView = findViewById(R.id.shop_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -135,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(MyViewModel.class);
 
-        viewModel.getSortedByText().observe( this, notes -> {
+        viewModel.getAllNotes().observe( this, notes -> {
             adapter.setNotes(notes);
             shopList = new ArrayList<>(notes);
             setSubTitle();
@@ -160,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_LONG ).show();
             } else {
                 note.setChecked(true);
+                settingActivity.setCheckedCounter();
                 Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_LONG ).show();
             }
 
@@ -179,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     /**
      * Запись количества отмеченных товаров в subtitle
      */
@@ -196,10 +190,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Сохранение списка покупок.
      */
-    public void saveList(List<NoteClass> saveList) {
-        mSettings.edit()
-                .putString("listNote", new Gson().toJson(saveList))
-                .apply();
+    public void saveList() {
 
         try {
             MenuItem checkedButton = menu.findItem(R.id.checkedButton);

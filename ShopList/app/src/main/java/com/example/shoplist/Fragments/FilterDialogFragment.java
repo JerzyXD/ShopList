@@ -61,7 +61,6 @@ public class FilterDialogFragment extends DialogFragment {
         Button sortCheck = v.findViewById(R.id.sortCheckBtn);
 
         sortTypeBtn.setOnClickListener(view -> {
-            //((MainActivity) context).updateAdapterData(shopList);
             //((MainActivity) context).saveList(shopList);
             dismiss();
         });
@@ -69,14 +68,12 @@ public class FilterDialogFragment extends DialogFragment {
         sortAlfBtn.setOnClickListener(view -> {
             Collections.sort(shopList, textComp);
             ((MainActivity) context).updateAdapterData(shopList);
-            ((MainActivity) context).saveList(shopList);
             dismiss();
         });
 
         sortDateBtn.setOnClickListener(view -> {
             Collections.sort(shopList, dateComp);
             ((MainActivity) context).updateAdapterData(shopList);
-            ((MainActivity) context).saveList(shopList);
             dismiss();
         });
 
@@ -84,7 +81,6 @@ public class FilterDialogFragment extends DialogFragment {
             Collections.sort(shopList,checkComp);
             sortCheck.setText("Сначала отмеченные");
             ((MainActivity) context).updateAdapterData(shopList);
-            ((MainActivity) context).saveList(shopList);
             dismiss();
 
         });

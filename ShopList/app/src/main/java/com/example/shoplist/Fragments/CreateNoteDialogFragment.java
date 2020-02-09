@@ -100,7 +100,6 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     note.setText(input);
                     note.setAmount(amount);
                     note.setUnits(units);
-                    //((MainActivity) context).saveList(list);
                     viewModel.update(note);
                     dismiss();
                 }

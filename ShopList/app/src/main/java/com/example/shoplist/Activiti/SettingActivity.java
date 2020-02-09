@@ -23,7 +23,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     Button setTimeBtn;
     int myHour;
     int myMinute;
-
+    int madeCounter;
+    int checkedCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         setContentView(R.layout.activity_setting);
         setTitle("Настройки");
         prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
+        checkedCounter = prefs.getInt("checkCounter", 0);
+        madeCounter = prefs.getInt("madeCounter", 0);
 
         TextView vkText1 = findViewById(R.id.textVk1);
         TextView vkText2 = findViewById(R.id.textVk2);
@@ -38,6 +41,11 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             vkText1.setMovementMethod(LinkMovementMethod.getInstance());
             vkText2.setMovementMethod(LinkMovementMethod.getInstance());
         }
+
+        TextView madeCounterTV = findViewById(R.id.madeCounterTV);
+        TextView checkCounterTV = findViewById(R.id.checkCounterTV);
+        checkCounterTV.setText("Куплено: " + checkedCounter);
+        madeCounterTV.setText("Создано: " + madeCounter);
 
         myHour = prefs.getInt("hour", 18);
         myMinute = prefs.getInt("minute", 0);
@@ -63,6 +71,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     protected void onPause() {
         super.onPause();
         SharedPreferences.Editor ed = prefs.edit();
+        ed.putInt("madeCounter", madeCounter);
+        ed.putInt("checkedCounter", checkedCounter);
         ed.putBoolean("switchState", switchNotification.isChecked());
         ed.apply();
     }
@@ -105,5 +115,14 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         intent.putExtra("hour", myHour);
         intent.putExtra("minute", myMinute);
         return intent;
+    }
+
+    public void setMadeCounter() {
+        madeCounter++;
+    }
+
+    public void setCheckedCounter() {
+        checkedCounter++;
+        System.out.println(checkedCounter);
     }
 }

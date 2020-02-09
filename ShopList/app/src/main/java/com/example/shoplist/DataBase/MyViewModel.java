@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import com.example.shoplist.Classes.NoteClass;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyViewModel extends AndroidViewModel {
@@ -33,6 +32,8 @@ public class MyViewModel extends AndroidViewModel {
     public void update (NoteClass note) {
         noteRepository.update(note);
     }
+
+    public void deleteAllNotes() {noteRepository.deleteAllNotes();}
 
     public LiveData<List<NoteClass>> getAllNotes() {
         return allNotes;
