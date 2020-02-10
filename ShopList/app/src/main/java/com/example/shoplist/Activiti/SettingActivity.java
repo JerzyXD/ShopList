@@ -121,7 +121,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         madeCounter++;
     }
 
-    public void setCheckedCounter() {
+    public void incCheckedCounter() {
         checkedCounter++;
         System.out.println(checkedCounter);
     }

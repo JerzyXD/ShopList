@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_LONG ).show();
             } else {
                 note.setChecked(true);
-                settingActivity.setCheckedCounter();
+                settingActivity.incCheckedCounter();
                 Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_LONG ).show();
             }
 
