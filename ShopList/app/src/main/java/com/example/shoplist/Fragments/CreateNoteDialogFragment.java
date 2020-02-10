@@ -130,6 +130,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     NoteClass note = new NoteClass(input, type, units, amount, id);
                     list.add(0, note);
                     viewModel.insert(note);
+                    MainActivity.incMadeCounter();
                     dismiss();
                 }
             });

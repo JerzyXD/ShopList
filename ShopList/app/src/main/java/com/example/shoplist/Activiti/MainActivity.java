@@ -44,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private Menu menu;
     private MyViewModel viewModel;
     ShopListAdapter adapter;
-    SettingActivity settingActivity = new SettingActivity();
+    private static int checkedCounter;
+    public static int madeCounter;
+    SharedPreferences prefs;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
+        checkedCounter = prefs.getInt("checkedCounter", 0);
+        madeCounter = prefs.getInt("madeCounter", 0);
+
         RecyclerView recyclerView = findViewById(R.id.shop_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         final ShopListAdapter adapter = new ShopListAdapter(this);
@@ -152,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_LONG ).show();
             } else {
                 note.setChecked(true);
-                settingActivity.incCheckedCounter();
+                incCheckCounter();
                 Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_LONG ).show();
             }
 
@@ -172,6 +178,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor ed = prefs.edit();
+        ed.putInt("checkedCounter", checkedCounter);
+        ed.putInt("madeCounter", madeCounter);
+        ed.apply();
+    }
 
     /**
      * Запись количества отмеченных товаров в subtitle
@@ -240,4 +254,19 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
+    private static void incCheckCounter() {
+        checkedCounter++;
+    }
+
+    public static int getCheckedCounter() {
+        return checkedCounter;
+    }
+
+    public static void incMadeCounter() {
+        madeCounter++;
+    }
+
+    public static int getMadeCounter() {
+        return madeCounter;
+    }
 }
