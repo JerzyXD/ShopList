@@ -19,7 +19,6 @@ import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.R;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -71,12 +70,12 @@ public class CreateNoteDialogFragment extends DialogFragment {
 
         Button saveButton = v.findViewById(R.id.save_button);
         Button deleteButton = v.findViewById(R.id.delete_button);
+        TextView textAmount = v.findViewById(R.id.textAmount);
+        EditText textUnits = v.findViewById(R.id.textUnits);
+        EditText text = v.findViewById(R.id.text);
 
         if (note !=  null) {
             deleteButton.setVisibility(View.VISIBLE);
-            TextView textAmount = v.findViewById(R.id.textAmount);
-            EditText textUnits = v.findViewById(R.id.textUnits);
-            EditText text = v.findViewById(R.id.text);
             text.setText(note.getText());
             textAmount.setText(Integer.toString( note.getAmount()));
             textUnits.setText(note.getUnits());
@@ -108,11 +107,9 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 viewModel.delete(note);
                 dismiss();
             });
+
         }else {
             saveButton.setOnClickListener(view -> {
-                TextView textAmount = v.findViewById(R.id.textAmount);
-                EditText textUnits = v.findViewById(R.id.textUnits);
-                EditText text = v.findViewById(R.id.text);
                 String type = NoteClass.TYPE_LIST_ITEM[id];
                 String units = textUnits.getText().toString();
                 int amount;
@@ -135,7 +132,6 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 }
             });
         }
-
 
         return v;
     }
