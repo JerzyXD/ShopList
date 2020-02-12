@@ -41,6 +41,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopLi
         NoteClass note = notes.get(position);
         holder.text.setText(note.getText());
         holder.type.setText(note.getType());
+        holder.data.setText(note.getData());
         String units = note.getUnits();
         String amount = Integer.toString(note.getAmount());
         if (units.equals("") | amount.equals("0")) {
@@ -87,12 +88,14 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ShopLi
         private Button type;
         private TextView text;
         private TextView info;
+        private TextView data;
 
         public ShopListHolder(@NonNull View itemView) {
             super(itemView);
             type = itemView.findViewById(R.id.type);
             text = itemView.findViewById(R.id.text);
             info = itemView.findViewById(R.id.textInfo);
+            data = itemView.findViewById(R.id.date);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
