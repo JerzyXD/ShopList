@@ -17,7 +17,7 @@ public class NoteClass {
 
     private boolean checked;
     private String text;
-    private String date;
+    private String data;
     private String type;
     private int amount;
     private String units;
@@ -27,7 +27,7 @@ public class NoteClass {
 
     public NoteClass (String text, String type, String units, int amount, String id) {
 
-        this.date = new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
+        this.data = new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
         this.text = text;
         this.type = type;
         this.checked = false;
@@ -38,8 +38,8 @@ public class NoteClass {
     }
 
 
-    public String getDate() {
-        return date;
+    public String getData() {
+        return data;
     }
 
     public String getText() {
@@ -66,8 +66,8 @@ public class NoteClass {
         return id;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setData(String data) {
+        this.data = data;
     }
 
     public void setText(String text) {
@@ -123,7 +123,7 @@ public class NoteClass {
 
         @Override
         public int compare(NoteClass o1, NoteClass o2) {
-            int result = o1.getDate().compareTo(o2.getDate());
+            int result = o1.getData().compareTo(o2.getData());
             return result;
         }
     }

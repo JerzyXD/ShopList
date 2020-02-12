@@ -73,6 +73,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
         TextView textAmount = v.findViewById(R.id.textAmount);
         EditText textUnits = v.findViewById(R.id.textUnits);
         EditText text = v.findViewById(R.id.text);
+        TextView textData = v.findViewById(R.id.date);
 
         if (note !=  null) {
             deleteButton.setVisibility(View.VISIBLE);
@@ -86,6 +87,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
                 String type = NoteClass.TYPE_LIST_ITEM[id];
                 String input = text.getText().toString();
                 String units = textUnits.getText().toString();
+                String data = note.getData();
                 int amount;
                 try {
                     amount = Integer.parseInt(textAmount.getText().toString());
@@ -99,6 +101,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     note.setText(input);
                     note.setAmount(amount);
                     note.setUnits(units);
+                    note.setData(data);
                     viewModel.update(note);
                     dismiss();
                 }

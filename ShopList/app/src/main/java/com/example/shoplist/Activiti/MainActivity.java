@@ -121,11 +121,14 @@ public class MainActivity extends AppCompatActivity {
 
             MenuItem checkedButton = menu.findItem(R.id.checkedButton);
             boolean allCheck = true;
-            for (int i = 0; i < notes.size(); i++) {
-                if (!notes.get(i).getChecked()) {
-                    allCheck = false;
+            if (notes != null) {
+                for (int i = 0; i < notes.size(); i++) {
+                    if (!notes.get(i).getChecked()) {
+                        allCheck = false;
+                    }
                 }
             }
+
 
             if (allCheck) {
                 checkedButton.setTitle("Убрать выделенные");
