@@ -41,7 +41,7 @@
                 android:textColor="@android:color/white"
                 android:maxLines="1"
                 android:lines="1"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapSentences"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -89,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
                         shopList.get(i).setChecked(false);
                         viewModel.update(shopList.get(i));
                     } else {
+                        if (!shopList.get(i).getChecked()) {
+                            incCheckCounter();
+                        }
                         shopList.get(i).setChecked(true);
                         viewModel.update(shopList.get(i));
                     }
@@ -244,5 +247,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static int getMadeCounter() {
         return madeCounter;
+    }
+
+    public static void clearCheckCounter() {
+        checkedCounter = 0;
+    }
+
+    public static void clearMadeCounter() {
+        madeCounter = 0;
     }
 }

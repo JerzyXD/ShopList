@@ -62,6 +62,14 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             createDialog();
         });
 
+        Button clearStat = findViewById(R.id.clearStat);
+        clearStat.setOnClickListener(v -> {
+            checkCounterTV.setText("Куплено: 0");
+            madeCounterTV.setText("Создано: 0");
+            MainActivity.clearCheckCounter();
+            MainActivity.clearMadeCounter();
+        });
+
         }
 
     @Override
