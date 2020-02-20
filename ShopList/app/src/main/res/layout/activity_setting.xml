@@ -95,52 +95,73 @@
                     android:text="Статистика"
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/listItemBack"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/madeCounterTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Всего создано:"
-                    android:textColor="@android:color/white"
-                    android:textSize="20dp"
-                    android:paddingLeft="10dp"/>
-
-                <TextView
-                    android:id="@+id/checkCounterTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Куплено: "
-                    android:textColor="@android:color/white"
-                    android:textSize="20dp"
-                    android:paddingLeft="10dp"/>
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Самая популярная категория:"
-                    android:textColor="@android:color/white"
-                    android:textSize="20dp"
-                    android:paddingLeft="10dp"
-                    android:visibility="gone"/>
-
-                <Button
-                    android:id="@+id/clearStat"
-                    style="@style/SortButton"
+                <LinearLayout
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/madeCounterTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="Всего создано:"
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/checkCounterTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="Куплено: "
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="Самая популярная категория:"
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Очистить"
-                    android:textSize="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="right"/>
+                    android:gravity="right"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
+
+                    <Button
+                        android:id="@+id/clearStat"
+                        style="@style/SortButton"
+                        android:background="@drawable/sort_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="Очистить"
+                        android:textSize="19sp"
+                        android:layout_marginEnd="10dp" />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 
