@@ -70,6 +70,12 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             MainActivity.clearMadeCounter();
         });
 
+        Button login = findViewById(R.id.login_btn);
+        login.setOnClickListener(view -> {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            startActivity(intent);
+        });
+
         }
 
     @Override
