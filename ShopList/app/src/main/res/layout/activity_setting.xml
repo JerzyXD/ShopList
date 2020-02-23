@@ -199,7 +199,7 @@
                 android:background="@color/listItemBack"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:text="Войти и зарегистрироваться для синхронизации заметок"
+                android:text="Войти или зарегистрироваться для синхронизации заметок"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="20dp" />
