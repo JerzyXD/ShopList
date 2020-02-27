@@ -72,8 +72,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
 
         Button login = findViewById(R.id.login_btn);
         login.setOnClickListener(view -> {
-            Intent intent = new Intent(this, RegistrationActivity.class);
-            startActivity(intent);
+
         });
 
         }

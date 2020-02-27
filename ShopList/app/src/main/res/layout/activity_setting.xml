@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:paddingLeft="10dp"
-                android:text="Вход или регистрация"
+                android:text="Авторизация через ВК"
                 android:textColor="@android:color/white"
                 android:textSize="24dp" />
 
@@ -199,7 +199,7 @@
                 android:background="@color/listItemBack"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:text="Войти или зарегистрироваться для синхронизации заметок"
+                android:text="Чтобы авторизоваться для синхронизации заметок, нажмите здесь"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="20dp" />

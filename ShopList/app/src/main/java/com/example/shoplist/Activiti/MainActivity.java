@@ -122,24 +122,28 @@ public class MainActivity extends AppCompatActivity {
             adapter.setNotes(notes);
             shopList = new ArrayList<>(notes);
 
-            MenuItem checkedButton = menu.findItem(R.id.checkedButton);
-            boolean allCheck = true;
-            if (notes != null) {
-                for (int i = 0; i < notes.size(); i++) {
-                    if (!notes.get(i).getChecked()) {
-                        allCheck = false;
+            try {
+                MenuItem checkedButton = menu.findItem(R.id.checkedButton);
+                boolean allCheck = true;
+                if (notes != null) {
+                    for (int i = 0; i < notes.size(); i++) {
+                        if (!notes.get(i).getChecked()) {
+                            allCheck = false;
+                        }
                     }
                 }
-            }
+
+                if (allCheck) {
+                    checkedButton.setTitle("Убрать выделенные");
+                    checkedButton.setIcon(R.drawable.ic_check_box_outline_blank_24px);
+                } else {
+                    checkedButton.setTitle("Выделить всё");
+                    checkedButton.setIcon(R.drawable.ic_check_box_24px);
+                }
+
+            } catch (NullPointerException ex){}
 
 
-            if (allCheck) {
-                checkedButton.setTitle("Убрать выделенные");
-                checkedButton.setIcon(R.drawable.ic_check_box_outline_blank_24px);
-            } else {
-                checkedButton.setTitle("Выделить всё");
-                checkedButton.setIcon(R.drawable.ic_check_box_24px);
-            }
             setSubTitle();
         });
 

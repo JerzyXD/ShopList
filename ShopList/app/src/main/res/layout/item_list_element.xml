@@ -41,14 +41,14 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/text"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="13dp"
@@ -72,20 +72,20 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="right"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/date"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="right"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:gravity="top"
-                        android:paddingTop="28dp"
+                        android:gravity="right"
+                        android:layout_gravity="right"
+                        android:paddingTop="25dp"
                         android:text="09.11.2019"
                         android:textColor="@color/colorAccent"
                         android:textSize="15dp" />
