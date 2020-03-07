@@ -3,6 +3,7 @@
     package="com.example.shoplist">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -45,6 +46,7 @@
             android:name=".Notification.BroadcastNotification"
             android:enabled="true"
             android:exported="true"/>
+        <activity android:name="com.vk.sdk.VKServiceActivity" android:label="ServiceActivity" android:theme="@style/VK.Transparent" />
     </application>
 
 </manifest>

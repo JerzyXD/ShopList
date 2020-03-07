@@ -4,4 +4,5 @@
     <string name="title">Список покупок</string>
     <string name="link1"><a href="https://vk.com/jerzyxd">Воронцов Юрий</a></string>
     <string name="link2"><a href="https://vk.com/seks_simvo1">Соляной Леонид</a></string>
+    <integer name="com_vk_sdk_AppId">7349060</integer>
 </resources>

@@ -29,6 +29,7 @@ import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
 import com.google.gson.Gson;
+import com.vk.sdk.VKSdk;
 
 import org.w3c.dom.Text;
 
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
         checkedCounter = prefs.getInt("checkedCounter", 0);
         madeCounter = prefs.getInt("madeCounter", 0);
+        VKSdk.initialize(this);
 
         RecyclerView recyclerView = findViewById(R.id.shop_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
