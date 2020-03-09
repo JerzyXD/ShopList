@@ -13,6 +13,15 @@ import android.widget.TextView;
 
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -72,8 +81,16 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
 
         Button login = findViewById(R.id.login_btn);
         login.setOnClickListener(view -> {
-
+            VKSdk.login(this, "wall");
+            VKRequest request = new VKRequest("account.get", VKParameters.from(VKApiConst.FIELDS, "name"));
+            request.executeWithListener(new VKRequest.VKRequestListener() {
+                @Override
+                public void onComplete(VKResponse response) {
+                    super.onComplete(response);
+                }
+            });
         });
+
 
         }
 
