@@ -22,6 +22,7 @@ import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
+import com.vk.sdk.api.model.VKList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -82,11 +83,14 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         Button login = findViewById(R.id.login_btn);
         login.setOnClickListener(view -> {
             VKSdk.login(this, "wall");
-            VKRequest request = new VKRequest("account.get", VKParameters.from(VKApiConst.FIELDS, "name"));
+            VKRequest request = VKApi.users().get();
             request.executeWithListener(new VKRequest.VKRequestListener() {
                 @Override
                 public void onComplete(VKResponse response) {
                     super.onComplete(response);
+                    VKList list =  (VKList) response.parsedModel;
+                    String s = list.get(0).fields.toString();
+                    System.out.println(s);
                 }
             });
         });
