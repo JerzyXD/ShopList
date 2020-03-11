@@ -1,6 +1,5 @@
 package com.example.shoplist.Activiti;
 
-import android.app.Application;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,20 +15,15 @@ import android.widget.Toast;
 import com.example.shoplist.Classes.User;
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKList;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,6 +36,9 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     Button setTimeBtn;
     int myHour;
     int myMinute;
+    int id;
+    String name;
+
 
 
     @Override
@@ -90,6 +87,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         });
 
         Button login = findViewById(R.id.login_btn);
+        login.setText(prefs.getString("login", "Чтобы авторизоваться для синхронизации заметок, нажмите здесь"));
         login.setOnClickListener(view -> {
             VKSdk.login(this, "wall");
             onActivityResult(1,RESULT_OK, getIntent());
@@ -108,7 +106,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             @Override
             public void onError(VKError error) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Вход отменён", Toast.LENGTH_SHORT);
-                toast.show();            }
+                toast.show();
+            }
         })) {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -118,6 +117,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     protected void onPause() {
         super.onPause();
         SharedPreferences.Editor ed = prefs.edit();
+        Button login = findViewById(R.id.login_btn);
+        ed.putString("welcome", (String) login.getText() );
         ed.putBoolean("switchState", switchNotification.isChecked());
         ed.apply();
     }
@@ -171,12 +172,17 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                 VKList list =  (VKList) response.parsedModel;
                 JSONObject object = list.get(0).fields;
                 try {
-                    int id = object.getInt("id");
-                    String name = object.getString("first_name");
+                    id = object.getInt("id");
+                    name = object.getString("first_name");
                     User user = createUser(id, name);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Button login = findViewById(R.id.login_btn);
+                login.setText("Здравствуйте, " + name);
+                SharedPreferences.Editor ed = prefs.edit();
+                ed.putString("login", (String) login.getText() );
+                ed.apply();
 
             }
 
