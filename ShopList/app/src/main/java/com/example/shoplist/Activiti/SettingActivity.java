@@ -1,5 +1,6 @@
 package com.example.shoplist.Activiti;
 
+import android.app.Application;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +11,13 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.shoplist.Classes.User;
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -23,6 +28,10 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -83,20 +92,27 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         Button login = findViewById(R.id.login_btn);
         login.setOnClickListener(view -> {
             VKSdk.login(this, "wall");
-            VKRequest request = VKApi.users().get();
-            request.executeWithListener(new VKRequest.VKRequestListener() {
-                @Override
-                public void onComplete(VKResponse response) {
-                    super.onComplete(response);
-                    VKList list =  (VKList) response.parsedModel;
-                    String s = list.get(0).fields.toString();
-                    System.out.println(s);
-                }
-            });
+            onActivityResult(1,RESULT_OK, getIntent());
+
         });
 
-
         }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken res) {
+                VKLogin();
+            }
+            @Override
+            public void onError(VKError error) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Вход отменён", Toast.LENGTH_SHORT);
+                toast.show();            }
+        })) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
     @Override
     protected void onPause() {
@@ -144,6 +160,41 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         intent.putExtra("hour", myHour);
         intent.putExtra("minute", myMinute);
         return intent;
+    }
+
+    private void VKLogin() {
+        VKRequest request = VKApi.users().get();
+        request.executeWithListener(new VKRequest.VKRequestListener() {
+            @Override
+            public void onComplete(VKResponse response) {
+                super.onComplete(response);
+                VKList list =  (VKList) response.parsedModel;
+                JSONObject object = list.get(0).fields;
+                try {
+                    int id = object.getInt("id");
+                    String name = object.getString("first_name");
+                    User user = createUser(id, name);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(VKError error) {
+                super.onError(error);
+            }
+        });
+    }
+
+    private User createUser(int id, String name) {
+        User user = new User(id, name, MainActivity.getMadeCounter(), MainActivity.getCheckedCounter());
+        System.out.println("/////////////////////////////////////////////////////");
+        System.out.println("Name: " + user.getName());
+        System.out.println("Id: " +user.getId());
+        System.out.println("MadeCounter: " + user.getMadeCounter());
+        System.out.println("CheckCounter: " + user.getCheckCounter());
+        return user;
     }
 
 }

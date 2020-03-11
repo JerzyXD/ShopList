@@ -2,13 +2,13 @@ package com.example.shoplist.Classes;
 
 public class User {
     private int id;
-    private String username;
+    private String name;
     private int madeCounter;
     private int checkCounter;
 
-    public void User(int id, String username, int madeCounter, int checkCounter) {
+    public User(int id, String name, int madeCounter, int checkCounter) {
         this.id = id;
-        this.username = username;
+        this.name = name;
         this.madeCounter = madeCounter;
         this.checkCounter = checkCounter;
     }
@@ -20,14 +20,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public int getMadeCounter() {
@@ -44,5 +36,13 @@ public class User {
 
     public void setCheckCounter(int checkCounter) {
         this.checkCounter = checkCounter;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
