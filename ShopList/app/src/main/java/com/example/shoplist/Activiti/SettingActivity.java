@@ -4,6 +4,8 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.Button;
@@ -89,8 +91,14 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         Button login = findViewById(R.id.login_btn);
         login.setText(prefs.getString("login", "Чтобы авторизоваться для синхронизации заметок, нажмите здесь"));
         login.setOnClickListener(view -> {
-            VKSdk.login(this, "wall");
-            onActivityResult(1,RESULT_OK, getIntent());
+            if (checkInternetConnection()) {
+                VKSdk.login(this, "wall");
+                onActivityResult(1,RESULT_OK, getIntent());
+
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(), "Нет сети", Toast.LENGTH_SHORT);
+                toast.show();
+            }
 
         });
 
@@ -105,8 +113,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             }
             @Override
             public void onError(VKError error) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Вход отменён", Toast.LENGTH_SHORT);
-                toast.show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Вход отменён", Toast.LENGTH_SHORT);
+                    toast.show();
             }
         })) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -121,6 +129,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         ed.putString("welcome", (String) login.getText() );
         ed.putBoolean("switchState", switchNotification.isChecked());
         ed.apply();
+        
     }
 
     @Override
@@ -201,6 +210,18 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         System.out.println("MadeCounter: " + user.getMadeCounter());
         System.out.println("CheckCounter: " + user.getCheckCounter());
         return user;
+    }
+
+    private boolean checkInternetConnection() {
+        boolean connect;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            connect = true;
+        }
+        else
+            connect = false;
+        return connect;
     }
 
 }
