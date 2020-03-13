@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Application;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -99,6 +101,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 break;
+
+            case R.id.copyButton:
+                StringBuilder builder = new StringBuilder();
+                for (NoteClass note: shopList) {
+                    builder.append(note.toString()).append(", ");
+                }
+                builder.setLength(builder.length()-2);
+                ClipboardManager clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", builder);
+                assert clipboard != null;
+                clipboard.setPrimaryClip(clip);
+                Toast toast = Toast.makeText(getApplicationContext(), "Список скопирован", Toast.LENGTH_SHORT);
+                toast.show();
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -127,11 +143,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 MenuItem checkedButton = menu.findItem(R.id.checkedButton);
                 boolean allCheck = true;
-                if (notes != null) {
-                    for (int i = 0; i < notes.size(); i++) {
-                        if (!notes.get(i).getChecked()) {
-                            allCheck = false;
-                        }
+                for (int i = 0; i < notes.size(); i++) {
+                    if (!notes.get(i).getChecked()) {
+                        allCheck = false;
                     }
                 }
 
@@ -262,4 +276,5 @@ public class MainActivity extends AppCompatActivity {
     public static void clearMadeCounter() {
         madeCounter = 0;
     }
+
 }

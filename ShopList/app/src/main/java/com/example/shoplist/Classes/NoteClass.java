@@ -139,4 +139,14 @@ public class NoteClass {
             return result;
         }
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        if (units.equals("") || amount == 0) {
+            return text;
+        } else {
+           return text + " " + amount + " " + units;
+        }
+    }
 }

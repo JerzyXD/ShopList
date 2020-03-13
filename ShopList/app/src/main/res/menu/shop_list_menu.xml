@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu 
+<menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/addButton"
         android:icon="@drawable/ic_add_box_24px"
         app:iconTint="@android:color/white"
         android:title=""
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
 
     </item>
 
@@ -14,7 +14,7 @@
         android:icon="@drawable/ic_more_vert_24px"
         app:iconTint="@android:color/white"
         android:title=""
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/menuFilter"
@@ -22,7 +22,8 @@
                 android:title="Фильтр заметок"
                 android:visible="false"
                 app:iconTint="@color/colorPrimaryDark"
-                app:showAsAction="always"></item>
+                app:showAsAction="always">
+            </item>
             <item android:id="@+id/menuSetting"
                 android:icon="@drawable/ic_settings_applications_24px"
                 app:iconTint="@color/colorPrimaryDark"
@@ -33,14 +34,20 @@
                 android:icon="@drawable/ic_check_box_24px"
                 app:iconTint="@color/colorPrimaryDark"
                 android:title="Отметить"
-                app:showAsAction="always">
+                app:showAsAction="ifRoom">
             </item>
             <item
                 android:id="@+id/deleteButton"
                 android:title="Удалить всё"
                 app:iconTint="@color/colorPrimaryDark"
                 android:icon="@drawable/ic_delete_sweep_24px"
-                app:showAsAction="always"/>
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/copyButton"
+                android:title="Копировать список"
+                android:icon="@drawable/ic_share_24px"
+                app:iconTint="@color/colorPrimaryDark"
+                app:showAsAction="ifRoom"/>
         </menu>
     </item>
 </menu>
