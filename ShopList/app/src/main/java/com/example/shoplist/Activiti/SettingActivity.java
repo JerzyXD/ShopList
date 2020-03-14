@@ -129,7 +129,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         ed.putString("welcome", (String) login.getText() );
         ed.putBoolean("switchState", switchNotification.isChecked());
         ed.apply();
-        
+
     }
 
     @Override

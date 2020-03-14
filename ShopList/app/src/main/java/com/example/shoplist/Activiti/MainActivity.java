@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.copyButton:
                 StringBuilder builder = new StringBuilder();
                 for (NoteClass note: shopList) {
-                    builder.append(note.toString()).append(", ");
+                    builder.append(shopList.indexOf(note) + 1 + ") " + note.toString() + "\n");
                 }
-                builder.setLength(builder.length()-2);
+                builder.setLength(builder.length()-1);
                 ClipboardManager clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", builder);
                 assert clipboard != null;
