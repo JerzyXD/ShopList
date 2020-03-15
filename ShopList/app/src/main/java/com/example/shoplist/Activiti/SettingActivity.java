@@ -14,6 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shoplist.Classes.URLSendRequest;
 import com.example.shoplist.Classes.User;
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
@@ -28,6 +29,9 @@ import com.vk.sdk.api.model.VKList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,6 +53,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         setContentView(R.layout.activity_setting);
         setTitle("Настройки");
         prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
+        Logger.getLogger("mylog").log(Level.INFO, "on create");
+        //URLSendRequest url = new URLSendRequest(MainActivity.SERVER_IP, 5000);
 
         TextView vkText1 = findViewById(R.id.textVk1);
         TextView vkText2 = findViewById(R.id.textVk2);
@@ -215,12 +221,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     private boolean checkInternetConnection() {
         boolean connect;
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-            connect = true;
-        }
-        else
-            connect = false;
+        connect = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
         return connect;
     }
 
