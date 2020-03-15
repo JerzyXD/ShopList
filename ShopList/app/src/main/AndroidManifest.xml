@@ -47,7 +47,8 @@
         <receiver
             android:name=".Notification.BroadcastNotification"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true"
+            android:permission="TODO" />
         <activity android:name="com.vk.sdk.VKServiceActivity" android:label="ServiceActivity" android:theme="@style/VK.Transparent" />
     </application>
 
