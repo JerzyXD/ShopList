@@ -57,6 +57,7 @@ public class URLSendRequest {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
+                assert conn != null;
                 conn.disconnect();
             }
         });

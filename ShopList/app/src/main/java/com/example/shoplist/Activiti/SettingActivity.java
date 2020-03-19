@@ -47,6 +47,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         setTitle("Настройки");
         prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
         Logger.getLogger("mylog").log(Level.INFO, "on create");
-        //URLSendRequest url = new URLSendRequest(MainActivity.SERVER_IP, 5000);
 
         TextView vkText1 = findViewById(R.id.textVk1);
         TextView vkText2 = findViewById(R.id.textVk2);
@@ -190,6 +190,12 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                     id = object.getInt("id");
                     name = object.getString("first_name");
                     User user = createUser(id, name);
+                    String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
+                    URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
+                    Logger.getLogger("mylog").log(Level.INFO, "send");
+                    int r = Integer.parseInt(url.get("login?act=reg&iduser="+user.getId()+"&username="+user.getName()+"&madecounter="+ MainActivity.getMadeCounter()+ "&checkcounter=" + MainActivity.getCheckedCounter()).replaceAll("\n",""));
+                    System.out.println(r + " result");
+                    Logger.getLogger("mylog").log(Level.INFO, "result " + r);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
