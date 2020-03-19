@@ -48,6 +48,7 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectId" id="1ZAJg6Gk86eExWh0uwtshZmxFmj" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -372,10 +373,26 @@
       <workItem from="1584557527318" duration="65000" />
       <workItem from="1584558194933" duration="4824000" />
       <workItem from="1584601896960" duration="2324000" />
+      <workItem from="1584604486427" duration="244000" />
+      <workItem from="1584619751726" duration="747000" />
+      <workItem from="1584631466809" duration="522000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
