@@ -6,7 +6,7 @@ import java.util.Properties;
 public class DBConnector {
     private static final String dbClassName = "com.mysql.cj.jdbc.Driver";
     private static final String CONNECTION =
-            "jdbc:mysql://localhost:3306/shoplist?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=" +
+            "jdbc:mysql://localhost:3306/shoplist?useSSL=false&useUnicode=true&characterEncoding=utf8&characterSetResults=utf-8&useJDBCCompliantTimezoneShift=" +
                     "true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
 
     public Connection con;

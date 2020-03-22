@@ -22,10 +22,12 @@ public class Login extends HttpServlet {
                 ResultSet rs = connector.executeQuery("SELECT iduser FROM user WHERE iduser='" + req.getParameter("iduser") + "'");
                 if (rs.next()) {
                     writer.print(rs.getString("iduser"));
+                    System.out.println("user login");
                 } else {
                     long c = connector.executeUpdate("INSERT user VALUE('" +
                             req.getParameter("iduser") + "','" + req.getParameter("username") + "','" + req.getParameter("madecounter") +  "','" + req.getParameter("checkcounter") + "')");
                     writer.print(Long.toString(c));
+                    System.out.println("user create");
                     System.out.println(c);
                 }
             } catch (SQLException e) {

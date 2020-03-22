@@ -18,6 +18,7 @@ import com.example.shoplist.Classes.URLSendRequest;
 import com.example.shoplist.Classes.User;
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
+import com.google.gson.Gson;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -47,7 +48,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +70,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
 
         myHour = prefs.getInt("hour", 18);
         myMinute = prefs.getInt("minute", 0);
+        id = prefs.getInt("id", 0);
 
         switchNotification = findViewById(R.id.switchNotification);
         switchNotification.setOnCheckedChangeListener(this);
@@ -134,7 +135,9 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         Button login = findViewById(R.id.login_btn);
         ed.putString("welcome", (String) login.getText() );
         ed.putBoolean("switchState", switchNotification.isChecked());
-        ed.apply();
+        ed.putInt("id", id);
+
+
 
     }
 
@@ -193,9 +196,9 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                     String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
                     URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
                     Logger.getLogger("mylog").log(Level.INFO, "send");
-                    int r = Integer.parseInt(url.get("login?act=reg&iduser="+user.getId()+"&username="+user.getName()+"&madecounter="+ MainActivity.getMadeCounter()+ "&checkcounter=" + MainActivity.getCheckedCounter()).replaceAll("\n",""));
-                    System.out.println(r + " result");
-                    Logger.getLogger("mylog").log(Level.INFO, "result " + r);
+                    int r = Integer.parseInt(url.get("login?act=reg&iduser="+ user.getId() +"&username="+ user.getName() +"&madecounter="+ user.getMadeCounter()+ "&checkcounter=" + user.getCheckCounter()).replaceAll("\n",""));
+
+                    Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -215,13 +218,13 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     }
 
     private User createUser(int id, String name) {
-        User user = new User(id, name, MainActivity.getMadeCounter(), MainActivity.getCheckedCounter());
+        User newUser = new User(id, name, MainActivity.getMadeCounter(), MainActivity.getCheckedCounter());
         System.out.println("/////////////////////////////////////////////////////");
-        System.out.println("Name: " + user.getName());
-        System.out.println("Id: " +user.getId());
-        System.out.println("MadeCounter: " + user.getMadeCounter());
-        System.out.println("CheckCounter: " + user.getCheckCounter());
-        return user;
+        System.out.println("Name: " + newUser.getName());
+        System.out.println("Id: " +newUser.getId());
+        System.out.println("MadeCounter: " + newUser.getMadeCounter());
+        System.out.println("CheckCounter: " + newUser.getCheckCounter());
+        return newUser;
     }
 
     private boolean checkInternetConnection() {
