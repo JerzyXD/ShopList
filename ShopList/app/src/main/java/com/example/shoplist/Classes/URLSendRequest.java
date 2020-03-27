@@ -6,10 +6,14 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import androidx.annotation.RequiresApi;
 
@@ -37,6 +41,7 @@ public class URLSendRequest {
      * @param SERVER_GET запрос для сервера
      * @return строка ответ сервера
      */
+
     public String get(final String SERVER_GET) {
         final String[] input = {null};
         Thread send = new Thread(() -> {
@@ -53,6 +58,9 @@ public class URLSendRequest {
                 if(HttpURLConnection.HTTP_OK == conn.getResponseCode()) {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     input[0] = readBuffer(bufferedReader);
+                    Logger.getLogger("intlog").log(Level.INFO, "HTTP_ERROR: " + conn.getResponseCode());
+                } else {
+                    Logger.getLogger("intlog").log(Level.INFO, "HTTP_ERROR: " + conn.getResponseCode());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -207,4 +215,5 @@ public class URLSendRequest {
     public void setSERVER_URL(String SERVER_URL) {
         this.SERVER_URL = SERVER_URL;
     }
+
 }

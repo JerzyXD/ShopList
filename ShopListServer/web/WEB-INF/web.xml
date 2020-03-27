@@ -11,4 +11,12 @@
         <servlet-name>login</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>addNote</servlet-name>
+        <servlet-class>Classes.AddNote</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addNote</servlet-name>
+        <url-pattern>/addnote</url-pattern>
+    </servlet-mapping>
 </web-app>

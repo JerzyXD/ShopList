@@ -280,6 +280,7 @@
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="index_jsp_ShopListServer_2" />
+        <option name="DEPLOY_TOMCAT_APPS" value="true" />
       </server-settings>
       <log_file alias="Tomcat Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/manager.*" />
       <predefined_log_file enabled="true" id="Tomcat" />
@@ -287,7 +288,7 @@
       <predefined_log_file enabled="true" id="Tomcat Host Manager" />
       <predefined_log_file enabled="true" id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="javadebug" />
+        <option name="DEBUG_PORT" value="57432" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -376,7 +377,19 @@
       <workItem from="1584604486427" duration="244000" />
       <workItem from="1584619751726" duration="747000" />
       <workItem from="1584631466809" duration="1523000" />
-      <workItem from="1584858000231" duration="4653000" />
+      <workItem from="1584858000231" duration="4781000" />
+      <workItem from="1584905226367" duration="123000" />
+      <workItem from="1584968862579" duration="533000" />
+      <workItem from="1584969407868" duration="397000" />
+      <workItem from="1584969819763" duration="2980000" />
+      <workItem from="1585035701399" duration="78000" />
+      <workItem from="1585050284538" duration="192000" />
+      <workItem from="1585120581165" duration="621000" />
+      <workItem from="1585168301200" duration="1686000" />
+      <workItem from="1585198339338" duration="6532000" />
+      <workItem from="1585205756616" duration="4339000" />
+      <workItem from="1585281186655" duration="1547000" />
+      <workItem from="1585297767927" duration="1729000" />
     </task>
     <servers />
   </component>

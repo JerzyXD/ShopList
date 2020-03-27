@@ -14,14 +14,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.shoplist.Activiti.MainActivity;
+import com.example.shoplist.Activiti.SettingActivity;
 import com.example.shoplist.Adapters.SpinnerTypeAdapter;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.Classes.URLSendRequest;
 import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.R;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -127,6 +133,11 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     NoteClass note = new NoteClass(input, type, units, amount, id);
                     list.add(0, note);
                     viewModel.insert(note);
+                    String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
+                    URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
+                    Logger.getLogger("mylog").log(Level.INFO, "send");
+                    int r = Integer.parseInt(url.get("addnote?act=reg&id="+ note.getId() +"&text="+ note.getText() +"&amount="+ note.getAmount() + "&type=" + note.getType() + "&units=" + note.getUnits() + "&checked=" + note.getChecked() + "&date=" + note.getData() + "&iduser=" + MainActivity.getUserId()).replaceAll("\n",""));
+                    Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
                     MainActivity.incMadeCounter();
                     dismiss();
                 }

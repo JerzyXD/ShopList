@@ -43,7 +43,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
     Button setTimeBtn;
     int myHour;
     int myMinute;
-    int id;
     String name;
 
 
@@ -70,7 +69,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
 
         myHour = prefs.getInt("hour", 18);
         myMinute = prefs.getInt("minute", 0);
-        id = prefs.getInt("id", 0);
 
         switchNotification = findViewById(R.id.switchNotification);
         switchNotification.setOnCheckedChangeListener(this);
@@ -135,8 +133,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         Button login = findViewById(R.id.login_btn);
         ed.putString("welcome", (String) login.getText() );
         ed.putBoolean("switchState", switchNotification.isChecked());
-        ed.putInt("id", id);
-
 
 
     }
@@ -190,7 +186,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                 VKList list =  (VKList) response.parsedModel;
                 JSONObject object = list.get(0).fields;
                 try {
-                    id = object.getInt("id");
+                    int id = object.getInt("id");
+                    MainActivity.setUserId(id);
                     name = object.getString("first_name");
                     User user = createUser(id, name);
                     String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
@@ -234,5 +231,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
         return connect;
     }
+
 
 }

@@ -36,6 +36,8 @@ import com.vk.sdk.VKSdk;
 
 import org.w3c.dom.Text;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     ShopListAdapter adapter;
     private static int checkedCounter;
     public static int madeCounter;
+    public static int userId;
     SharedPreferences prefs;
 
     @Override
@@ -128,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
         checkedCounter = prefs.getInt("checkedCounter", 0);
         madeCounter = prefs.getInt("madeCounter", 0);
+        userId = prefs.getInt("id", 0);
+        System.out.println(userId);
 
         RecyclerView recyclerView = findViewById(R.id.shop_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -208,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor ed = prefs.edit();
         ed.putInt("checkedCounter", checkedCounter);
         ed.putInt("madeCounter", madeCounter);
+        ed.putInt("id", userId);
         ed.apply();
     }
 
@@ -277,4 +283,11 @@ public class MainActivity extends AppCompatActivity {
         madeCounter = 0;
     }
 
+    public static void setUserId(int id) {
+        MainActivity.userId = id;
+    }
+
+    public static int getUserId() {
+        return userId;
+    }
 }

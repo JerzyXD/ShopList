@@ -1,5 +1,7 @@
 package Classes;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.util.Properties;
 
