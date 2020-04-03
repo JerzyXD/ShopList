@@ -17,9 +17,16 @@ public class AddNote extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         System.out.println("input note");
         if (connector == null || !connector.isOpen()) connector = new DBConnector();
-        if (req.getParameter("act").equals("addnote")) {
-                    long c = connector.executeUpdate("INSERT note VALUE('" +
-                            req.getParameter("id") + "','" + req.getParameter("text") + "','" + req.getParameter("amount") +  "','" + req.getParameter("type") + "','" + req.getParameter("units") + "','" + req.getParameter("checked") + "','" + req.getParameter("date") + "','" + req.getParameter("iduser") + "')");
+        if (req.getParameter("act").equals("addNote")) {
+                    long c = connector.executeUpdate("INSERT notes VALUE('" +
+                            req.getParameter("idnote")
+                            + "','" + req.getParameter("name")
+                            + "','" + req.getParameter("type")
+                            +  "','" + req.getParameter("amount")
+                            + "','" + req.getParameter("units")
+                            + "','" + req.getParameter("date")
+                            + "','" + req.getParameter("checked")
+                            + "','" + req.getParameter("iduser") + "')");
                     writer.print(c);
                     System.out.println("note add");
                     System.out.println(c);

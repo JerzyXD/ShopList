@@ -136,7 +136,14 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
                     URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
                     Logger.getLogger("mylog").log(Level.INFO, "send");
-                    int r = Integer.parseInt(url.get("addnote?act=reg&id="+ note.getId() +"&text="+ note.getText() +"&amount="+ note.getAmount() + "&type=" + note.getType() + "&units=" + note.getUnits() + "&checked=" + note.getChecked() + "&date=" + note.getData() + "&iduser=" + MainActivity.getUserId()).replaceAll("\n",""));
+                    int r = Integer.parseInt(url.get("addNote?act=reg&idnote="+ note.getId()
+                            + "&name="+ note.getText()
+                            + "&type=" + note.getType()
+                            + "&amount="+ note.getAmount()
+                            + "&units=" + note.getUnits()
+                            + "&date=" + note.getData()
+                            + "&checked=" + note.getChecked().toString()
+                            + "&iduser=" + MainActivity.getUserId()).replaceAll("\n",""));
                     Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
                     MainActivity.incMadeCounter();
                     dismiss();

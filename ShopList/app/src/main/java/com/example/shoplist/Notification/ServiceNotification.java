@@ -1,20 +1,29 @@
 package com.example.shoplist.Notification;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.shoplist.Activiti.MainActivity;
+import com.example.shoplist.R;
+
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import java.util.Calendar;
 
 public class ServiceNotification extends Service {
 
     final String LOG_TAG = "myLogs";
+
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -40,7 +49,7 @@ public class ServiceNotification extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "onStartCommand");
-        someTask(intent);
+        sendNotif(intent);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -53,14 +62,14 @@ public class ServiceNotification extends Service {
      * Метод для того, чтобы задать время показа уведомления
      */
 
-    void someTask(Intent intent2) {
+    void sendNotif(Intent intent2) {
+
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, BroadcastNotification.class);
         int hour = intent2.getIntExtra("hour", 18);
         int minute = intent2.getIntExtra("minute", 0);
         PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0,
                 intent, PendingIntent.FLAG_CANCEL_CURRENT );
-
 
         Calendar timeToStart = Calendar.getInstance();
         timeToStart.set(Calendar.HOUR_OF_DAY, hour);

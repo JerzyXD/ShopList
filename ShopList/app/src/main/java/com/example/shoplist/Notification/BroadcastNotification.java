@@ -16,12 +16,11 @@ import androidx.core.app.NotificationCompat;
 
 
 public class BroadcastNotification extends BroadcastReceiver {
+
     private static final int NOTIFY_ID = 101;
     private static String CHANNEL_ID = "ShopList channel";
 
-    public BroadcastNotification(){
 
-    }
 
     /**
      * Метод для создания уведомления
@@ -59,7 +58,6 @@ public class BroadcastNotification extends BroadcastReceiver {
 
 
         notificationManager.notify(NOTIFY_ID, builder.build());
-
     }
 
 }

@@ -25,8 +25,11 @@ public class Login extends HttpServlet {
                     System.out.println("user login");
                 } else {
                     long c = connector.executeUpdate("INSERT user VALUE('" +
-                            req.getParameter("iduser") + "','" + req.getParameter("username") + "','" + req.getParameter("madecounter") +  "','" + req.getParameter("checkcounter") + "')");
-                    writer.print(Long.toString(c));
+                            req.getParameter("iduser")
+                            + "','" + req.getParameter("username")
+                            + "','" + req.getParameter("madecounter")
+                            + "','" + req.getParameter("checkcounter") + "')");
+                    writer.print(c);
                     System.out.println("user create");
                     System.out.println(c);
                 }

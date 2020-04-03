@@ -1,5 +1,7 @@
 package com.example.shoplist.Activiti;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.shoplist.Classes.URLSendRequest;
 import com.example.shoplist.Classes.User;
+import com.example.shoplist.Notification.BroadcastNotification;
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
 import com.google.gson.Gson;
@@ -31,6 +34,7 @@ import com.vk.sdk.api.model.VKList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -189,11 +193,14 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                     int id = object.getInt("id");
                     MainActivity.setUserId(id);
                     name = object.getString("first_name");
-                    User user = createUser(id, name);
+                    User user = createUser(id, "Юра");
                     String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
                     URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
                     Logger.getLogger("mylog").log(Level.INFO, "send");
-                    int r = Integer.parseInt(url.get("login?act=reg&iduser="+ user.getId() +"&username="+ user.getName() +"&madecounter="+ user.getMadeCounter()+ "&checkcounter=" + user.getCheckCounter()).replaceAll("\n",""));
+                    int r = Integer.parseInt(url.get("login?act=reg&iduser="+ user.getId()
+                            + "&username="+ user.getName()
+                            + "&madecounter="+ user.getMadeCounter()
+                            + "&checkcounter=" + user.getCheckCounter()).replaceAll("\n",""));
 
                     Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
                 } catch (JSONException e) {
