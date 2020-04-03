@@ -106,6 +106,15 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     note.setAmount(amount);
                     note.setUnits(units);
                     viewModel.update(note);
+                    String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
+                    URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
+                    Logger.getLogger("mylog").log(Level.INFO, "send");
+                    int r = Integer.parseInt(url.get("note?act=edit&name="+ note.getText()
+                            + "&type=" + note.getType()
+                            + "&amount="+ note.getAmount()
+                            + "&units=" + note.getUnits()
+                            + "&idnote=" + note.getId()).replaceAll("\n",""));
+                    Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
                     dismiss();
                 }
             });
@@ -136,7 +145,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
                     URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
                     Logger.getLogger("mylog").log(Level.INFO, "send");
-                    int r = Integer.parseInt(url.get("addNote?act=reg&idnote="+ note.getId()
+                    int r = Integer.parseInt(url.get("note?act=add&idnote="+ note.getId()
                             + "&name="+ note.getText()
                             + "&type=" + note.getType()
                             + "&amount="+ note.getAmount()

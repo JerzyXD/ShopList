@@ -17,6 +17,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>addNote</servlet-name>
-        <url-pattern>/addNote</url-pattern>
+        <url-pattern>/note</url-pattern>
     </servlet-mapping>
 </web-app>

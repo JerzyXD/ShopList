@@ -15,14 +15,14 @@ public class AddNote extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
-        System.out.println("input note");
         if (connector == null || !connector.isOpen()) connector = new DBConnector();
-        if (req.getParameter("act").equals("addNote")) {
-                    long c = connector.executeUpdate("INSERT notes VALUE('" +
+        if (req.getParameter("act").equals("add")) {
+            System.out.println("input note");
+            long c = connector.executeUpdate("INSERT notes VALUE('" +
                             req.getParameter("idnote")
                             + "','" + req.getParameter("name")
                             + "','" + req.getParameter("type")
-                            +  "','" + req.getParameter("amount")
+                            + "','" + req.getParameter("amount")
                             + "','" + req.getParameter("units")
                             + "','" + req.getParameter("date")
                             + "','" + req.getParameter("checked")
@@ -30,6 +30,17 @@ public class AddNote extends HttpServlet {
                     writer.print(c);
                     System.out.println("note add");
                     System.out.println(c);
+        }
+
+        if (req.getParameter("act").equals("edit")) {
+            System.out.println("edit note");
+            long c = connector.executeUpdate("UPDATE notes SET name ='"
+                    + req.getParameter("name") + "'"
+                    + "," + "type='" + req.getParameter("type") + "'"
+                    + "," + "amount='" + req.getParameter("amount") + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
+            writer.print(c);
+            System.out.println("note add");
+            System.out.println(c);
         }
 
     }
