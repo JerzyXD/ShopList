@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 viewModel.delete(adapter.getNotePos(viewHolder.getAdapterPosition()));
+                CreateNoteDialogFragment.deleteNoteServer(adapter.getNotePos(viewHolder.getAdapterPosition()));
                 setSubTitle();
             }
         }).attachToRecyclerView(recyclerView);
@@ -190,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
                 incCheckCounter();
                 Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_LONG ).show();
             }
+
+            CreateNoteDialogFragment.updateServerUserInfo();
 
             viewModel.update(note);
             setSubTitle();

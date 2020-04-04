@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.shoplist.Classes.URLSendRequest;
 import com.example.shoplist.Classes.User;
+import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Notification.BroadcastNotification;
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
@@ -44,6 +45,8 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
 
     private Switch switchNotification;
     SharedPreferences prefs;
+    private static String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
+    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
     Button setTimeBtn;
     int myHour;
     int myMinute;
@@ -95,6 +98,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             madeCounterTV.setText("Создано: 0");
             MainActivity.clearCheckCounter();
             MainActivity.clearMadeCounter();
+            CreateNoteDialogFragment.updateServerUserInfo();
         });
 
         Button login = findViewById(R.id.login_btn);
@@ -194,8 +198,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                     MainActivity.setUserId(id);
                     name = object.getString("first_name");
                     User user = createUser(id, "Юра");
-                    String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
-                    URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
                     Logger.getLogger("mylog").log(Level.INFO, "send");
                     int r = Integer.parseInt(url.get("login?act=reg&iduser="+ user.getId()
                             + "&username="+ user.getName()

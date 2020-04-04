@@ -38,6 +38,15 @@ public class Login extends HttpServlet {
             }
 
         }
+
+        if (req.getParameter("act").equals("update")) {
+            long c = connector.executeUpdate("UPDATE user SET madecounter='" + req.getParameter("madecounter")
+                    + "'," + "checkcounter='" + req.getParameter("checkcounter")
+                    + "' WHERE iduser='" + req.getParameter("iduser") + "'");
+            writer.print(c);
+            System.out.println("user info update");
+            System.out.println(c);
+        }
        
     }
 }

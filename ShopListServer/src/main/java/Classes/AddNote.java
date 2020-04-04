@@ -39,7 +39,13 @@ public class AddNote extends HttpServlet {
                     + "," + "type='" + req.getParameter("type") + "'"
                     + "," + "amount='" + req.getParameter("amount") + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
             writer.print(c);
-            System.out.println("note add");
+            System.out.println(c);
+        }
+
+        if (req.getParameter("act").equals("delete")) {
+            long c = connector.executeUpdate("DELETE FROM notes WHERE idnote='" + req.getParameter("idnote") + "'");
+            writer.print(c);
+            System.out.println("note delete");
             System.out.println(c);
         }
 

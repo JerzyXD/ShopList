@@ -33,11 +33,13 @@ import androidx.fragment.app.DialogFragment;
 
 public class CreateNoteDialogFragment extends DialogFragment {
 
+    private NoteClass note;
     private Context context;
     private List<NoteClass> list;
     private int id;
-    private NoteClass note;
     private MyViewModel viewModel;
+    private static String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
+    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
 
     public CreateNoteDialogFragment(Context context, List list, MyViewModel viewModel ) {
         this.context = context;
@@ -120,6 +122,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
             });
             deleteButton.setOnClickListener(view -> {
                 viewModel.delete(note);
+                deleteNoteServer(note);
                 dismiss();
             });
 
@@ -142,19 +145,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     NoteClass note = new NoteClass(input, type, units, amount, id);
                     list.add(0, note);
                     viewModel.insert(note);
-                    String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
-                    URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
-                    Logger.getLogger("mylog").log(Level.INFO, "send");
-                    int r = Integer.parseInt(url.get("note?act=add&idnote="+ note.getId()
-                            + "&name="+ note.getText()
-                            + "&type=" + note.getType()
-                            + "&amount="+ note.getAmount()
-                            + "&units=" + note.getUnits()
-                            + "&date=" + note.getData()
-                            + "&checked=" + note.getChecked().toString()
-                            + "&iduser=" + MainActivity.getUserId()).replaceAll("\n",""));
-                    Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
-                    MainActivity.incMadeCounter();
+                    noteAddServer(note);
                     dismiss();
                 }
             });
@@ -163,5 +154,33 @@ public class CreateNoteDialogFragment extends DialogFragment {
         return v;
     }
 
+    public static void noteAddServer(NoteClass note) {
+        Logger.getLogger("mylog").log(Level.INFO, "send");
+        int r = Integer.parseInt(url.get("note?act=add&idnote="+ note.getId()
+                + "&name="+ note.getText()
+                + "&type=" + note.getType()
+                + "&amount="+ note.getAmount()
+                + "&units=" + note.getUnits()
+                + "&date=" + note.getData()
+                + "&checked=" + note.getChecked().toString()
+                + "&iduser=" + MainActivity.getUserId()).replaceAll("\n",""));
+        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+        MainActivity.incMadeCounter();
+        updateServerUserInfo();
+
+    }
+
+    public static void updateServerUserInfo() {
+        int r = Integer.parseInt(url.get("login?act=update&iduser="+MainActivity.getUserId()
+                + "&madecounter=" + MainActivity.getMadeCounter()
+                + "&checkcounter=" + MainActivity.getCheckedCounter()).replaceAll("\n",""));
+        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+    }
+
+    public static void deleteNoteServer(NoteClass note) {
+        Logger.getLogger("mylog").log(Level.INFO, "send");
+        int r = Integer.parseInt(url.get("note?act=delete&idnote=" + note.getId()).replaceAll("\n",""));
+        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+    }
 
 }
