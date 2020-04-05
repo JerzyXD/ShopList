@@ -17,6 +17,7 @@ import com.example.shoplist.Activiti.MainActivity;
 import com.example.shoplist.Activiti.SettingActivity;
 import com.example.shoplist.Adapters.SpinnerTypeAdapter;
 import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.Classes.ServerRequest;
 import com.example.shoplist.Classes.URLSendRequest;
 import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.R;
@@ -30,6 +31,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import androidx.fragment.app.DialogFragment;
+
+import static com.example.shoplist.Classes.ServerRequest.deleteNoteServer;
+import static com.example.shoplist.Classes.ServerRequest.editNoteServer;
+import static com.example.shoplist.Classes.ServerRequest.noteAddServer;
 
 public class CreateNoteDialogFragment extends DialogFragment {
 
@@ -108,15 +113,7 @@ public class CreateNoteDialogFragment extends DialogFragment {
                     note.setAmount(amount);
                     note.setUnits(units);
                     viewModel.update(note);
-                    String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
-                    URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
-                    Logger.getLogger("mylog").log(Level.INFO, "send");
-                    int r = Integer.parseInt(url.get("note?act=edit&name="+ note.getText()
-                            + "&type=" + note.getType()
-                            + "&amount="+ note.getAmount()
-                            + "&units=" + note.getUnits()
-                            + "&idnote=" + note.getId()).replaceAll("\n",""));
-                    Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+                    editNoteServer(note);
                     dismiss();
                 }
             });
@@ -154,33 +151,6 @@ public class CreateNoteDialogFragment extends DialogFragment {
         return v;
     }
 
-    public static void noteAddServer(NoteClass note) {
-        Logger.getLogger("mylog").log(Level.INFO, "send");
-        int r = Integer.parseInt(url.get("note?act=add&idnote="+ note.getId()
-                + "&name="+ note.getText()
-                + "&type=" + note.getType()
-                + "&amount="+ note.getAmount()
-                + "&units=" + note.getUnits()
-                + "&date=" + note.getData()
-                + "&checked=" + note.getChecked().toString()
-                + "&iduser=" + MainActivity.getUserId()).replaceAll("\n",""));
-        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
-        MainActivity.incMadeCounter();
-        updateServerUserInfo();
 
-    }
-
-    public static void updateServerUserInfo() {
-        int r = Integer.parseInt(url.get("login?act=update&iduser="+MainActivity.getUserId()
-                + "&madecounter=" + MainActivity.getMadeCounter()
-                + "&checkcounter=" + MainActivity.getCheckedCounter()).replaceAll("\n",""));
-        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
-    }
-
-    public static void deleteNoteServer(NoteClass note) {
-        Logger.getLogger("mylog").log(Level.INFO, "send");
-        int r = Integer.parseInt(url.get("note?act=delete&idnote=" + note.getId()).replaceAll("\n",""));
-        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
-    }
 
 }

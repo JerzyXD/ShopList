@@ -41,6 +41,8 @@ import java.util.logging.Logger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.shoplist.Classes.ServerRequest.updateServerUserInfo;
+
 public class SettingActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     private Switch switchNotification;
@@ -98,7 +100,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
             madeCounterTV.setText("Создано: 0");
             MainActivity.clearCheckCounter();
             MainActivity.clearMadeCounter();
-            CreateNoteDialogFragment.updateServerUserInfo();
+            updateServerUserInfo();
         });
 
         Button login = findViewById(R.id.login_btn);

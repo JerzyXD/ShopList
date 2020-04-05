@@ -44,6 +44,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.example.shoplist.Classes.ServerRequest.deleteNoteServer;
+import static com.example.shoplist.Classes.ServerRequest.updateServerUserInfo;
+
 public class MainActivity extends AppCompatActivity {
 
     private List<NoteClass> shopList;
@@ -168,7 +171,11 @@ public class MainActivity extends AppCompatActivity {
             setSubTitle();
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        /**
+         * Обработка свайпов заметки (только влево)
+         */
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -177,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 viewModel.delete(adapter.getNotePos(viewHolder.getAdapterPosition()));
-                CreateNoteDialogFragment.deleteNoteServer(adapter.getNotePos(viewHolder.getAdapterPosition()));
+                deleteNoteServer(adapter.getNotePos(viewHolder.getAdapterPosition()));
                 setSubTitle();
             }
         }).attachToRecyclerView(recyclerView);
@@ -192,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_LONG ).show();
             }
 
-            CreateNoteDialogFragment.updateServerUserInfo();
+            updateServerUserInfo();
 
             viewModel.update(note);
             setSubTitle();
@@ -202,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Переопределение кнопки назад чтоб
+     * Переопределение кнопки назад, чтобы
      * не попасть обратно на сплэш.
      */
     @Override
