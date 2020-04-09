@@ -1,7 +1,5 @@
 package com.example.shoplist.Activiti;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,11 +16,8 @@ import android.widget.Toast;
 
 import com.example.shoplist.Classes.URLSendRequest;
 import com.example.shoplist.Classes.User;
-import com.example.shoplist.Fragments.CreateNoteDialogFragment;
-import com.example.shoplist.Notification.BroadcastNotification;
 import com.example.shoplist.Notification.ServiceNotification;
 import com.example.shoplist.R;
-import com.google.gson.Gson;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -35,17 +30,17 @@ import com.vk.sdk.api.model.VKList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.example.shoplist.Classes.ServerRequest.updateServerUserInfo;
+import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUserInfo;
 
 public class SettingActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     private Switch switchNotification;
+    public String[] requestArray;
     SharedPreferences prefs;
     private static String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
     private static URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
@@ -235,13 +230,12 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         return newUser;
     }
 
-    private boolean checkInternetConnection() {
+    public boolean checkInternetConnection() {
         boolean connect;
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         connect = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
         return connect;
     }
-
 
 }

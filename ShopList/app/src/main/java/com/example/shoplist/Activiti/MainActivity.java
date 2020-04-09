@@ -1,28 +1,21 @@
 package com.example.shoplist.Activiti;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Application;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shoplist.Adapters.ShopListAdapter;
@@ -31,21 +24,12 @@ import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
-import com.google.gson.Gson;
-import com.vk.sdk.VKSdk;
 
-import org.w3c.dom.Text;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import static com.example.shoplist.Classes.ServerRequest.deleteNoteServer;
-import static com.example.shoplist.Classes.ServerRequest.updateServerUserInfo;
+import static com.example.shoplist.ServerConnection.ServerRequest.deleteNoteServer;
+import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUserInfo;
 
 public class MainActivity extends AppCompatActivity {
 

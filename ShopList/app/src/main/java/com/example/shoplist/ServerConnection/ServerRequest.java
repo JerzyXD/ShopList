@@ -1,9 +1,18 @@
-package com.example.shoplist.Classes;
+package com.example.shoplist.ServerConnection;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.example.shoplist.Activiti.MainActivity;
+import com.example.shoplist.Activiti.SettingActivity;
+import com.example.shoplist.Classes.NoteClass;
+import com.example.shoplist.Classes.URLSendRequest;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import androidx.core.content.ContextCompat;
 
 public class ServerRequest {
 

@@ -13,28 +13,21 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.shoplist.Activiti.MainActivity;
-import com.example.shoplist.Activiti.SettingActivity;
 import com.example.shoplist.Adapters.SpinnerTypeAdapter;
 import com.example.shoplist.Classes.NoteClass;
-import com.example.shoplist.Classes.ServerRequest;
 import com.example.shoplist.Classes.URLSendRequest;
 import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.R;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import androidx.fragment.app.DialogFragment;
 
-import static com.example.shoplist.Classes.ServerRequest.deleteNoteServer;
-import static com.example.shoplist.Classes.ServerRequest.editNoteServer;
-import static com.example.shoplist.Classes.ServerRequest.noteAddServer;
+import static com.example.shoplist.ServerConnection.ServerRequest.deleteNoteServer;
+import static com.example.shoplist.ServerConnection.ServerRequest.editNoteServer;
+import static com.example.shoplist.ServerConnection.ServerRequest.noteAddServer;
 
 public class CreateNoteDialogFragment extends DialogFragment {
 
