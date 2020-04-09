@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 
 import androidx.core.content.ContextCompat;
 
+import static com.example.shoplist.Activiti.MainActivity.addRequest;
+import static com.example.shoplist.Activiti.MainActivity.clearRequest;
+
 public class ServerRequest {
 
     private static String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
@@ -25,30 +28,50 @@ public class ServerRequest {
      */
 
     public static void noteAddServer(NoteClass note) {
-        Logger.getLogger("mylog").log(Level.INFO, "send");
-        int r = Integer.parseInt(url.get("note?act=add&idnote="+ note.getId()
+        SettingActivity settingActivity = new SettingActivity();
+        String request = "note?act=add&idnote="+ note.getId()
                 + "&name="+ note.getText()
                 + "&type=" + note.getType()
                 + "&amount="+ note.getAmount()
                 + "&units=" + note.getUnits()
                 + "&date=" + note.getData()
                 + "&checked=" + note.getChecked().toString()
-                + "&iduser=" + MainActivity.getUserId()).replaceAll("\n",""));
-        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
-        MainActivity.incMadeCounter();
-        updateServerUserInfo();
+                + "&iduser=" + MainActivity.getUserId();
+
+        if (settingActivity.isInternetConnection()) {
+            int r =  Integer.parseInt(url.get(request).replaceAll("\n",""));
+            Logger.getLogger("mylog").log(Level.INFO, "send");
+
+            Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+            MainActivity.incMadeCounter();
+            updateServerUserInfo();
+        } else {
+            addRequest(request);
+        }
+
     }
+
+
 
     /**
      * Обновление информации о пользователе при изменении его статистики
      */
 
     public static void updateServerUserInfo() {
-        int r = Integer.parseInt(url.get("login?act=update&iduser="+MainActivity.getUserId()
+        SettingActivity settingActivity = new SettingActivity();
+        String request = "login?act=update&iduser="+MainActivity.getUserId()
                 + "&madecounter=" + MainActivity.getMadeCounter()
-                + "&checkcounter=" + MainActivity.getCheckedCounter()).replaceAll("\n",""));
-        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+                + "&checkcounter=" + MainActivity.getCheckedCounter();
+
+        if (settingActivity.isInternetConnection()) {
+            int r = Integer.parseInt(url.get(request).replaceAll("\n",""));
+            Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+        } else {
+            addRequest(request);
+        }
+
     }
+
 
     /**
      * Удаление заметки с сервера
@@ -56,9 +79,16 @@ public class ServerRequest {
      */
 
     public static void deleteNoteServer(NoteClass note) {
-        Logger.getLogger("mylog").log(Level.INFO, "send");
-        int r = Integer.parseInt(url.get("note?act=delete&idnote=" + note.getId()).replaceAll("\n",""));
-        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+        SettingActivity settingActivity = new SettingActivity();
+        String request = "note?act=delete&idnote=" + note.getId();
+
+        if (settingActivity.isInternetConnection()) {
+            int r = Integer.parseInt(url.get(request).replaceAll("\n",""));
+            Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+        } else {
+            addRequest(request);
+        }
+
     }
 
     /**
@@ -67,13 +97,32 @@ public class ServerRequest {
      */
 
     public static void editNoteServer(NoteClass note) {
-        Logger.getLogger("mylog").log(Level.INFO, "send");
-        int r = Integer.parseInt(url.get("note?act=edit&name="+ note.getText()
+        SettingActivity settingActivity = new SettingActivity();
+        String request = "note?act=edit&name="+ note.getText()
                 + "&type=" + note.getType()
                 + "&amount="+ note.getAmount()
                 + "&units=" + note.getUnits()
-                + "&idnote=" + note.getId()).replaceAll("\n",""));
-        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+                + "&idnote=" + note.getId();
+        if (settingActivity.isInternetConnection()) {
+            int r = Integer.parseInt(url.get(request).replaceAll("\n",""));
+            Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+
+        } else {
+            addRequest(request);
+        }
+
+    }
+
+    public static void sendRequestFromMemory (String request) {
+        SettingActivity settingActivity = new SettingActivity();
+        if (settingActivity.isInternetConnection()) {
+            int r =  Integer.parseInt(url.get(request).replaceAll("\n",""));
+            Logger.getLogger("mylog").log(Level.INFO, "send");
+            clearRequest(request);
+            Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+            MainActivity.incMadeCounter();
+            updateServerUserInfo();
+        }
     }
 
 

@@ -24,6 +24,7 @@ import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
+import com.example.shoplist.ServerConnection.RequestService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +35,12 @@ import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUs
 public class MainActivity extends AppCompatActivity {
 
     private List<NoteClass> shopList;
+    public static String[] requestArray;
     private Menu menu;
     private MyViewModel viewModel;
     ShopListAdapter adapter;
     private static int checkedCounter;
-    public static int madeCounter;
+    private static int madeCounter;
     public static int userId;
     SharedPreferences prefs;
 
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startService(new Intent( this ,RequestService.class));
 
         prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
         checkedCounter = prefs.getInt("checkedCounter", 0);
@@ -284,4 +287,28 @@ public class MainActivity extends AppCompatActivity {
     public static int getUserId() {
         return userId;
     }
+
+    public static void addRequest(String newRequest) {
+        for (int i = 0; i < requestArray.length; i++ ) {
+            if (requestArray[i] != null) {
+                requestArray[i] = newRequest;
+                break;
+            }
+        }
+    }
+
+    public static String[] getRequestArray() {
+        return requestArray;
+    }
+
+    public static void clearRequest(String request) {
+        for (int i = 0; i < requestArray.length; i++ ) {
+            if (requestArray[i].equals(request)) {
+                requestArray[i] = null;
+                break;
+            }
+        }
+    }
+
+
 }

@@ -40,7 +40,6 @@ import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUs
 public class SettingActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     private Switch switchNotification;
-    public String[] requestArray;
     SharedPreferences prefs;
     private static String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
     private static URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
@@ -101,7 +100,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         Button login = findViewById(R.id.login_btn);
         login.setText(prefs.getString("login", "Чтобы авторизоваться для синхронизации заметок, нажмите здесь"));
         login.setOnClickListener(view -> {
-            if (checkInternetConnection()) {
+            if (isInternetConnection()) {
                 VKSdk.login(this, "wall");
                 onActivityResult(1,RESULT_OK, getIntent());
 
@@ -230,7 +229,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         return newUser;
     }
 
-    public boolean checkInternetConnection() {
+    public boolean isInternetConnection() {
         boolean connect;
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         connect = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
