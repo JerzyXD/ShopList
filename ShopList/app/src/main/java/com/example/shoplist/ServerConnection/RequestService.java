@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import androidx.annotation.Nullable;
 
 import static com.example.shoplist.Activiti.MainActivity.getRequestArray;
@@ -28,7 +31,6 @@ public class RequestService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "onStartCommand");
         sendRequest();
-        stopSelf();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -38,12 +40,15 @@ public class RequestService extends Service {
     }
 
     public void sendRequest() {
-        String[] requestArray = getRequestArray();
-        for (int i = 0; i < requestArray.length; i++) {
-            if (requestArray[i] != null) {
-                sendRequestFromMemory(requestArray[i]);
-            }
-        }
+        new Thread(() -> {
+            String[] requestArray = getRequestArray();
+            for (String s : requestArray) {
+                if (s != null) {
+                    sendRequestFromMemory(s);
+                    Logger.getLogger(LOG_TAG).log(Level.INFO, s);
+                } else break;
+            } stopSelf();
+        }).start();
     }
 
 

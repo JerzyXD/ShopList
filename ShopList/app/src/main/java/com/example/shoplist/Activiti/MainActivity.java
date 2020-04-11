@@ -1,6 +1,7 @@
 package com.example.shoplist.Activiti;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -12,6 +13,9 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,16 +30,22 @@ import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
 import com.example.shoplist.ServerConnection.RequestService;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.example.shoplist.ServerConnection.ServerRequest.deleteNoteServer;
+import static com.example.shoplist.ServerConnection.ServerRequest.setInternetConnection;
 import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUserInfo;
 
 public class MainActivity extends AppCompatActivity {
 
     private List<NoteClass> shopList;
-    public static String[] requestArray;
+    public static String[] requestArray = new String[20];
     private Menu menu;
     private MyViewModel viewModel;
     ShopListAdapter adapter;
@@ -43,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private static int madeCounter;
     public static int userId;
     SharedPreferences prefs;
+    public JSONArray jsonArray = new JSONArray();
+    public String array;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,13 +128,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startService(new Intent( this ,RequestService.class));
+        setInternetConnection(isInternetConnection());
+        addRequest("/note?act=add&idnote=f3&name=g&type=%D0%9F%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%8B&amount=3&units=hg&date=11.04.2020&checked=false&iduser=310035822");
+        Logger.getLogger("myLog").log(Level.INFO, requestArray[0]);
+        if (isInternetConnection()) {
+            Logger.getLogger("myLog").log(Level.INFO, "Отправка из буфера");
+            startService(new Intent( this, RequestService.class));
+        }
+
 
         prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
         checkedCounter = prefs.getInt("checkedCounter", 0);
         madeCounter = prefs.getInt("madeCounter", 0);
         userId = prefs.getInt("id", 0);
-        System.out.println(userId);
+        
 
         RecyclerView recyclerView = findViewById(R.id.shop_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -211,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
         ed.putInt("checkedCounter", checkedCounter);
         ed.putInt("madeCounter", madeCounter);
         ed.putInt("id", userId);
+        ed.putString("array", array);
         ed.apply();
     }
 
@@ -290,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void addRequest(String newRequest) {
         for (int i = 0; i < requestArray.length; i++ ) {
-            if (requestArray[i] != null) {
+            if (requestArray[i] == null) {
                 requestArray[i] = newRequest;
                 break;
             }
@@ -305,8 +325,27 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < requestArray.length; i++ ) {
             if (requestArray[i].equals(request)) {
                 requestArray[i] = null;
+                Logger.getLogger("myLog").log(Level.INFO, "Request clear " + i);
                 break;
             }
+        }
+    }
+
+    public boolean isInternetConnection() {
+        boolean connect;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        connect = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+        return connect;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void saveRequestArray (String[] requestArray) {
+        try {
+            jsonArray = new JSONArray(requestArray);
+            array = jsonArray.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

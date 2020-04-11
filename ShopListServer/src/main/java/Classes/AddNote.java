@@ -34,20 +34,36 @@ public class AddNote extends HttpServlet {
 
         if (req.getParameter("act").equals("edit")) {
             System.out.println("edit note");
-            long c = connector.executeUpdate("UPDATE notes SET name ='"
-                    + req.getParameter("name") + "'"
-                    + "," + "type='" + req.getParameter("type") + "'"
-                    + "," + "amount='" + req.getParameter("amount") + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
-            writer.print(c);
-            System.out.println(c);
+            try {
+                ResultSet rs = connector.executeQuery("SELECT idnote FROM notes WHERE idnote='" + req.getParameter("idnote") + "'");
+                if (rs.next()) {
+                    long c = connector.executeUpdate("UPDATE notes SET name ='"
+                            + req.getParameter("name") + "'"
+                            + "," + "type='" + req.getParameter("type") + "'"
+                            + "," + "amount='" + req.getParameter("amount") + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
+                    writer.print(c);
+                    System.out.println(c);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
 
         if (req.getParameter("act").equals("delete")) {
-            long c = connector.executeUpdate("DELETE FROM notes WHERE idnote='" + req.getParameter("idnote") + "'");
-            writer.print(c);
-            System.out.println("note delete");
-            System.out.println(c);
+            try {
+                ResultSet rs = connector.executeQuery("SELECT idnote FROM notes WHERE idnote='" + req.getParameter("idnote") + "'");
+                if (rs.next()) {
+                    long c = connector.executeUpdate("DELETE FROM notes WHERE idnote='" + req.getParameter("idnote") + "'");
+                    writer.print(c);
+                    System.out.println("note delete");
+                    System.out.println(c);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
     }
+
+
 }

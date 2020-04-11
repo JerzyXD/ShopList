@@ -56,7 +56,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         setContentView(R.layout.activity_setting);
         setTitle("Настройки");
         prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
-        Logger.getLogger("mylog").log(Level.INFO, "on create");
 
         TextView vkText1 = findViewById(R.id.textVk1);
         TextView vkText2 = findViewById(R.id.textVk2);

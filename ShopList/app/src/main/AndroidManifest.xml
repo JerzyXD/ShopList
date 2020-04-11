@@ -21,6 +21,11 @@
             android:exported="false"
             android:stopWithTask="false">
         </service>
+        <service
+            android:name=".ServerConnection.RequestService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
         <activity
             android:name=".Activiti.MainActivity"
             android:screenOrientation="fullSensor">
