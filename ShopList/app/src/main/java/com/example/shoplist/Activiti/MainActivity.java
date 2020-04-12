@@ -29,11 +29,14 @@ import com.example.shoplist.Fragments.CreateNoteDialogFragment;
 import com.example.shoplist.Fragments.FilterDialogFragment;
 import com.example.shoplist.R;
 import com.example.shoplist.ServerConnection.RequestService;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,16 +48,14 @@ import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUs
 public class MainActivity extends AppCompatActivity {
 
     private List<NoteClass> shopList;
-    public static String[] requestArray = new String[20];
+    public static String[] requestArray = new String[50];
     private Menu menu;
     private MyViewModel viewModel;
     ShopListAdapter adapter;
     private static int checkedCounter;
     private static int madeCounter;
     public static int userId;
-    SharedPreferences prefs;
-    public JSONArray jsonArray = new JSONArray();
-    public String array;
+    static SharedPreferences prefs;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,19 +130,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setInternetConnection(isInternetConnection());
-        addRequest("/note?act=add&idnote=f3&name=g&type=%D0%9F%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%8B&amount=3&units=hg&date=11.04.2020&checked=false&iduser=310035822");
-        Logger.getLogger("myLog").log(Level.INFO, requestArray[0]);
-        if (isInternetConnection()) {
-            Logger.getLogger("myLog").log(Level.INFO, "Отправка из буфера");
-            startService(new Intent( this, RequestService.class));
-        }
-
 
         prefs = getSharedPreferences("test", Context.MODE_PRIVATE);
         checkedCounter = prefs.getInt("checkedCounter", 0);
         madeCounter = prefs.getInt("madeCounter", 0);
         userId = prefs.getInt("id", 0);
-        
+        Gson gson = new Gson();
+        String json = prefs.getString("requestArray", "");
+        if (json.length() != 0) {
+            requestArray = gson.fromJson(json, String[].class).clone();
+        }
+
+        for (String request : requestArray) {
+            System.out.println(request);
+        }
+
+        if (isInternetConnection()) {
+            Logger.getLogger("myLog").log(Level.INFO, "Отправка из буфера");
+            //Logger.getLogger("myLog").log(Level.INFO, requestArray[0]);
+            startService(new Intent( this, RequestService.class));
+        }
+
 
         RecyclerView recyclerView = findViewById(R.id.shop_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -176,10 +185,6 @@ public class MainActivity extends AppCompatActivity {
 
             setSubTitle();
         });
-
-        /**
-         * Обработка свайпов заметки (только влево)
-         */
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -230,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         ed.putInt("checkedCounter", checkedCounter);
         ed.putInt("madeCounter", madeCounter);
         ed.putInt("id", userId);
-        ed.putString("array", array);
+
         ed.apply();
     }
 
@@ -315,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
+        saveRequestArray(requestArray);
     }
 
     public static String[] getRequestArray() {
@@ -329,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
+        saveRequestArray(requestArray);
     }
 
     public boolean isInternetConnection() {
@@ -339,14 +346,11 @@ public class MainActivity extends AppCompatActivity {
         return connect;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void saveRequestArray (String[] requestArray) {
-        try {
-            jsonArray = new JSONArray(requestArray);
-            array = jsonArray.toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+    public static void saveRequestArray (String[] requestArray) {
+        SharedPreferences.Editor ed = prefs.edit();
+        ed.putString("requestArray", new Gson().toJson(requestArray))
+                .apply();
     }
 
 

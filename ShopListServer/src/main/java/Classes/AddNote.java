@@ -43,7 +43,7 @@ public class AddNote extends HttpServlet {
                             + "," + "amount='" + req.getParameter("amount") + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
                     writer.print(c);
                     System.out.println(c);
-                }
+                } else writer.print(0);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -58,7 +58,7 @@ public class AddNote extends HttpServlet {
                     writer.print(c);
                     System.out.println("note delete");
                     System.out.println(c);
-                }
+                } else writer.print(0);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

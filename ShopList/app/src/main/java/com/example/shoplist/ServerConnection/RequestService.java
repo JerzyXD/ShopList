@@ -10,7 +10,9 @@ import java.util.logging.Logger;
 
 import androidx.annotation.Nullable;
 
+import static com.example.shoplist.Activiti.MainActivity.clearRequest;
 import static com.example.shoplist.Activiti.MainActivity.getRequestArray;
+import static com.example.shoplist.Activiti.MainActivity.saveRequestArray;
 import static com.example.shoplist.ServerConnection.ServerRequest.noteAddServer;
 import static com.example.shoplist.ServerConnection.ServerRequest.sendRequestFromMemory;
 
@@ -46,8 +48,12 @@ public class RequestService extends Service {
                 if (s != null) {
                     sendRequestFromMemory(s);
                     Logger.getLogger(LOG_TAG).log(Level.INFO, s);
+
                 } else break;
-            } stopSelf();
+            }
+            requestArray = new String[50];
+            saveRequestArray(requestArray);
+            stopSelf();
         }).start();
     }
 

@@ -47,7 +47,7 @@ public class ServerRequest {
             updateServerUserInfo();
         } else {
             addRequest(request);
-            Logger.getLogger("myLog").log(Level.INFO, "Не отправлено");
+            Logger.getLogger("myLog").log(Level.INFO, "Добавлено в буфер");
         }
 
     }
@@ -68,7 +68,7 @@ public class ServerRequest {
             Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
         } else {
             addRequest(request);
-            Logger.getLogger("myLog").log(Level.INFO, "Не отправлено");
+            Logger.getLogger("myLog").log(Level.INFO, "Добавлено в буфер");
         }
 
     }
@@ -87,7 +87,7 @@ public class ServerRequest {
             Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
         } else {
             addRequest(request);
-            Logger.getLogger("myLog").log(Level.INFO, "Не отправлено");
+            Logger.getLogger("myLog").log(Level.INFO, "Добавлено в буфер");
         }
 
     }
@@ -108,7 +108,7 @@ public class ServerRequest {
             Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
 
         } else {
-            Logger.getLogger("myLog").log(Level.INFO, "Не отправлено");
+            Logger.getLogger("myLog").log(Level.INFO, "Добавлено в буфер");
             addRequest(request);
         }
 
@@ -118,7 +118,6 @@ public class ServerRequest {
         if (getInternetConnection()) {
             int r =  Integer.parseInt(url.get(request).replaceAll("\n",""));
             Logger.getLogger("mylog").log(Level.INFO, "send");
-            clearRequest(request);
             Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
             MainActivity.incMadeCounter();
             updateServerUserInfo();
