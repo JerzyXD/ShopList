@@ -1,26 +1,20 @@
 package com.example.shoplist.ServerConnection;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-
 import com.example.shoplist.Activiti.MainActivity;
-import com.example.shoplist.Activiti.SettingActivity;
 import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.Classes.URLSendRequest;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import androidx.core.content.ContextCompat;
-
 import static com.example.shoplist.Activiti.MainActivity.addRequest;
-import static com.example.shoplist.Activiti.MainActivity.clearRequest;
+import static com.example.shoplist.Activiti.MainActivity.getCheckedCounter;
+import static com.example.shoplist.Activiti.MainActivity.getMadeCounter;
 
 public class ServerRequest {
 
     private static String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
-    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
+    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 30000);
     private static boolean isInternetConnection;
 
     /**
@@ -52,16 +46,14 @@ public class ServerRequest {
 
     }
 
-
-
     /**
      * Обновление информации о пользователе при изменении его статистики
      */
 
     public static void updateServerUserInfo() {
         String request = "login?act=update&iduser="+MainActivity.getUserId()
-                + "&madecounter=" + MainActivity.getMadeCounter()
-                + "&checkcounter=" + MainActivity.getCheckedCounter();
+                + "&madecounter=" + getMadeCounter()
+                + "&checkcounter=" + getCheckedCounter();
 
         if (getInternetConnection()) {
             int r = Integer.parseInt(url.get(request).replaceAll("\n",""));
@@ -114,6 +106,11 @@ public class ServerRequest {
 
     }
 
+    /**
+     * Отправка запроса из буфера
+     * @param request — запрос, который нужно отправить
+     */
+
     public static void sendRequestFromMemory (String request) {
         if (getInternetConnection()) {
             int r =  Integer.parseInt(url.get(request).replaceAll("\n",""));
@@ -122,6 +119,20 @@ public class ServerRequest {
             MainActivity.incMadeCounter();
             updateServerUserInfo();
         }
+    }
+
+    /**
+     * Вход/регистрация пользователя
+     * @param id пользователя
+     * @param name — имя пользователя
+     */
+    public static void login (int id, String name) {
+        int r = Integer.parseInt(url.get("login?act=reg&iduser=" + id
+                + "&username="+ name
+                + "&madecounter="+ getMadeCounter()
+                + "&checkcounter=" + getCheckedCounter()).replaceAll("\n",""));
+
+        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
     }
 
 

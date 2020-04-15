@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 
 import androidx.annotation.Nullable;
 
-import static com.example.shoplist.Activiti.MainActivity.clearRequest;
 import static com.example.shoplist.Activiti.MainActivity.getRequestArray;
 import static com.example.shoplist.Activiti.MainActivity.saveRequestArray;
 import static com.example.shoplist.ServerConnection.ServerRequest.noteAddServer;
@@ -41,7 +40,7 @@ public class RequestService extends Service {
         Log.d(LOG_TAG, "onDestroy");
     }
 
-    public void sendRequest() {
+    private void sendRequest() {
         new Thread(() -> {
             String[] requestArray = getRequestArray();
             for (String s : requestArray) {
@@ -56,6 +55,5 @@ public class RequestService extends Service {
             stopSelf();
         }).start();
     }
-
 
 }

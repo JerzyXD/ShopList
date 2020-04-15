@@ -36,8 +36,6 @@ public class CreateNoteDialogFragment extends DialogFragment {
     private List<NoteClass> list;
     private int id;
     private MyViewModel viewModel;
-    private static String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
-    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
 
     public CreateNoteDialogFragment(Context context, List list, MyViewModel viewModel ) {
         this.context = context;

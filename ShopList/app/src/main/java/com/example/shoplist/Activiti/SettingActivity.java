@@ -35,14 +35,13 @@ import java.util.logging.Logger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.shoplist.ServerConnection.ServerRequest.login;
 import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUserInfo;
 
 public class SettingActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     private Switch switchNotification;
     SharedPreferences prefs;
-    private static String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
-    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
     Button setTimeBtn;
     int myHour;
     int myMinute;
@@ -192,14 +191,9 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                     int id = object.getInt("id");
                     MainActivity.setUserId(id);
                     name = object.getString("first_name");
-                    User user = createUser(id, "Юра");
+                    User user = createUser(id, name);
                     Logger.getLogger("mylog").log(Level.INFO, "send");
-                    int r = Integer.parseInt(url.get("login?act=reg&iduser="+ user.getId()
-                            + "&username="+ user.getName()
-                            + "&madecounter="+ user.getMadeCounter()
-                            + "&checkcounter=" + user.getCheckCounter()).replaceAll("\n",""));
-
-                    Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+                    login(user.getId(), user.getName());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -220,7 +214,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
 
     private User createUser(int id, String name) {
         User newUser = new User(id, name, MainActivity.getMadeCounter(), MainActivity.getCheckedCounter());
-        System.out.println("/////////////////////////////////////////////////////");
+        System.out.println("________________________________________________");
         System.out.println("Name: " + newUser.getName());
         System.out.println("Id: " +newUser.getId());
         System.out.println("MadeCounter: " + newUser.getMadeCounter());

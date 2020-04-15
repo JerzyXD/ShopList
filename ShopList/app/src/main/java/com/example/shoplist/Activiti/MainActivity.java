@@ -1,7 +1,6 @@
 package com.example.shoplist.Activiti;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -31,12 +30,8 @@ import com.example.shoplist.R;
 import com.example.shoplist.ServerConnection.RequestService;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -147,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (isInternetConnection()) {
             Logger.getLogger("myLog").log(Level.INFO, "Отправка из буфера");
-            //Logger.getLogger("myLog").log(Level.INFO, requestArray[0]);
             startService(new Intent( this, RequestService.class));
         }
 
@@ -274,11 +268,45 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Открытие диалога для редактирования заметки.
-     * @param note
+     * @param note — заметка, которую будут редактировать
      */
     public void createDialog(NoteClass note) {
         CreateNoteDialogFragment dialog = new CreateNoteDialogFragment(note,this, shopList, viewModel);
         dialog.show(getSupportFragmentManager(), "tag");
+    }
+
+    /**
+     * Добавление запроса в буфер
+     * @param newRequest — текст запроса
+     */
+    public static void addRequest(String newRequest) {
+        for (int i = 0; i < requestArray.length; i++ ) {
+            if (requestArray[i] == null) {
+                requestArray[i] = newRequest;
+                break;
+            }
+        }
+        saveRequestArray(requestArray);
+    }
+
+    public static String[] getRequestArray() {
+        return requestArray;
+    }
+
+
+    public boolean isInternetConnection() {
+        boolean connect;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        connect = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+        return connect;
+    }
+
+
+    public static void saveRequestArray (String[] requestArray) {
+        SharedPreferences.Editor ed = prefs.edit();
+        ed.putString("requestArray", new Gson().toJson(requestArray))
+                .apply();
     }
 
     private static void incCheckCounter() {
@@ -311,46 +339,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static int getUserId() {
         return userId;
-    }
-
-    public static void addRequest(String newRequest) {
-        for (int i = 0; i < requestArray.length; i++ ) {
-            if (requestArray[i] == null) {
-                requestArray[i] = newRequest;
-                break;
-            }
-        }
-        saveRequestArray(requestArray);
-    }
-
-    public static String[] getRequestArray() {
-        return requestArray;
-    }
-
-    public static void clearRequest(String request) {
-        for (int i = 0; i < requestArray.length; i++ ) {
-            if (requestArray[i].equals(request)) {
-                requestArray[i] = null;
-                Logger.getLogger("myLog").log(Level.INFO, "Request clear " + i);
-                break;
-            }
-        }
-        saveRequestArray(requestArray);
-    }
-
-    public boolean isInternetConnection() {
-        boolean connect;
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        connect = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
-        return connect;
-    }
-
-
-    public static void saveRequestArray (String[] requestArray) {
-        SharedPreferences.Editor ed = prefs.edit();
-        ed.putString("requestArray", new Gson().toJson(requestArray))
-                .apply();
     }
 
 
