@@ -13,8 +13,8 @@ import static com.example.shoplist.Activiti.MainActivity.getMadeCounter;
 
 public class ServerRequest {
 
-    private static String SERVER_IP = "http://192.168.56.1:8080/ShopListServer/";
-    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 30000);
+    private static String SERVER_IP = "http://192.168.1.194:8080/ShopListServer/";
+    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
     private static boolean isInternetConnection;
 
     /**
