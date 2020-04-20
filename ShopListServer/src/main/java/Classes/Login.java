@@ -17,36 +17,39 @@ public class Login extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         System.out.println("login");
         if (connector == null || !connector.isOpen()) connector = new DBConnector();
-        if (req.getParameter("act").equals("reg")) {
-            try {
-                ResultSet rs = connector.executeQuery("SELECT iduser FROM user WHERE iduser='" + req.getParameter("iduser") + "'");
-                if (rs.next()) {
-                    writer.print(rs.getString("iduser"));
-                    System.out.println("user login");
-                } else {
-                    long c = connector.executeUpdate("INSERT user VALUE('" +
-                            req.getParameter("iduser")
-                            + "','" + req.getParameter("username")
-                            + "','" + req.getParameter("madecounter")
-                            + "','" + req.getParameter("checkcounter") + "')");
+        if (req.getParameter("act") != null) {
+            switch (req.getParameter("act")) {
+                case "reg":
+                    try {
+                        ResultSet rs = connector.executeQuery("SELECT iduser FROM user WHERE iduser='" + req.getParameter("iduser") + "'");
+                        if (rs.next()) {
+                            writer.print(rs.getString("iduser"));
+                            System.out.println("user login");
+                        } else {
+                            long c = connector.executeUpdate("INSERT user VALUE('" +
+                                    req.getParameter("iduser")
+                                    + "','" + req.getParameter("username")
+                                    + "','" + req.getParameter("madecounter")
+                                    + "','" + req.getParameter("checkcounter") + "')");
+                            writer.print(c);
+                            System.out.println("user create");
+                            System.out.println(c);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case "update": {
+                    long c = connector.executeUpdate("UPDATE user SET madecounter='" + req.getParameter("madecounter")
+                            + "'," + "checkcounter='" + req.getParameter("checkcounter")
+                            + "' WHERE iduser='" + req.getParameter("iduser") + "'");
                     writer.print(c);
-                    System.out.println("user create");
+                    System.out.println("user info update");
                     System.out.println(c);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
+                break;
             }
-
         }
-
-        if (req.getParameter("act").equals("update")) {
-            long c = connector.executeUpdate("UPDATE user SET madecounter='" + req.getParameter("madecounter")
-                    + "'," + "checkcounter='" + req.getParameter("checkcounter")
-                    + "' WHERE iduser='" + req.getParameter("iduser") + "'");
-            writer.print(c);
-            System.out.println("user info update");
-            System.out.println(c);
-        }
-       
     }
 }

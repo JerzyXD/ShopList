@@ -17,30 +17,36 @@ public class AddNote extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
         if (connector == null || !connector.isOpen()) connector = new DBConnector();
-        if (req.getParameter("act").equals("add")) {
-            addNote(req, writer);
-        }
+        if (req.getParameter("act") != null) {
+            switch (req.getParameter("act")) {
+                case "add": {
+                    addNote(req, writer);
+                }
+                break;
 
-        if (req.getParameter("act").equals("edit")) {
-            System.out.println("edit note");
-                     c = connector.executeUpdate("UPDATE notes SET name ='"
+                case "edit": {
+                    System.out.println("edit note");
+                    c = connector.executeUpdate("UPDATE notes SET name ='"
                             + req.getParameter("name") + "'"
                             + "," + "type='" + req.getParameter("type") + "'"
                             + "," + "amount='" + req.getParameter("amount") + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
-                     if (c == 0) {
-                         addNote(req, writer);
-                     }
+                    if (c == 0) {
+                        addNote(req, writer);
+                    }
                     writer.print(c);
                     System.out.println(c);
+                }
+                break;
 
-        }
-
-        if (req.getParameter("act").equals("delete")) {
+                case "delete": {
                     long c = connector.executeUpdate("DELETE FROM notes WHERE idnote='" + req.getParameter("idnote") + "'");
                     writer.print(c);
                     System.out.println("note delete");
                     System.out.println(c);
                 }
+                break;
+            }
+        }
     }
 
     private void addNote(HttpServletRequest req, PrintWriter writer) {
