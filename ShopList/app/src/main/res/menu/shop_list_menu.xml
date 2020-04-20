@@ -48,6 +48,9 @@
                 android:icon="@drawable/ic_share_24px"
                 app:iconTint="@color/colorPrimaryDark"
                 app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/getListButton"
+                android:title="Синхронизация заметок" />
         </menu>
     </item>
 </menu>
