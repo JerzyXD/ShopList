@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.example.shoplist.ServerConnection.ServerRequest.deleteNoteServer;
+import static com.example.shoplist.ServerConnection.ServerRequest.editNoteServer;
 import static com.example.shoplist.ServerConnection.ServerRequest.setInternetConnection;
 import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUserInfo;
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     ShopListAdapter adapter;
     private static int checkedCounter;
     private static int madeCounter;
-    public static int userId;
+    private static int userId;
     static SharedPreferences prefs;
 
     @Override
@@ -104,18 +105,24 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.copyButton:
                 StringBuilder builder = new StringBuilder();
-                for (NoteClass note: shopList) {
-                    builder.append(shopList.indexOf(note) + 1 + ") " + note.toString() + "\n");
+                if (shopList.size() > 0) {
+                    for (NoteClass note: shopList) {
+                        builder.append(shopList.indexOf(note) + 1 + ") " + note.toString() + "\n");
+                    }
+                    builder.setLength(builder.length()-1);
+                    ClipboardManager clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("", builder);
+                    assert clipboard != null;
+                    clipboard.setPrimaryClip(clip);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Список скопирован", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else
+                {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Список пустой", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
-                builder.setLength(builder.length()-1);
-                ClipboardManager clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("", builder);
-                assert clipboard != null;
-                clipboard.setPrimaryClip(clip);
-                Toast toast = Toast.makeText(getApplicationContext(), "Список скопирован", Toast.LENGTH_SHORT);
-                toast.show();
-
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -130,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         checkedCounter = prefs.getInt("checkedCounter", 0);
         madeCounter = prefs.getInt("madeCounter", 0);
         userId = prefs.getInt("id", 0);
+        System.out.println(getUserId());
         Gson gson = new Gson();
         String json = prefs.getString("requestArray", "");
         if (json.length() != 0) {
@@ -204,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_LONG ).show();
             }
 
+            editNoteServer(note);
             updateServerUserInfo();
 
             viewModel.update(note);
@@ -340,6 +349,5 @@ public class MainActivity extends AppCompatActivity {
     public static int getUserId() {
         return userId;
     }
-
 
 }

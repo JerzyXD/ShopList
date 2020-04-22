@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.shoplist.Activiti.MainActivity.setUserId;
 import static com.example.shoplist.ServerConnection.ServerRequest.login;
 import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUserInfo;
 
@@ -135,8 +136,6 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         Button login = findViewById(R.id.login_btn);
         ed.putString("welcome", (String) login.getText() );
         ed.putBoolean("switchState", switchNotification.isChecked());
-
-
     }
 
     @Override
@@ -189,7 +188,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
                 JSONObject object = list.get(0).fields;
                 try {
                     int id = object.getInt("id");
-                    MainActivity.setUserId(id);
+                    setUserId(id);
                     name = object.getString("first_name");
                     User user = createUser(id, name);
                     Logger.getLogger("mylog").log(Level.INFO, "send");
@@ -216,7 +215,7 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         User newUser = new User(id, name, MainActivity.getMadeCounter(), MainActivity.getCheckedCounter());
         System.out.println("________________________________________________");
         System.out.println("Name: " + newUser.getName());
-        System.out.println("Id: " +newUser.getId());
+        System.out.println("Id: " + newUser.getId());
         System.out.println("MadeCounter: " + newUser.getMadeCounter());
         System.out.println("CheckCounter: " + newUser.getCheckCounter());
         return newUser;

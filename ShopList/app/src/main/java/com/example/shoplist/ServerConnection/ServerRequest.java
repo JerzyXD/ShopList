@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import static com.example.shoplist.Activiti.MainActivity.addRequest;
 import static com.example.shoplist.Activiti.MainActivity.getCheckedCounter;
 import static com.example.shoplist.Activiti.MainActivity.getMadeCounter;
+import static com.example.shoplist.Activiti.MainActivity.getUserId;
 
 public class ServerRequest {
 
@@ -30,7 +31,7 @@ public class ServerRequest {
                 + "&units=" + note.getUnits()
                 + "&date=" + note.getData()
                 + "&checked=" + note.getChecked().toString()
-                + "&iduser=" + MainActivity.getUserId();
+                + "&iduser=" + getUserId();
 
         if (getInternetConnection()) {
             int r =  Integer.parseInt(url.get(request).replaceAll("\n",""));
@@ -51,7 +52,7 @@ public class ServerRequest {
      */
 
     public static void updateServerUserInfo() {
-        String request = "login?act=update&iduser="+MainActivity.getUserId()
+        String request = "login?act=update&iduser="+ getUserId()
                 + "&madecounter=" + getMadeCounter()
                 + "&checkcounter=" + getCheckedCounter();
 
@@ -94,7 +95,10 @@ public class ServerRequest {
                 + "&type=" + note.getType()
                 + "&amount="+ note.getAmount()
                 + "&units=" + note.getUnits()
-                + "&idnote=" + note.getId();
+                + "&idnote=" + note.getId()
+                + "&iduser=" + getUserId();
+        System.out.println(getUserId());
+        System.out.println(request);
         if (getInternetConnection()) {
             int r = Integer.parseInt(url.get(request).replaceAll("\n",""));
             Logger.getLogger("mylog").log(Level.INFO, "result: " + r);

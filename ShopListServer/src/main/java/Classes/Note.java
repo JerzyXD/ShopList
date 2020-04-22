@@ -42,6 +42,7 @@ public class Note extends HttpServlet {
                             + "," + "amount='" + req.getParameter("amount") + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
                     if (c == 0) {
                         addNote(req, writer);
+                        System.out.println(req.getParameter("iduser"));
                     }
                     writer.print(c);
                     System.out.println(c);
