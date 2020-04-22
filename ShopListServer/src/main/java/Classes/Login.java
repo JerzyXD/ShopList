@@ -11,6 +11,8 @@ import java.sql.SQLException;
 
 public class Login extends HttpServlet {
 
+    long c;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
@@ -24,7 +26,7 @@ public class Login extends HttpServlet {
                             writer.print(rs.getString("iduser"));
                             System.out.println("user login");
                         } else {
-                            long c = DBConnector.executeUpdate("INSERT user VALUE('" +
+                             c = DBConnector.executeUpdate("INSERT user VALUE('" +
                                     req.getParameter("iduser")
                                     + "','" + req.getParameter("username")
                                     + "','" + req.getParameter("madecounter")
@@ -39,7 +41,7 @@ public class Login extends HttpServlet {
                     break;
 
                 case "update": {
-                    long c = DBConnector.executeUpdate("UPDATE user SET madecounter='" + req.getParameter("madecounter")
+                     c = DBConnector.executeUpdate("UPDATE user SET madecounter='" + req.getParameter("madecounter")
                             + "'," + "checkcounter='" + req.getParameter("checkcounter")
                             + "' WHERE iduser='" + req.getParameter("iduser") + "'");
                     writer.print(c);

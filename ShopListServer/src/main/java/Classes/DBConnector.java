@@ -28,7 +28,7 @@ public class DBConnector {
 
 
 
-    public boolean isOpen() {
+    public static boolean isOpen() {
         try {
             return !con.isClosed();
         } catch (SQLException e) {
@@ -37,21 +37,34 @@ public class DBConnector {
         }
     }
 
+    /**
+     * Отправка запроса извлекающего данные.
+     * @param q строка запроса.
+     * @return result set
+     * @throws SQLException
+     */
     public static ResultSet executeQuery(String q) throws SQLException {
+        if (con == null || !isOpen()) init();
         ResultSet rs;
         Statement st = con.createStatement();
         rs = st.executeQuery(q);
         return rs;
     }
 
+    /**
+     * Отправка запроса обновляющего данные.
+     * @param q строка запроса.
+     * @return Количество измененных записей.
+     */
     public static long executeUpdate(String q) {
+        if (con == null || !isOpen()) init();
         long count = 0;
         try {
             Statement st = con.createStatement();
             count += st.executeUpdate(q);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        };
         return count;
     }
 }
