@@ -1,7 +1,5 @@
 package Classes;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.util.Properties;
 
@@ -11,26 +9,24 @@ public class DBConnector {
             "jdbc:mysql://localhost:3306/shoplist?useSSL=false&useUnicode=true&characterEncoding=utf8&characterSetResults=utf-8&useJDBCCompliantTimezoneShift=" +
                     "true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
 
-    public Connection con;
+    private static Connection con;
 
-    public DBConnector() {
+    public static void init() {
         try {
             System.out.println(dbClassName);
-            // Class.forName(xxx) loads the jdbc classes and
-            // creates a drivermanager class factory
             Class.forName(dbClassName);
 
-            // Properties for user and password. Here the user and password are both 'craig'
             Properties p = new Properties();
             p.put("user","root");
             p.put("password","299792458");
 
-            // Now try to connect
             con = DriverManager.getConnection(CONNECTION,p);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
+
 
     public boolean isOpen() {
         try {
@@ -41,21 +37,21 @@ public class DBConnector {
         }
     }
 
-    public ResultSet executeQuery(String q) throws SQLException {
+    public static ResultSet executeQuery(String q) throws SQLException {
         ResultSet rs;
         Statement st = con.createStatement();
         rs = st.executeQuery(q);
         return rs;
     }
 
-    public long executeUpdate(String q) {
+    public static long executeUpdate(String q) {
         long count = 0;
         try {
             Statement st = con.createStatement();
             count += st.executeUpdate(q);
         } catch (Exception e) {
             e.printStackTrace();
-        };
+        }
         return count;
     }
 }

@@ -12,11 +12,11 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>addNote</servlet-name>
-        <servlet-class>Classes.AddNote</servlet-class>
+        <servlet-name>note</servlet-name>
+        <servlet-class>Classes.Note</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>addNote</servlet-name>
+        <servlet-name>note</servlet-name>
         <url-pattern>/note</url-pattern>
     </servlet-mapping>
 </web-app>

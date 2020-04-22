@@ -6,17 +6,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-public class AddNote extends HttpServlet {
-    private static DBConnector connector = new DBConnector();
+public class Note extends HttpServlet {
     private long c;
+
+    /**
+     * В зависимости от значения act параметра
+     * выбираются разные сценарии.
+     *
+     * act = add добавление заметки.
+     * <<< idnote, name, type, amount, units, date, checked, iduser
+     *
+     * act = edit редактирование заметки.
+     * <<< idnote, name, type, amount, units, date, checked
+     *
+     * act = delete удаление заметки
+     * <<< idnote
+     */
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
-        if (connector == null || !connector.isOpen()) connector = new DBConnector();
         if (req.getParameter("act") != null) {
             switch (req.getParameter("act")) {
                 case "add": {
@@ -26,7 +36,7 @@ public class AddNote extends HttpServlet {
 
                 case "edit": {
                     System.out.println("edit note");
-                    c = connector.executeUpdate("UPDATE notes SET name ='"
+                    c = DBConnector.executeUpdate("UPDATE notes SET name ='"
                             + req.getParameter("name") + "'"
                             + "," + "type='" + req.getParameter("type") + "'"
                             + "," + "amount='" + req.getParameter("amount") + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
@@ -39,7 +49,7 @@ public class AddNote extends HttpServlet {
                 break;
 
                 case "delete": {
-                    long c = connector.executeUpdate("DELETE FROM notes WHERE idnote='" + req.getParameter("idnote") + "'");
+                    long c = DBConnector.executeUpdate("DELETE FROM notes WHERE idnote='" + req.getParameter("idnote") + "'");
                     writer.print(c);
                     System.out.println("note delete");
                     System.out.println(c);
@@ -51,7 +61,7 @@ public class AddNote extends HttpServlet {
 
     private void addNote(HttpServletRequest req, PrintWriter writer) {
         System.out.println("input note");
-        c = connector.executeUpdate("INSERT notes VALUE('" +
+        c = DBConnector.executeUpdate("INSERT notes VALUE('" +
                 req.getParameter("idnote")
                 + "','" + req.getParameter("name")
                 + "','" + req.getParameter("type")
