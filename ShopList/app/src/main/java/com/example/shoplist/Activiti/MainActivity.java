@@ -39,6 +39,7 @@ import java.util.logging.Logger;
 import static com.example.shoplist.ServerConnection.ServerRequest.deleteNoteServer;
 import static com.example.shoplist.ServerConnection.ServerRequest.editNoteServer;
 import static com.example.shoplist.ServerConnection.ServerRequest.setInternetConnection;
+import static com.example.shoplist.ServerConnection.ServerRequest.syncNotes;
 import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUserInfo;
 
 public class MainActivity extends AppCompatActivity {
@@ -121,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), "Список пустой", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+                break;
+            case R.id.syncButton:
+                syncNotes();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -344,6 +349,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setUserId(int id) {
         MainActivity.userId = id;
+        SharedPreferences.Editor ed = prefs.edit();
+        ed.putInt("id", userId);
+        ed.apply();
     }
 
     public static int getUserId() {

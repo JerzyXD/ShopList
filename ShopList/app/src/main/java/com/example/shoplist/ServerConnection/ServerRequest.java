@@ -4,6 +4,10 @@ import com.example.shoplist.Activiti.MainActivity;
 import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.Classes.URLSendRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -139,7 +143,12 @@ public class ServerRequest {
         Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
     }
 
+    public static void syncNotes() throws JSONException {
+        String notes = url.get("login?act=sync&iduser=" + getUserId());
+        System.out.println(notes);
 
+
+    }
 
 
     public static boolean getInternetConnection() {
