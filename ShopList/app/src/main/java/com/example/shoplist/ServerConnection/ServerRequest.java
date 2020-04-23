@@ -3,6 +3,9 @@ package com.example.shoplist.ServerConnection;
 import com.example.shoplist.Activiti.MainActivity;
 import com.example.shoplist.Classes.NoteClass;
 import com.example.shoplist.Classes.URLSendRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -146,7 +149,11 @@ public class ServerRequest {
     public static void syncNotes() throws JSONException {
         String notes = url.get("login?act=sync&iduser=" + getUserId());
         System.out.println(notes);
-
+        JSONArray jsonArray = new JSONArray(notes);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                System.out.println(jsonObject.get("idnote").toString() + " i:" + i);
+        }
 
     }
 

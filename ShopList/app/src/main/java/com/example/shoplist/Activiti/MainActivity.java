@@ -31,6 +31,8 @@ import com.example.shoplist.ServerConnection.RequestService;
 import com.google.gson.Gson;
 
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -124,7 +126,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.syncButton:
-                syncNotes();
+                try {
+                    syncNotes();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
 
