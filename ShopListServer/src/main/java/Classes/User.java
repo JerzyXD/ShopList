@@ -1,21 +1,28 @@
 package Classes;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Login extends HttpServlet {
+public class User extends HttpServlet {
 
-    long c;
+    private long c;
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
+        JSONArray objects = new JSONArray();
         System.out.println("login");
         if (req.getParameter("act") != null) {
             switch (req.getParameter("act")) {
@@ -48,6 +55,27 @@ public class Login extends HttpServlet {
                     System.out.println("user info update");
                     System.out.println(c);
                 }
+                break;
+
+                case "sync": {
+                    try {
+                        System.out.println("sync notes");
+                        ResultSet rs =  DBConnector.executeQuery("SELECT * FROM notes WHERE iduser=" + req.getParameter("iduser"));
+                            while (rs.next()) {
+                                JSONObject object = new JSONObject();
+                                object.put("idnote", rs.getString("idnote"));
+                                object.put("type", rs.getString("type"));
+                                object.put("name", rs.getString("name"));
+                                object.put("amount", rs.getString("amount"));
+                                object.put("checked", rs.getString("checked"));
+                                object.put("units", rs.getString("units"));
+                                objects.put(object);
+                            }
+                    } catch (SQLException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                writer.println(objects.toString());
                 break;
             }
         }

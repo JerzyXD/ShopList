@@ -41,7 +41,6 @@ public class DBConnector {
      * Отправка запроса извлекающего данные.
      * @param q строка запроса.
      * @return result set
-     * @throws SQLException
      */
     public static ResultSet executeQuery(String q) throws SQLException {
         if (con == null || !isOpen()) init();
