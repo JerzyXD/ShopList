@@ -22,7 +22,6 @@ public class User extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
-        JSONObject object = new JSONObject();
         JSONArray objects = new JSONArray();
         System.out.println("login");
         if (req.getParameter("act") != null) {
@@ -62,8 +61,8 @@ public class User extends HttpServlet {
                     try {
                         System.out.println("sync notes");
                         ResultSet rs =  DBConnector.executeQuery("SELECT * FROM notes WHERE iduser=" + req.getParameter("iduser"));
-                        if (rs.next()) {
                             while (rs.next()) {
+                                JSONObject object = new JSONObject();
                                 object.put("idnote", rs.getString("idnote"));
                                 object.put("type", rs.getString("type"));
                                 object.put("name", rs.getString("name"));
@@ -72,11 +71,6 @@ public class User extends HttpServlet {
                                 object.put("units", rs.getString("units"));
                                 objects.put(object);
                             }
-
-                        } else {
-                            object.put("error","");
-                            objects.put(object);
-                        }
                     } catch (SQLException | JSONException e) {
                         e.printStackTrace();
                     }
