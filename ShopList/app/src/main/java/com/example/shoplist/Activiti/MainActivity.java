@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -159,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.println(request);
         }
 
-        if (isInternetConnection()) {
+        if (requestArray[0] != null) {
             Logger.getLogger("myLog").log(Level.INFO, "Отправка из буфера");
             startService(new Intent( this, RequestService.class));
         }
@@ -171,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         viewModel = ViewModelProviders.of(this).get(MyViewModel.class);
-
         viewModel.getAllNotes().observe( this, notes -> {
             adapter.setNotes(notes);
             shopList = new ArrayList<>(notes);
