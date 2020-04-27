@@ -9,7 +9,7 @@
 <html>
   <head>
     <title>ShopList</title>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
   </head>
   <link rel="stylesheet" href="css/main.css" >
   <link rel="shortcut icon" href="images/ic_launcher.png">

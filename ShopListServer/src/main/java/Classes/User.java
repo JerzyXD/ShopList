@@ -69,6 +69,7 @@ public class User extends HttpServlet {
                                 object.put("amount", rs.getString("amount"));
                                 object.put("checked", rs.getString("checked"));
                                 object.put("units", rs.getString("units"));
+                                object.put("date", rs.getString("date"));
                                 objects.put(object);
                             }
                     } catch (SQLException | JSONException e) {
@@ -76,6 +77,7 @@ public class User extends HttpServlet {
                     }
                 }
                 writer.println(objects.toString());
+                System.out.println(objects.toString());
                 break;
             }
         }
