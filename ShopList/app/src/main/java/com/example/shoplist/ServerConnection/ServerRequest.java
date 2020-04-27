@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +20,7 @@ import static com.example.shoplist.Activiti.MainActivity.getUserId;
 public class ServerRequest {
 
     private static String SERVER_IP = "http://192.168.1.194:8080/ShopListServer/";
-    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 20000);
+    private static URLSendRequest url = new URLSendRequest(SERVER_IP, 5000);
     private static boolean isInternetConnection;
 
     /**
@@ -36,18 +37,18 @@ public class ServerRequest {
                 + "&date=" + note.getData()
                 + "&checked=" + note.getChecked().toString()
                 + "&iduser=" + getUserId();
-
-        if (getInternetConnection()) {
+        try {
             int r =  Integer.parseInt(url.get(request).replaceAll("\n",""));
             Logger.getLogger("mylog").log(Level.INFO, "send");
-
             Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+
             MainActivity.incMadeCounter();
             updateServerUserInfo();
-        } else {
+        } catch (NullPointerException ex) {
             addRequest(request);
             Logger.getLogger("myLog").log(Level.INFO, "Добавлено в буфер");
         }
+
 
     }
 
@@ -59,11 +60,10 @@ public class ServerRequest {
         String request = "login?act=update&iduser="+ getUserId()
                 + "&madecounter=" + getMadeCounter()
                 + "&checkcounter=" + getCheckedCounter();
-
-        if (getInternetConnection()) {
+        try {
             int r = Integer.parseInt(url.get(request).replaceAll("\n",""));
             Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
-        } else {
+        } catch (NullPointerException ex) {
             addRequest(request);
             Logger.getLogger("myLog").log(Level.INFO, "Добавлено в буфер");
         }
@@ -103,15 +103,14 @@ public class ServerRequest {
                 + "&iduser=" + getUserId();
         System.out.println(getUserId());
         System.out.println(request);
-        if (getInternetConnection()) {
-            int r = Integer.parseInt(url.get(request).replaceAll("\n",""));
-            Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
-
-        } else {
-            Logger.getLogger("myLog").log(Level.INFO, "Добавлено в буфер");
-            addRequest(request);
-        }
-
+            try {
+                int r = Integer.parseInt(url.get(request).replaceAll("\n",""));
+                Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+            } catch (NullPointerException ex) {
+                Logger.getLogger("mylog").log(Level.INFO, "result: no server connect " );
+                Logger.getLogger("myLog").log(Level.INFO, "Добавлено в буфер");
+                addRequest(request);
+            }
     }
 
     /**
@@ -120,12 +119,14 @@ public class ServerRequest {
      */
 
     public static void sendRequestFromMemory (String request) {
-        if (getInternetConnection()) {
+        try {
             int r =  Integer.parseInt(url.get(request).replaceAll("\n",""));
             Logger.getLogger("mylog").log(Level.INFO, "send");
             Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
             MainActivity.incMadeCounter();
             updateServerUserInfo();
+        } catch (NullPointerException ex) {
+            Logger.getLogger("mylog").log(Level.INFO, "result: no server connect " );
         }
     }
 
@@ -135,18 +136,31 @@ public class ServerRequest {
      * @param name — имя пользователя
      */
     public static void login (int id, String name) {
-        int r = Integer.parseInt(url.get("login?act=reg&iduser=" + id
-                + "&username="+ name
-                + "&madecounter="+ getMadeCounter()
-                + "&checkcounter=" + getCheckedCounter()).replaceAll("\n",""));
+        try {
+            int r = Integer.parseInt(url.get("login?act=reg&iduser=" + id
+                    + "&username="+ name
+                    + "&madecounter="+ getMadeCounter()
+                    + "&checkcounter=" + getCheckedCounter()).replaceAll("\n",""));
 
-        Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+            Logger.getLogger("mylog").log(Level.INFO, "result: " + r);
+        } catch (NullPointerException ex) {
+            Logger.getLogger("mylog").log(Level.INFO, "result: no server connection ");
+        }
+
     }
 
     public static void syncNotes() throws JSONException {
-        String notes = url.get("login?act=sync&iduser=" + getUserId());
-        System.out.println(notes);
-
+        try {
+            String notes = url.get("login?act=sync&iduser=" + getUserId());
+            System.out.println(notes);
+            JSONArray jsonArray = new JSONArray(notes);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                System.out.println(jsonObject.get("idnote").toString() + " i:" + i);
+            }
+        } catch (NullPointerException ex) {
+            Logger.getLogger("mylog").log(Level.INFO, "result: no server connection ");
+        }
 
     }
 
