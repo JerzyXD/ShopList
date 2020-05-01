@@ -1,7 +1,9 @@
 package com.example.shoplist.Activiti;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,10 +48,10 @@ import static com.example.shoplist.ServerConnection.ServerRequest.updateServerUs
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<NoteClass> shopList;
+    private static List<NoteClass> shopList;
     public static String[] requestArray = new String[50];
     private Menu menu;
-    private MyViewModel viewModel;
+    private static MyViewModel viewModel;
     ShopListAdapter adapter;
     private static int checkedCounter;
     private static int madeCounter;
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
         switch (item.getItemId()) {
@@ -147,15 +151,10 @@ public class MainActivity extends AppCompatActivity {
         checkedCounter = prefs.getInt("checkedCounter", 0);
         madeCounter = prefs.getInt("madeCounter", 0);
         userId = prefs.getInt("id", 0);
-        System.out.println(getUserId());
         Gson gson = new Gson();
         String json = prefs.getString("requestArray", "");
         if (json.length() != 0) {
             requestArray = gson.fromJson(json, String[].class).clone();
-        }
-
-        for (String request : requestArray) {
-            System.out.println(request);
         }
 
         if (requestArray[0] != null) {
@@ -360,6 +359,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static int getUserId() {
         return userId;
+    }
+
+    public static List<NoteClass> getShopList () {
+        return shopList;
+    }
+
+    public static MyViewModel getViewModel () {
+        return viewModel;
     }
 
 }
