@@ -38,6 +38,7 @@ public class NoteClass {
     }
 
 
+
     public String getData() {
         return data;
     }

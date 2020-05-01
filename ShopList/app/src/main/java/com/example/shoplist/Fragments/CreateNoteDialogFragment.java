@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.shoplist.Adapters.SpinnerTypeAdapter;
 import com.example.shoplist.Classes.NoteClass;
-import com.example.shoplist.Classes.URLSendRequest;
 import com.example.shoplist.DataBase.MyViewModel;
 import com.example.shoplist.R;
 
