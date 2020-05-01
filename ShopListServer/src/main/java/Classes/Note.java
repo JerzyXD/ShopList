@@ -39,7 +39,8 @@ public class Note extends HttpServlet {
                     c = DBConnector.executeUpdate("UPDATE notes SET name ='"
                             + req.getParameter("name") + "'"
                             + "," + "type='" + req.getParameter("type") + "'"
-                            + "," + "amount='" + req.getParameter("amount") + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
+                            + "," + "amount='" + req.getParameter("amount") + "'"
+                            + "," + "checked='" + req.getParameter("checked")  + "'" + " WHERE idnote='" + req.getParameter("idnote") + "'");
                     if (c == 0) {
                         addNote(req, writer);
                         System.out.println(req.getParameter("iduser"));
